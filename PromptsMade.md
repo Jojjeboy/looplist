@@ -91,3 +91,15 @@ Here is a sequential history of the prompts made during the development of this 
 **Date:** 2025-11-21
 > Put it under the Roadmap & Notes link, make the text small but visible
 
+## 23. Persist Theme
+**Date:** 2025-11-21
+> Save current Light/Dark mode in localstorage so if you update the webpage its remains the same
+
+## 24. Rename to Notes
+**Date:** 2025-11-21
+> Update Roadmaps & Notes to only Notes
+
+## 25. Commit and Push
+**Date:** 2025-11-21
+> Commit the code and push it please
+

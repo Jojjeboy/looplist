@@ -58,7 +58,7 @@ export const RoadmapView: React.FC = () => {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Roadmap & Notes</h2>
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Notes</h2>
                 <button
                     onClick={() => setIsAdding(!isAdding)}
                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-md"

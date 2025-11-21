@@ -39,7 +39,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }, [theme]);
 
     useEffect(() => {
-        if (navigator.geolocation) {
+        const manualTheme = localStorage.getItem('manual_theme');
+        if (!manualTheme && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const { latitude, longitude } = position.coords;
@@ -122,6 +123,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const toggleTheme = () => {
         setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+        localStorage.setItem('manual_theme', 'true');
     };
 
     const addNote = (title: string, content: string) => {
