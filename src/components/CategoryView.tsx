@@ -54,7 +54,7 @@ export const CategoryView: React.FC = () => {
                 {categories.map((category) => (
                     <div
                         key={category.id}
-                        className="group flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all"
+                        className="group flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all animate-in fade-in slide-in-from-bottom-4 duration-300"
                     >
                         <Link
                             to={`/category/${category.id}`}

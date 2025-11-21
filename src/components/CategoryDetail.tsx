@@ -86,7 +86,7 @@ export const CategoryDetail: React.FC = () => {
             </div>
 
             {showTemplates && (
-                <div className="grid grid-cols-2 gap-2 p-4 bg-gray-100 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="grid grid-cols-2 gap-2 p-4 bg-gray-100 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 animate-in fade-in slide-in-from-top-2 duration-200">
                     {templates.map(template => (
                         <button
                             key={template.id}
@@ -107,7 +107,7 @@ export const CategoryDetail: React.FC = () => {
                 {categoryLists.map((list) => (
                     <div
                         key={list.id}
-                        className="group flex flex-col bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all"
+                        className="group flex flex-col bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all animate-in fade-in slide-in-from-bottom-4 duration-300"
                     >
                         <div className="flex items-center justify-between p-4">
                             <Link
