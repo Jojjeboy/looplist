@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Link } from 'react-router-dom';
-import { Moon, Sun, Search } from 'lucide-react';
+import { Moon, Sun, Search, Settings } from 'lucide-react';
 import { SearchResults } from './SearchResults';
+import { SettingsModal } from './SettingsModal';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { theme, toggleTheme, searchQuery, setSearchQuery } = useApp();
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 flex flex-col">
@@ -19,7 +21,14 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                             </h1>
                         </Link>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setIsSettingsOpen(true)}
+                            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
+                            aria-label="Settings"
+                        >
+                            <Settings size={20} />
+                        </button>
                         <button
                             onClick={toggleTheme}
                             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
@@ -51,6 +60,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                     Senast uppdaterad: 2025-11-21 12:45
                 </p>
             </footer>
+            <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
         </div>
     );
 };

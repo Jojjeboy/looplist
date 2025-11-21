@@ -20,6 +20,7 @@ interface AppContextType {
     togglePin: (listId: string) => void;
     updateListItems: (listId: string, items: Item[]) => void;
     deleteItem: (listId: string, itemId: string) => void;
+    importData: (data: any) => void;
     toggleTheme: () => void;
     notes: Note[];
     addNote: (title: string, content: string) => void;
@@ -183,6 +184,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         }
     };
 
+    const importData = (data: any) => {
+        try {
+            if (data.categories) setCategories(data.categories);
+            if (data.lists) setLists(data.lists);
+            if (data.notes) setNotes(data.notes);
+            if (data.theme) setTheme(data.theme);
+            showToast('Data imported successfully', 'success');
+        } catch (error) {
+            showToast('Failed to import data', 'error');
+            console.error('Import error:', error);
+        }
+    };
+
     const togglePin = (listId: string) => {
         setLists(lists.map((l) => (l.id === listId ? { ...l, isPinned: !l.isPinned } : l)));
     };
@@ -226,6 +240,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 togglePin,
                 updateListItems,
                 deleteItem,
+                importData,
                 toggleTheme,
                 notes,
                 addNote,
