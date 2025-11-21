@@ -83,3 +83,11 @@ Here is a sequential history of the prompts made during the development of this 
 **Date:** 2025-11-21
 > Lägg roadmap länken i footer istället
 
+## 21. Last Updated Footer
+**Date:** 2025-11-21
+> Add a small text in the footer where it says, 'Senast uppdaterad:' followed by a time and date for the last time the code was updated
+
+## 22. Footer Styling
+**Date:** 2025-11-21
+> Put it under the Roadmap & Notes link, make the text small but visible
+
