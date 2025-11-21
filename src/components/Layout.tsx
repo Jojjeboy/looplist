@@ -16,16 +16,8 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                             Anti
                         </h1>
                     </Link>
-                    <nav className="hidden md:flex items-center gap-4">
-                        <Link to="/roadmap" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                            Roadmap
-                        </Link>
-                    </nav>
                 </div>
                 <div className="flex items-center gap-4">
-                    <Link to="/roadmap" className="md:hidden text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Roadmap
-                    </Link>
                     <button
                         onClick={toggleTheme}
                         className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
@@ -38,6 +30,11 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             <main className="flex-1 p-4 max-w-3xl mx-auto w-full">
                 {children}
             </main>
+            <footer className="p-6 text-center border-t border-gray-200 dark:border-gray-700 mt-auto">
+                <Link to="/roadmap" className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                    Roadmap & Notes
+                </Link>
+            </footer>
         </div>
     );
 };

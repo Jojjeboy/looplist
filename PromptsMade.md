@@ -75,3 +75,11 @@ Here is a sequential history of the prompts made during the development of this 
 **Date:** 2025-11-21
 > Commit and push all code
 
+## 19. Publish Inquiry
+**Date:** 2025-11-21
+> Can i publish this app somewhere?
+
+## 20. Move Roadmap Link
+**Date:** 2025-11-21
+> Lägg roadmap länken i footer istället
+
