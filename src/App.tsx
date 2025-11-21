@@ -2,24 +2,20 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AppProvider } from './context/AppContext'
 import { Layout } from './components/Layout'
 import { CategoryView } from './components/CategoryView'
-import { CategoryDetail } from './components/CategoryDetail'
-import { ListDetail } from './components/ListDetail'
-import { RoadmapView } from './components/RoadmapView'
-
-function App() {
-    return (
-        <BrowserRouter>
-            <AppProvider>
-                <Layout>
-                    <Routes>
-                        <Route path="/" element={<CategoryView />} />
-                        <Route path="/category/:categoryId" element={<CategoryDetail />} />
-                        <Route path="/list/:listId" element={<ListDetail />} />
-                        <Route path="/roadmap" element={<RoadmapView />} />
-                    </Routes>
-                </Layout>
-            </AppProvider>
-        </BrowserRouter>
+<AppProvider>
+    <BrowserRouter> {/* Changed from <Router> to <BrowserRouter> to match import */}
+        <Layout>
+            <Routes>
+                <Route path="/" element={<CategoryView />} />
+                <Route path="/category/:categoryId" element={<CategoryDetail />} />
+                <Route path="/list/:listId" element={<ListDetail />} />
+                <Route path="/roadmap" element={<RoadmapView />} />
+            </Routes>
+            <ToastContainer />
+        </Layout>
+    </BrowserRouter> {/* Changed from <Router> to <BrowserRouter> to match import */}
+</AppProvider>
+        </ToastProvider >
     )
 }
 

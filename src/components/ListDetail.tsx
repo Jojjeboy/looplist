@@ -10,7 +10,7 @@ import { Modal } from './Modal';
 
 export const ListDetail: React.FC = () => {
     const { listId } = useParams<{ listId: string }>();
-    const { lists, updateListItems } = useApp();
+    const { lists, updateListItems, deleteItem } = useApp();
     const [newItemText, setNewItemText] = useState('');
     const [uncheckModalOpen, setUncheckModalOpen] = useState(false);
 
@@ -70,8 +70,7 @@ export const ListDetail: React.FC = () => {
     };
 
     const handleDelete = (itemId: string) => {
-        const newItems = list.items.filter(item => item.id !== itemId);
-        updateListItems(list.id, newItems);
+        deleteItem(list.id, itemId);
     };
 
     const handleEdit = (itemId: string, text: string) => {

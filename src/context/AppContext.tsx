@@ -4,6 +4,7 @@ import SunCalc from 'suncalc';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { Category, List, Item, Note } from '../types';
 import { templates } from '../data/templates';
+import { useToast } from './ToastContext';
 
 interface AppContextType {
     categories: Category[];
@@ -18,6 +19,7 @@ interface AppContextType {
     moveList: (listId: string, newCategoryId: string) => void;
     togglePin: (listId: string) => void;
     updateListItems: (listId: string, items: Item[]) => void;
+    deleteItem: (listId: string, itemId: string) => void;
     toggleTheme: () => void;
     notes: Note[];
     addNote: (title: string, content: string) => void;
@@ -35,6 +37,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const [theme, setTheme] = useLocalStorage<'light' | 'dark'>('theme', 'light');
     const [notes, setNotes] = useLocalStorage<Note[]>('notes', []);
     const [searchQuery, setSearchQuery] = useState('');
+    const { showToast } = useToast();
 
     useEffect(() => {
         if (theme === 'dark') {
@@ -79,7 +82,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     const deleteList = (id: string) => {
-        setLists(lists.filter((l) => l.id !== id));
+        const listToDelete = lists.find(l => l.id === id);
+        if (listToDelete) {
+            setLists(lists.filter((l) => l.id !== id));
+            showToast(`List "${listToDelete.name}" deleted`, 'info', {
+                label: 'Undo',
+                onClick: () => {
+                    setLists(prev => [...prev, listToDelete]);
+                }
+            });
+        }
     };
 
     const addListFromTemplate = (templateId: string, categoryId: string) => {
@@ -145,6 +157,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setLists(lists.map((l) => (l.id === listId ? { ...l, items } : l)));
     };
 
+    const deleteItem = (listId: string, itemId: string) => {
+        const list = lists.find(l => l.id === listId);
+        if (list) {
+            const itemToDelete = list.items.find(i => i.id === itemId);
+            if (itemToDelete) {
+                const newItems = list.items.filter(i => i.id !== itemId);
+                updateListItems(listId, newItems);
+
+                showToast('Item deleted', 'info', {
+                    label: 'Undo',
+                    onClick: () => {
+                        // Re-fetch list to get current state in case of other changes
+                        setLists(currentLists => {
+                            return currentLists.map(l => {
+                                if (l.id === listId) {
+                                    return { ...l, items: [...l.items, itemToDelete] };
+                                }
+                                return l;
+                            });
+                        });
+                    }
+                });
+            }
+        }
+    };
+
     const togglePin = (listId: string) => {
         setLists(lists.map((l) => (l.id === listId ? { ...l, isPinned: !l.isPinned } : l)));
     };
@@ -187,6 +225,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 moveList,
                 togglePin,
                 updateListItems,
+                deleteItem,
                 toggleTheme,
                 notes,
                 addNote,
