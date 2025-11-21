@@ -120,6 +120,21 @@ export const CategoryDetail: React.FC = () => {
                             </div>
                         </div>
 
+                        {list.items.length > 0 && (
+                            <div className="px-4 pb-4">
+                                <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
+                                    <span>Progress</span>
+                                    <span>{Math.round((list.items.filter(i => i.completed).length / list.items.length) * 100)}%</span>
+                                </div>
+                                <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
+                                    <div
+                                        className="bg-blue-500 h-full rounded-full transition-all duration-500"
+                                        style={{ width: `${(list.items.filter(i => i.completed).length / list.items.length) * 100}%` }}
+                                    />
+                                </div>
+                            </div>
+                        )}
+
                         {movingListId === list.id && (
                             <div className="p-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-xl">
                                 <p className="text-sm text-gray-500 mb-2">Move to category:</p>

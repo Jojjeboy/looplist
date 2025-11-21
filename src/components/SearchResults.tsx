@@ -56,12 +56,22 @@ export const SearchResults: React.FC = () => {
                                         {list.isPinned && <Pin size={14} className="text-blue-500 fill-current" />}
                                     </div>
                                     <span className="text-xs text-gray-400">
-                                        In {categories.find(c => c.id === list.categoryId)?.name || 'Unknown'}
+                                        In {categories.find(c => c.id === list.categoryId)?.name || 'Unknown'} • {list.items.length} items
                                     </span>
+                                    {list.items.length > 0 && (
+                                        <div className="mt-2 flex items-center gap-2">
+                                            <div className="flex-1 bg-gray-100 dark:bg-gray-700 rounded-full h-1 overflow-hidden">
+                                                <div
+                                                    className="bg-purple-500 h-full rounded-full transition-all duration-500"
+                                                    style={{ width: `${(list.items.filter(i => i.completed).length / list.items.length) * 100}%` }}
+                                                />
+                                            </div>
+                                            <span className="text-[10px] text-gray-400">
+                                                {Math.round((list.items.filter(i => i.completed).length / list.items.length) * 100)}%
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
-                                <span className="text-sm text-gray-400">
-                                    {list.items.length} items
-                                </span>
                             </Link>
                         ))}
                     </div>
