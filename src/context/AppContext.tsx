@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import SunCalc from 'suncalc';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -20,6 +20,8 @@ interface AppContextType {
     addNote: (title: string, content: string) => void;
     updateNote: (id: string, title: string, content: string) => void;
     deleteNote: (id: string) => void;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -29,6 +31,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const [lists, setLists] = useLocalStorage<List[]>('lists', []);
     const [theme, setTheme] = useLocalStorage<'light' | 'dark'>('theme', 'light');
     const [notes, setNotes] = useLocalStorage<Note[]>('notes', []);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         if (theme === 'dark') {
@@ -162,6 +165,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 addNote,
                 updateNote,
                 deleteNote,
+                searchQuery,
+                setSearchQuery,
             }}
         >
             {children}

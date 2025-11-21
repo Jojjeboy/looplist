@@ -103,3 +103,7 @@ Here is a sequential history of the prompts made during the development of this 
 **Date:** 2025-11-21
 > Commit the code and push it please
 
+## 26. Feature Suggestions
+**Date:** 2025-11-21
+> Is there any ideas or suggestions you can provide that would make the app more usefull and better based upon similar apps?
+
