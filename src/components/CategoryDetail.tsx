@@ -7,7 +7,7 @@ import { templates } from '../data/templates';
 
 export const CategoryDetail: React.FC = () => {
     const { categoryId } = useParams<{ categoryId: string }>();
-    const { categories, lists, addList, deleteList, copyList, moveList, togglePin, addListFromTemplate } = useApp();
+    const { categories, lists, addList, deleteList, copyList, moveList, togglePin, addListFromTemplate, updateCategoryName } = useApp();
     const [newListName, setNewListName] = useState('');
     const [movingListId, setMovingListId] = useState<string | null>(null);
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; listId: string | null }>({
@@ -15,6 +15,8 @@ export const CategoryDetail: React.FC = () => {
         listId: null,
     });
     const [showTemplates, setShowTemplates] = useState(false);
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+    const [editedTitle, setEditedTitle] = useState('');
 
     const category = categories.find((c) => c.id === categoryId);
     const categoryLists = lists
@@ -24,6 +26,7 @@ export const CategoryDetail: React.FC = () => {
     React.useEffect(() => {
         if (category) {
             document.title = `Anti - ${category.name}`;
+            setEditedTitle(category.name);
         }
     }, [category]);
 
@@ -51,13 +54,52 @@ export const CategoryDetail: React.FC = () => {
         }
     };
 
+    const handleSaveTitle = () => {
+        if (editedTitle.trim()) {
+            updateCategoryName(category.id, editedTitle.trim());
+            setIsEditingTitle(false);
+        }
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex items-center gap-2">
                 <Link to="/" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors">
                     <ChevronLeft />
                 </Link>
-                <h2 className="text-xl font-semibold">{category.name}</h2>
+                {isEditingTitle ? (
+                    <div className="flex items-center gap-2 flex-1">
+                        <input
+                            type="text"
+                            value={editedTitle}
+                            onChange={(e) => setEditedTitle(e.target.value)}
+                            className="text-xl font-semibold bg-transparent border-b-2 border-blue-500 focus:outline-none w-full"
+                            autoFocus
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleSaveTitle();
+                                if (e.key === 'Escape') {
+                                    setEditedTitle(category.name);
+                                    setIsEditingTitle(false);
+                                }
+                            }}
+                            onBlur={handleSaveTitle}
+                        />
+                    </div>
+                ) : (
+                    <div className="flex items-center gap-2 group">
+                        <h2 className="text-xl font-semibold">{category.name}</h2>
+                        <button
+                            onClick={() => setIsEditingTitle(true)}
+                            className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-blue-500 transition-all"
+                            title="Edit Title"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                                <path d="m15 5 4 4" />
+                            </svg>
+                        </button>
+                    </div>
+                )}
             </div>
 
             <div className="flex gap-2">

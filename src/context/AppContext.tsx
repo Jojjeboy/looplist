@@ -11,8 +11,10 @@ interface AppContextType {
     lists: List[];
     theme: 'light' | 'dark';
     addCategory: (name: string) => void;
+    updateCategoryName: (id: string, name: string) => void;
     deleteCategory: (id: string) => void;
     addList: (name: string, categoryId: string) => void;
+    updateListName: (id: string, name: string) => void;
     addListFromTemplate: (templateId: string, categoryId: string) => void;
     deleteList: (id: string) => void;
     copyList: (listId: string) => void;
@@ -73,6 +75,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setCategories([...categories, { id: uuidv4(), name }]);
     };
 
+    const updateCategoryName = (id: string, name: string) => {
+        setCategories(categories.map((c) => (c.id === id ? { ...c, name } : c)));
+    };
+
     const deleteCategory = (id: string) => {
         setCategories(categories.filter((c) => c.id !== id));
         setLists(lists.filter((l) => l.categoryId !== id));
@@ -80,6 +86,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const addList = (name: string, categoryId: string) => {
         setLists([...lists, { id: uuidv4(), name, categoryId, items: [] }]);
+    };
+
+    const updateListName = (id: string, name: string) => {
+        setLists(lists.map((l) => (l.id === id ? { ...l, name } : l)));
     };
 
     const deleteList = (id: string) => {
@@ -231,8 +241,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 lists,
                 theme,
                 addCategory,
+                updateCategoryName,
                 deleteCategory,
                 addList,
+                updateListName,
                 addListFromTemplate,
                 deleteList,
                 copyList,
