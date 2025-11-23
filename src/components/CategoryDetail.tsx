@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { Plus, Trash2, Copy, ArrowRight, ChevronLeft, Pin, LayoutTemplate } from 'lucide-react';
+import { Plus, Trash2, Copy, ArrowRight, ChevronLeft, Pin } from 'lucide-react';
 import { Modal } from './Modal';
-import { templates } from '../data/templates';
 
 export const CategoryDetail: React.FC = () => {
     const { categoryId } = useParams<{ categoryId: string }>();
-    const { categories, lists, addList, deleteList, copyList, moveList, togglePin, addListFromTemplate, updateCategoryName } = useApp();
+    const { categories, lists, addList, deleteList, copyList, moveList, togglePin, updateCategoryName } = useApp();
     const [newListName, setNewListName] = useState('');
     const [movingListId, setMovingListId] = useState<string | null>(null);
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; listId: string | null }>({
         isOpen: false,
         listId: null,
     });
-    const [showTemplates, setShowTemplates] = useState(false);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [editedTitle, setEditedTitle] = useState('');
 
@@ -118,32 +116,7 @@ export const CategoryDetail: React.FC = () => {
                         <Plus />
                     </button>
                 </form>
-                <button
-                    onClick={() => setShowTemplates(!showTemplates)}
-                    className="p-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 shadow-sm transition-colors"
-                    title="Use Template"
-                >
-                    <LayoutTemplate size={24} />
-                </button>
             </div>
-
-            {showTemplates && (
-                <div className="grid grid-cols-2 gap-2 p-4 bg-gray-100 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 animate-in fade-in slide-in-from-top-2 duration-200">
-                    {templates.map(template => (
-                        <button
-                            key={template.id}
-                            onClick={() => {
-                                addListFromTemplate(template.id, categoryId!);
-                                setShowTemplates(false);
-                            }}
-                            className="p-3 text-left bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-all"
-                        >
-                            <span className="font-medium block">{template.name}</span>
-                            <span className="text-xs text-gray-400">{template.items.length} items</span>
-                        </button>
-                    ))}
-                </div>
-            )}
 
             <div className="grid gap-3">
                 {categoryLists.map((list) => (
