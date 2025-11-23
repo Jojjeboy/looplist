@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Folder, FileText, Pin } from 'lucide-react';
 
 export const SearchResults: React.FC = () => {
-    const { lists, categories, searchQuery } = useApp();
+    const { lists, categories, searchQuery, setSearchQuery } = useApp();
 
     const filteredLists = lists.filter(list =>
         list.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -29,6 +29,7 @@ export const SearchResults: React.FC = () => {
                             <Link
                                 key={category.id}
                                 to={`/category/${category.id}`}
+                                onClick={() => setSearchQuery('')}
                                 className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all"
                             >
                                 <Folder className="text-blue-500" />
@@ -47,6 +48,7 @@ export const SearchResults: React.FC = () => {
                             <Link
                                 key={list.id}
                                 to={`/list/${list.id}`}
+                                onClick={() => setSearchQuery('')}
                                 className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all"
                             >
                                 <FileText className="text-purple-500" />
