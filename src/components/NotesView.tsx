@@ -5,7 +5,7 @@ import { Modal } from './Modal';
 import { useTranslation } from 'react-i18next';
 import { MarqueeText } from './MarqueeText';
 
-export const RoadmapView: React.FC = () => {
+export const NotesView: React.FC = () => {
     const { t } = useTranslation();
     const { notes, addNote, updateNote, deleteNote } = useApp();
     const [expandedNoteId, setExpandedNoteId] = useState<string | null>(null);

@@ -1,5 +1,11 @@
 [
   {
+    "hash": "3c90de0ba548a13ad37e68596cf933c7248d8e02",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 19:57:36 +0100",
+    "message": "feat: Restore templates functionality with i18n support"
+  },
+  {
     "hash": "9b66bd6d5e91d7016b9e2a946f6914b830fe7a50",
     "author": "Jojjeboy",
     "date": "2025-11-24 19:52:28 +0100",

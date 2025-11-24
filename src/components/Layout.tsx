@@ -63,7 +63,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 {searchQuery ? <SearchResults /> : children}
             </main>
             <footer className="p-6 text-center border-t border-gray-200 dark:border-gray-700 mt-auto flex flex-col items-center gap-2">
-                <Link to="/roadmap" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <Link to="/notes" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     {t('app.notes')}
                 </Link>
                 <div className="flex flex-col items-center gap-1">
