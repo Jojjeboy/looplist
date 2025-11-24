@@ -1,5 +1,11 @@
 [
   {
+    "hash": "46138a6faa35ef33b2c6c1ca55351e97da68b2bb",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 20:05:31 +0100",
+    "message": "refactor: Rename Roadmap to Notes and fix offline icon"
+  },
+  {
     "hash": "3c90de0ba548a13ad37e68596cf933c7248d8e02",
     "author": "Jojjeboy",
     "date": "2025-11-24 19:57:36 +0100",

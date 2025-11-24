@@ -23,6 +23,7 @@ export interface Note {
     content: string;
     createdAt: string;
     priority: 'low' | 'medium' | 'high';
+    completed: boolean;
 }
 
 export interface List {
