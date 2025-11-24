@@ -22,7 +22,6 @@ interface AppContextType {
     moveList: (listId: string, newCategoryId: string) => Promise<void>;
     updateListItems: (listId: string, items: Item[]) => Promise<void>;
     deleteItem: (listId: string, itemId: string) => Promise<void>;
-    importData: (data: any) => void;
     toggleTheme: () => void;
     notes: Note[];
     addNote: (title: string, content: string, priority: 'low' | 'medium' | 'high') => Promise<void>;
@@ -191,18 +190,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         }
     };
 
-    const importData = (_data: any) => {
-        // TODO: Implement import for Firestore if needed, or keep local for now?
-        // For now, let's just log that import is not fully supported in cloud mode yet or implement it.
-        // Implementing it would mean batch writing all data.
-        try {
-            // This is a bit complex for now, let's skip or implement basic batch add
-            showToast(t('toasts.importFailed'), 'error'); // Placeholder
-        } catch (error) {
-            showToast(t('toasts.importFailed'), 'error');
-            console.error('Import error:', error);
-        }
-    };
+
 
     const toggleTheme = () => {
         setTheme((prev) => {
@@ -248,7 +236,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 moveList,
                 updateListItems,
                 deleteItem,
-                importData,
                 toggleTheme,
                 notes: notesSync.data,
                 addNote,

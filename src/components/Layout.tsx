@@ -8,6 +8,8 @@ import { SettingsModal } from './SettingsModal';
 import commitsData from '../commits.json';
 import { Commit } from '../types';
 
+import { OfflineIndicator } from './OfflineIndicator';
+
 const commits = commitsData as Commit[];
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -18,6 +20,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 flex flex-col">
+            <OfflineIndicator />
             <header className="sticky top-0 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm p-4 flex flex-col gap-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between items-center">
                     <div className="flex items-center gap-6">

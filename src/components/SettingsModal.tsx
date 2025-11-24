@@ -1,7 +1,5 @@
-import React, { useRef } from 'react';
-import { useApp } from '../context/AppContext';
-import { Download, Upload, X, AlertTriangle, RefreshCw, LogOut } from 'lucide-react';
-import { useToast } from '../context/ToastContext';
+import React from 'react';
+import { X, RefreshCw, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 import { useTranslation } from 'react-i18next';
@@ -13,67 +11,9 @@ interface SettingsModalProps {
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
     const { t, i18n } = useTranslation();
-    const { categories, lists, notes, theme, importData } = useApp();
-    const { showToast } = useToast();
-    const { logout, user } = useAuth();
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const { user, logout } = useAuth();
 
     if (!isOpen) return null;
-
-    const handleExport = () => {
-        const data = {
-            categories,
-            lists,
-            notes,
-            theme,
-            exportDate: new Date().toISOString(),
-            version: '1.0'
-        };
-
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `anti-backup-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast(t('toasts.dataImported'), 'success');
-    };
-
-    const handleImportClick = () => {
-        fileInputRef.current?.click();
-    };
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const content = e.target?.result as string;
-                const data = JSON.parse(content);
-
-                // Basic validation
-                if (!data.categories && !data.lists && !data.notes) {
-                    throw new Error('Invalid backup file format');
-                }
-
-                if (confirm(t('settings.importConfirm'))) {
-                    importData(data);
-                    onClose();
-                }
-            } catch (error) {
-                console.error('Import error:', error);
-                showToast(t('toasts.importFailed'), 'error');
-            }
-        };
-        reader.readAsText(file);
-        // Reset input
-        event.target.value = '';
-    };
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
@@ -134,44 +74,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                     </div>
 
                     <div className="space-y-4">
-                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settings.dataManagement')}</h3>
-
-                        <div className="grid gap-3">
-                            <button
-                                onClick={handleExport}
-                                className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left group"
-                            >
-                                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg group-hover:scale-110 transition-transform">
-                                    <Download size={20} />
-                                </div>
-                                <div>
-                                    <div className="font-medium">{t('settings.exportData')}</div>
-                                    <div className="text-xs text-gray-500 dark:text-gray-400">{t('settings.exportDataDesc')}</div>
-                                </div>
-                            </button>
-
-                            <button
-                                onClick={handleImportClick}
-                                className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left group"
-                            >
-                                <div className="p-2 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-lg group-hover:scale-110 transition-transform">
-                                    <Upload size={20} />
-                                </div>
-                                <div>
-                                    <div className="font-medium">{t('settings.importData')}</div>
-                                    <div className="text-xs text-gray-500 dark:text-gray-400">{t('settings.importDataDesc')}</div>
-                                </div>
-                            </button>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handleFileChange}
-                                accept=".json"
-                                className="hidden"
-                            />
-                        </div>
-                    </div>
-                    <div className="space-y-4">
                         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settings.system', 'System')}</h3>
                         <button
                             onClick={() => {
@@ -196,14 +98,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                                 <div className="text-xs text-gray-500 dark:text-gray-400">{t('settings.reloadUpdateDesc', 'Clear cache and reload to get the latest version')}</div>
                             </div>
                         </button>
-                    </div>
-
-                    <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border border-yellow-100 dark:border-yellow-900/50 flex gap-3">
-                        <AlertTriangle className="text-yellow-600 dark:text-yellow-500 shrink-0" size={20} />
-                        <div className="text-sm text-yellow-800 dark:text-yellow-200">
-                            <p className="font-medium mb-1">{t('settings.note')}</p>
-                            <p>{t('settings.importWarning')}</p>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,11 @@
 [
   {
+    "hash": "1171c636f4f10428f4b362669dbd19732ae8b4b1",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 19:11:21 +0100",
+    "message": "Fix: Limit note title width and add marquee effect for long titles"
+  },
+  {
     "hash": "bb2725be066cba705704c06defd6d8a84c6f02b1",
     "author": "Jojjeboy",
     "date": "2025-11-24 18:47:14 +0100",
