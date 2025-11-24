@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { useApp } from '../context/AppContext';
-import { Download, Upload, X, AlertTriangle, RefreshCw } from 'lucide-react';
+import { Download, Upload, X, AlertTriangle, RefreshCw, LogOut } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 
 import { useTranslation } from 'react-i18next';
 
@@ -14,6 +15,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
     const { t, i18n } = useTranslation();
     const { categories, lists, notes, theme, importData } = useApp();
     const { showToast } = useToast();
+    const { logout, user } = useAuth();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     if (!isOpen) return null;
@@ -107,6 +109,26 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                                     }`}
                             >
                                 Svenska
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settings.account', 'Account')}</h3>
+                        <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+                            <div>
+                                <div className="font-medium">{user?.displayName || user?.email}</div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</div>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    logout();
+                                    onClose();
+                                }}
+                                className="p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                                title={t('settings.logout', 'Logout')}
+                            >
+                                <LogOut size={20} />
                             </button>
                         </div>
                     </div>

@@ -1,5 +1,11 @@
 [
   {
+    "hash": "1dd67d4d9e96a3c2ba88abac8a2345989b1c03e1",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 08:28:27 +0100",
+    "message": "fix: add touch-none and pointer-events handling for drag functionality"
+  },
+  {
     "hash": "18f03ea1bc5280e40923f60aba347a338ee68187",
     "author": "Jojjeboy",
     "date": "2025-11-24 08:22:00 +0100",

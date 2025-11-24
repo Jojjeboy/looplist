@@ -9,25 +9,31 @@ import { ActivityLog } from './components/ActivityLog'
 import { ToastProvider } from './context/ToastContext'
 import { ToastContainer } from './components/ToastContainer'
 import { UpdatePrompt } from './components/UpdatePrompt'
+import { AuthProvider } from './context/AuthContext'
+import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App() {
     return (
         <ToastProvider>
-            <AppProvider>
-                <BrowserRouter>
-                    <Layout>
-                        <Routes>
-                            <Route path="/" element={<CategoryView />} />
-                            <Route path="/category/:categoryId" element={<CategoryDetail />} />
-                            <Route path="/list/:listId" element={<ListDetail />} />
-                            <Route path="/roadmap" element={<RoadmapView />} />
-                            <Route path="/activity" element={<ActivityLog />} />
-                        </Routes>
-                        <ToastContainer />
-                        <UpdatePrompt />
-                    </Layout>
-                </BrowserRouter>
-            </AppProvider>
+            <AuthProvider>
+                <AppProvider>
+                    <BrowserRouter>
+                        <ProtectedRoute>
+                            <Layout>
+                                <Routes>
+                                    <Route path="/" element={<CategoryView />} />
+                                    <Route path="/category/:categoryId" element={<CategoryDetail />} />
+                                    <Route path="/list/:listId" element={<ListDetail />} />
+                                    <Route path="/roadmap" element={<RoadmapView />} />
+                                    <Route path="/activity" element={<ActivityLog />} />
+                                </Routes>
+                                <ToastContainer />
+                                <UpdatePrompt />
+                            </Layout>
+                        </ProtectedRoute>
+                    </BrowserRouter>
+                </AppProvider>
+            </AuthProvider>
         </ToastProvider>
     )
 }
