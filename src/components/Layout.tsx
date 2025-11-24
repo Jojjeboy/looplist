@@ -5,11 +5,16 @@ import { Moon, Sun, Search, Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SearchResults } from './SearchResults';
 import { SettingsModal } from './SettingsModal';
+import commitsData from '../commits.json';
+import { Commit } from '../types';
+
+const commits = commitsData as Commit[];
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { t } = useTranslation();
     const { theme, toggleTheme, searchQuery, setSearchQuery } = useApp();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const latestCommit = commits[0];
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 flex flex-col">
@@ -58,9 +63,16 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 <Link to="/roadmap" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     {t('app.notes')}
                 </Link>
-                <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
-                    {t('app.lastUpdated')}
-                </p>
+                <div className="flex flex-col items-center gap-1">
+                    <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
+                        {t('app.lastUpdated')}
+                    </p>
+                    {latestCommit && (
+                        <Link to="/activity" className="text-[10px] text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors max-w-xs truncate">
+                            {latestCommit.message}
+                        </Link>
+                    )}
+                </div>
             </footer>
             <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
         </div>

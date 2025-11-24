@@ -36,3 +36,10 @@ export interface Category {
     id: string;
     name: string;
 }
+
+export interface Commit {
+    hash: string;
+    author: string;
+    date: string;
+    message: string;
+}

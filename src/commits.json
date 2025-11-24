@@ -1,0 +1,152 @@
+[
+  {
+    "hash": "067168cf1741f329b6411e4aa276863b3ab243af",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 06:31:49 +0100",
+    "message": "fix: allow list titles to wrap instead of truncating"
+  },
+  {
+    "hash": "33188f7bfbdf8c6bf73e27e87bf03afabd1e195a",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 06:23:57 +0100",
+    "message": "refactor: remove pin list functionality"
+  },
+  {
+    "hash": "192327f7b33f061f55e84659f2b740f471cb56f8",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 06:18:57 +0100",
+    "message": "feat: implement note prioritization"
+  },
+  {
+    "hash": "7ac082d290debea79939df31e34853035d2b1666",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 06:16:18 +0100",
+    "message": "feat: implement internationalization (i18n) support"
+  },
+  {
+    "hash": "cb86cedc6b4c9f15718fb60d3a458028ae399442",
+    "author": "Jojjeboy",
+    "date": "2025-11-23 12:42:01 +0100",
+    "message": "fix: update SearchResults component"
+  },
+  {
+    "hash": "f054b4fc75acbf7f6f1281d76f1668fefbaf65a8",
+    "author": "Jojjeboy",
+    "date": "2025-11-23 12:27:17 +0100",
+    "message": "Removed list templates"
+  },
+  {
+    "hash": "4a8767b2c2099c2e0f58ff62c24d21b0deee5714",
+    "author": "Jojjeboy",
+    "date": "2025-11-23 12:18:01 +0100",
+    "message": "fix: prevent horizontal scroll on mobile devices"
+  },
+  {
+    "hash": "a33d36d0d4a9dec225979628d5fba6e06cf60526",
+    "author": "Jojjeboy",
+    "date": "2025-11-23 12:07:23 +0100",
+    "message": "feat: allow editing of category and list titles"
+  },
+  {
+    "hash": "dc0ac5f8f263b0e0ba04c8972853ab8e4f20983a",
+    "author": "Jojjeboy",
+    "date": "2025-11-22 10:46:00 +0100",
+    "message": "Error fix"
+  },
+  {
+    "hash": "e467bca74fb78ca7da7faa0cb8f930ffa23f551e",
+    "author": "Jojjeboy",
+    "date": "2025-11-22 10:45:23 +0100",
+    "message": "Error fix"
+  },
+  {
+    "hash": "ef357f894aa0ceee7d1a02ab62488aba7f811507",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 14:15:37 +0100",
+    "message": "docs: Update documentation with new features"
+  },
+  {
+    "hash": "c8988589daa0109e32f44d6bcd5ad02633ff27db",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 14:10:06 +0100",
+    "message": "feat: Add voice input for adding items"
+  },
+  {
+    "hash": "527261819b9b0e445ba89bf28be4b26f9608c8df",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 14:01:19 +0100",
+    "message": "style: Add micro-animations and visual polish"
+  },
+  {
+    "hash": "b687c289839ec2c423d7e45deaa72a2e2ff04395",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 13:58:35 +0100",
+    "message": "feat: Add data import/export functionality"
+  },
+  {
+    "hash": "d5e26b3c59a7006a0240cddf030c4d5332deac91",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 13:54:49 +0100",
+    "message": "feat: Add undo functionality with toast notifications"
+  },
+  {
+    "hash": "3baadbfb36eb7ddaaf039b3ef2607a3521717cf3",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 13:52:33 +0100",
+    "message": "feat: Add sorting options to lists"
+  },
+  {
+    "hash": "1546b1aed260937886b871d46d5ce691ee077e13",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 13:50:23 +0100",
+    "message": "feat: Add template library functionality"
+  },
+  {
+    "hash": "59568c96e7450882779d396d42e29eeb8f7fd9d1",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 13:46:42 +0100",
+    "message": "feat: Add progress indicators to lists"
+  },
+  {
+    "hash": "8e3d2dc536bf0b253456b46b69c0805bbd5caac2",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 13:43:54 +0100",
+    "message": "feat: Add pinned lists functionality"
+  },
+  {
+    "hash": "2d9fd4e215d05041990757259c107ce7414b5b17",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 13:36:53 +0100",
+    "message": "feat: Add global search functionality"
+  },
+  {
+    "hash": "4aa9daf114d178782b0fc515f461acb495d17a8e",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 12:51:13 +0100",
+    "message": "Saves theme state in ls"
+  },
+  {
+    "hash": "13e113713ff34fa0264599f05b30dc5b14ccf7f7",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 12:46:06 +0100",
+    "message": "minor fix"
+  },
+  {
+    "hash": "5f1a265e67b70418b5e7ae43a6227e23f70db5ab",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 12:41:15 +0100",
+    "message": "Moved link to footer"
+  },
+  {
+    "hash": "2dcb696fe777348e3dfa2e37453de797b07f0a4b",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 12:19:24 +0100",
+    "message": "Roadmap feature"
+  },
+  {
+    "hash": "8f525295c618c392c3db4e3910738f71ba3b53bb",
+    "author": "Jojjeboy",
+    "date": "2025-11-21 09:55:56 +0100",
+    "message": "Initial commit"
+  }
+]
