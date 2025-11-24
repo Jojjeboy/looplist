@@ -98,26 +98,6 @@ export const CategoryDetail: React.FC = () => {
                                 <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
                                 <path d="m15 5 4 4" />
                             </svg>
-                        </button>
-                    </div>
-                )}
-            </div>
-
-            <div className="flex gap-2">
-                <form onSubmit={handleAdd} className="flex-1 flex gap-2">
-                    <input
-                        type="text"
-                        value={newListName}
-                        onChange={(e) => setNewListName(e.target.value)}
-                        placeholder={t('lists.newPlaceholder')}
-                        className="flex-1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                    />
-                    <button
-                        type="submit"
-                        className="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md transition-colors"
-                    >
-                        <Plus />
-                    </button>
                 </form>
                 <div className="relative group">
                     <button
@@ -255,5 +235,5 @@ export const CategoryDetail: React.FC = () => {
                 isDestructive
             />
         </div>
-    );
+            );
 };
