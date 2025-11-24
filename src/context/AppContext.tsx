@@ -4,6 +4,7 @@ import SunCalc from 'suncalc';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { Category, List, Item, Note } from '../types';
 import { useToast } from './ToastContext';
+import { useTranslation } from 'react-i18next';
 
 interface AppContextType {
     categories: Category[];
@@ -39,6 +40,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const [notes, setNotes] = useLocalStorage<Note[]>('notes', []);
     const [searchQuery, setSearchQuery] = useState('');
     const { showToast } = useToast();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (theme === 'dark') {
@@ -94,16 +96,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const listToDelete = lists.find(l => l.id === id);
         if (listToDelete) {
             setLists(lists.filter((l) => l.id !== id));
-            showToast(`List "${listToDelete.name}" deleted`, 'info', {
-                label: 'Undo',
+            showToast(t('toasts.listDeleted', { name: listToDelete.name }), 'info', {
+                label: t('common.undo'),
                 onClick: () => {
                     setLists(prev => [...prev, listToDelete]);
                 }
             });
         }
     };
-
-
 
     const copyList = (listId: string) => {
         const listToCopy = lists.find((l) => l.id === listId);
@@ -146,6 +146,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setLists(lists.map((l) => (l.id === listId ? { ...l, categoryId: newCategoryId } : l)));
     };
 
+    const togglePin = (listId: string) => {
+        setLists(lists.map((l) => (l.id === listId ? { ...l, isPinned: !l.isPinned } : l)));
+    };
+
     const updateListItems = (listId: string, items: Item[]) => {
         setLists(lists.map((l) => (l.id === listId ? { ...l, items } : l)));
     };
@@ -158,8 +162,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 const newItems = list.items.filter(i => i.id !== itemId);
                 updateListItems(listId, newItems);
 
-                showToast('Item deleted', 'info', {
-                    label: 'Undo',
+                showToast(t('toasts.itemDeleted'), 'info', {
+                    label: t('common.undo'),
                     onClick: () => {
                         // Re-fetch list to get current state in case of other changes
                         setLists(currentLists => {
@@ -182,15 +186,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             if (data.lists) setLists(data.lists);
             if (data.notes) setNotes(data.notes);
             if (data.theme) setTheme(data.theme);
-            showToast('Data imported successfully', 'success');
+            showToast(t('toasts.dataImported'), 'success');
         } catch (error) {
-            showToast('Failed to import data', 'error');
+            showToast(t('toasts.importFailed'), 'error');
             console.error('Import error:', error);
         }
-    };
-
-    const togglePin = (listId: string) => {
-        setLists(lists.map((l) => (l.id === listId ? { ...l, isPinned: !l.isPinned } : l)));
     };
 
     const toggleTheme = () => {

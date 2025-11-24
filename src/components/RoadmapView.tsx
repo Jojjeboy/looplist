@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { ChevronDown, ChevronUp, Plus, Trash2, Edit2, Save, X } from 'lucide-react';
 import { Modal } from './Modal';
+import { useTranslation } from 'react-i18next';
 
 export const RoadmapView: React.FC = () => {
+    const { t } = useTranslation();
     const { notes, addNote, updateNote, deleteNote } = useApp();
     const [expandedNoteId, setExpandedNoteId] = useState<string | null>(null);
     const [isAdding, setIsAdding] = useState(false);
@@ -58,13 +60,13 @@ export const RoadmapView: React.FC = () => {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Notes</h2>
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t('notes.title')}</h2>
                 <button
                     onClick={() => setIsAdding(!isAdding)}
                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-md"
                 >
                     {isAdding ? <X size={20} /> : <Plus size={20} />}
-                    {isAdding ? 'Cancel' : 'Add Note'}
+                    {isAdding ? t('notes.cancel') : t('notes.add')}
                 </button>
             </div>
 
@@ -74,14 +76,14 @@ export const RoadmapView: React.FC = () => {
                         type="text"
                         value={newTitle}
                         onChange={(e) => setNewTitle(e.target.value)}
-                        placeholder="Title"
+                        placeholder={t('notes.titlePlaceholder')}
                         className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                         autoFocus
                     />
                     <textarea
                         value={newContent}
                         onChange={(e) => setNewContent(e.target.value)}
-                        placeholder="Content..."
+                        placeholder={t('notes.contentPlaceholder')}
                         rows={4}
                         className="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"
                     />
@@ -91,7 +93,7 @@ export const RoadmapView: React.FC = () => {
                             disabled={!newTitle.trim() || !newContent.trim()}
                             className="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            Save Note
+                            {t('notes.save')}
                         </button>
                     </div>
                 </form>
@@ -99,7 +101,7 @@ export const RoadmapView: React.FC = () => {
 
             <div className="space-y-4">
                 {notes.length === 0 && !isAdding && (
-                    <p className="text-center text-gray-500 dark:text-gray-400 py-10">No notes yet. Add one to get started!</p>
+                    <p className="text-center text-gray-500 dark:text-gray-400 py-10">{t('notes.empty')}</p>
                 )}
 
                 {notes.map((note) => (
@@ -123,13 +125,13 @@ export const RoadmapView: React.FC = () => {
                                         onClick={() => setEditingNoteId(null)}
                                         className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                                     >
-                                        Cancel
+                                        {t('common.cancel')}
                                     </button>
                                     <button
                                         onClick={() => handleUpdate(note.id)}
                                         className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                                     >
-                                        <Save size={18} /> Save
+                                        <Save size={18} /> {t('notes.saveChanges')}
                                     </button>
                                 </div>
                             </div>
@@ -158,13 +160,13 @@ export const RoadmapView: React.FC = () => {
                                                 onClick={(e) => { e.stopPropagation(); startEditing(note); }}
                                                 className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
                                             >
-                                                <Edit2 size={16} /> Edit
+                                                <Edit2 size={16} /> {t('notes.edit')}
                                             </button>
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); confirmDelete(note.id); }}
                                                 className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
                                             >
-                                                <Trash2 size={16} /> Delete
+                                                <Trash2 size={16} /> {t('notes.delete')}
                                             </button>
                                         </div>
                                     </div>
@@ -179,9 +181,9 @@ export const RoadmapView: React.FC = () => {
                 isOpen={deleteModalOpen}
                 onClose={() => setDeleteModalOpen(false)}
                 onConfirm={handleDelete}
-                title="Delete Note"
-                message="Are you sure you want to delete this note? This action cannot be undone."
-                confirmText="Delete"
+                title={t('notes.deleteTitle')}
+                message={t('notes.deleteMessage')}
+                confirmText={t('notes.deleteConfirm')}
                 isDestructive
             />
         </div>

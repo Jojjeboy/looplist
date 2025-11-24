@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { Link } from 'react-router-dom';
 import { Plus, Trash2, Folder } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
 
 export const CategoryView: React.FC = () => {
+    const { t } = useTranslation();
     const { categories, addCategory, deleteCategory } = useApp();
     const [newCategoryName, setNewCategoryName] = useState('');
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; categoryId: string | null }>({
@@ -33,13 +35,13 @@ export const CategoryView: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-xl font-semibold">Categories</h2>
+            <h2 className="text-xl font-semibold">{t('categories.title')}</h2>
             <form onSubmit={handleAdd} className="flex gap-2">
                 <input
                     type="text"
                     value={newCategoryName}
                     onChange={(e) => setNewCategoryName(e.target.value)}
-                    placeholder="New Category..."
+                    placeholder={t('categories.newPlaceholder')}
                     className="flex-1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                 />
                 <button
@@ -66,7 +68,7 @@ export const CategoryView: React.FC = () => {
                         <button
                             onClick={() => setDeleteModal({ isOpen: true, categoryId: category.id })}
                             className="p-2 text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
-                            aria-label="Delete category"
+                            aria-label={t('categories.deleteTitle')}
                         >
                             <Trash2 size={20} />
                         </button>
@@ -77,8 +79,8 @@ export const CategoryView: React.FC = () => {
                         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
                             <Folder size={32} className="text-gray-400" />
                         </div>
-                        <p className="text-gray-500">No categories yet.</p>
-                        <p className="text-sm text-gray-400">Add one to get started!</p>
+                        <p className="text-gray-500">{t('categories.empty')}</p>
+                        <p className="text-sm text-gray-400">{t('categories.emptyHint')}</p>
                     </div>
                 )}
             </div>
@@ -87,9 +89,9 @@ export const CategoryView: React.FC = () => {
                 isOpen={deleteModal.isOpen}
                 onClose={() => setDeleteModal({ isOpen: false, categoryId: null })}
                 onConfirm={confirmDelete}
-                title="Delete Category"
-                message="Are you sure? All lists in this category will be deleted. This action cannot be undone."
-                confirmText="Delete"
+                title={t('categories.deleteTitle')}
+                message={t('categories.deleteMessage')}
+                confirmText={t('categories.deleteConfirm')}
                 isDestructive
             />
         </div>

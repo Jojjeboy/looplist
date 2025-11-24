@@ -1,0 +1,94 @@
+{
+    "app": {
+        "title": "Anti",
+        "searchPlaceholder": "Sök listor, objekt, kategorier...",
+        "settings": "Inställningar",
+        "toggleTheme": "Växla tema",
+        "notes": "Anteckningar",
+        "lastUpdated": "Senast uppdaterad: 2025-11-21 12:45"
+    },
+    "categories": {
+        "title": "Kategorier",
+        "newPlaceholder": "Ny kategori...",
+        "add": "Lägg till",
+        "empty": "Inga kategorier än.",
+        "emptyHint": "Lägg till en för att komma igång!",
+        "deleteTitle": "Ta bort kategori",
+        "deleteMessage": "Är du säker? Alla listor i denna kategori kommer att tas bort. Denna åtgärd kan inte ångras.",
+        "deleteConfirm": "Ta bort",
+        "notFound": "Kategorin hittades inte.",
+        "goBack": "Gå tillbaka"
+    },
+    "lists": {
+        "newPlaceholder": "Ny lista...",
+        "add": "Lägg till",
+        "empty": "Inga listor i denna kategori.",
+        "deleteTitle": "Ta bort lista",
+        "deleteMessage": "Är du säker på att du vill ta bort denna lista? Denna åtgärd kan inte ångras.",
+        "deleteConfirm": "Ta bort",
+        "progress": "Framsteg",
+        "itemsCount": "objekt",
+        "moveToCategory": "Flytta till kategori:",
+        "noOtherCategories": "Inga andra kategorier",
+        "copy": "Kopiera lista",
+        "move": "Flytta lista",
+        "pin": "Fäst lista",
+        "unpin": "Lossa lista",
+        "editTitle": "Redigera titel",
+        "notFound": "Listan hittades inte.",
+        "sort": {
+            "manual": "Manuell",
+            "alphabetical": "A-Ö",
+            "completed": "Omarkerade först"
+        },
+        "reset": "Återställ",
+        "addItemPlaceholder": "Lägg till objekt...",
+        "emptyList": "Listan är tom.",
+        "resetTitle": "Återställ lista",
+        "resetMessage": "Är du säker på att du vill avmarkera alla objekt?"
+    },
+    "notes": {
+        "title": "Anteckningar",
+        "add": "Ny anteckning",
+        "cancel": "Avbryt",
+        "save": "Spara anteckning",
+        "titlePlaceholder": "Titel",
+        "contentPlaceholder": "Innehåll...",
+        "empty": "Inga anteckningar än. Lägg till en för att komma igång!",
+        "edit": "Redigera",
+        "delete": "Ta bort",
+        "deleteTitle": "Ta bort anteckning",
+        "deleteMessage": "Är du säker på att du vill ta bort denna anteckning? Denna åtgärd kan inte ångras.",
+        "deleteConfirm": "Ta bort",
+        "saveChanges": "Spara"
+    },
+    "common": {
+        "cancel": "Avbryt",
+        "delete": "Ta bort",
+        "save": "Spara",
+        "undo": "Ångra",
+        "confirm": "Bekräfta"
+    },
+    "settings": {
+        "title": "Inställningar",
+        "language": "Språk",
+        "theme": "Tema",
+        "light": "Ljust",
+        "dark": "Mörkt",
+        "auto": "Auto",
+        "dataManagement": "Datahantering",
+        "exportData": "Exportera data",
+        "exportDataDesc": "Ladda ner en säkerhetskopia av dina listor och anteckningar",
+        "importData": "Importera data",
+        "importDataDesc": "Återställ från en säkerhetskopia",
+        "note": "Obs",
+        "importWarning": "Att importera data kommer att skriva över dina nuvarande listor och anteckningar. Se till att säkerhetskopiera din nuvarande data först.",
+        "importConfirm": "Detta kommer att skriva över din nuvarande data. Är du säker?"
+    },
+    "toasts": {
+        "listDeleted": "Listan \"{{name}}\" borttagen",
+        "itemDeleted": "Objekt borttaget",
+        "dataImported": "Data importerad",
+        "importFailed": "Misslyckades med att importera data"
+    }
+}

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Plus, Trash2, Copy, ArrowRight, ChevronLeft, Pin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
 
 export const CategoryDetail: React.FC = () => {
+    const { t } = useTranslation();
     const { categoryId } = useParams<{ categoryId: string }>();
     const { categories, lists, addList, deleteList, copyList, moveList, togglePin, updateCategoryName } = useApp();
     const [newListName, setNewListName] = useState('');
@@ -31,8 +33,8 @@ export const CategoryDetail: React.FC = () => {
     if (!category) {
         return (
             <div className="text-center py-10">
-                <p>Category not found.</p>
-                <Link to="/" className="text-blue-500 hover:underline">Go back</Link>
+                <p>{t('categories.notFound')}</p>
+                <Link to="/" className="text-blue-500 hover:underline">{t('categories.goBack')}</Link>
             </div>
         );
     }
@@ -89,7 +91,7 @@ export const CategoryDetail: React.FC = () => {
                         <button
                             onClick={() => setIsEditingTitle(true)}
                             className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-blue-500 transition-all"
-                            title="Edit Title"
+                            title={t('lists.editTitle')}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
@@ -106,7 +108,7 @@ export const CategoryDetail: React.FC = () => {
                         type="text"
                         value={newListName}
                         onChange={(e) => setNewListName(e.target.value)}
-                        placeholder="New List..."
+                        placeholder={t('lists.newPlaceholder')}
                         className="flex-1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                     />
                     <button
@@ -130,34 +132,34 @@ export const CategoryDetail: React.FC = () => {
                                 className="flex-1 text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors min-w-0 truncate"
                             >
                                 {list.name}
-                                <span className="text-sm text-gray-400 ml-2 whitespace-nowrap">({list.items.length} items)</span>
+                                <span className="text-sm text-gray-400 ml-2 whitespace-nowrap">({list.items.length} {t('lists.itemsCount')})</span>
                             </Link>
                             <div className="flex items-center gap-1 flex-shrink-0">
                                 <button
                                     onClick={() => togglePin(list.id)}
                                     className={`p-2 transition-colors ${list.isPinned ? 'text-blue-500' : 'text-gray-400 hover:text-blue-500'}`}
-                                    title={list.isPinned ? "Unpin List" : "Pin List"}
+                                    title={list.isPinned ? t('lists.unpin') : t('lists.pin')}
                                 >
                                     <Pin size={18} fill={list.isPinned ? "currentColor" : "none"} />
                                 </button>
                                 <button
                                     onClick={() => copyList(list.id)}
                                     className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                                    title="Copy List"
+                                    title={t('lists.copy')}
                                 >
                                     <Copy size={18} />
                                 </button>
                                 <button
                                     onClick={() => setMovingListId(movingListId === list.id ? null : list.id)}
                                     className="p-2 text-gray-400 hover:text-yellow-500 transition-colors"
-                                    title="Move List"
+                                    title={t('lists.move')}
                                 >
                                     <ArrowRight size={18} />
                                 </button>
                                 <button
                                     onClick={() => setDeleteModal({ isOpen: true, listId: list.id })}
                                     className="p-2 text-gray-400 hover:text-red-500 transition-colors"
-                                    title="Delete List"
+                                    title={t('lists.deleteTitle')}
                                 >
                                     <Trash2 size={18} />
                                 </button>
@@ -167,7 +169,7 @@ export const CategoryDetail: React.FC = () => {
                         {list.items.length > 0 && (
                             <div className="px-4 pb-4">
                                 <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
-                                    <span>Progress</span>
+                                    <span>{t('lists.progress')}</span>
                                     <span>{Math.round((list.items.filter(i => i.completed).length / list.items.length) * 100)}%</span>
                                 </div>
                                 <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
@@ -181,7 +183,7 @@ export const CategoryDetail: React.FC = () => {
 
                         {movingListId === list.id && (
                             <div className="p-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-xl">
-                                <p className="text-sm text-gray-500 mb-2">Move to category:</p>
+                                <p className="text-sm text-gray-500 mb-2">{t('lists.moveToCategory')}</p>
                                 <div className="flex flex-wrap gap-2">
                                     {categories.filter(c => c.id !== categoryId).map(c => (
                                         <button
@@ -195,14 +197,14 @@ export const CategoryDetail: React.FC = () => {
                                             {c.name}
                                         </button>
                                     ))}
-                                    {categories.length <= 1 && <span className="text-sm text-gray-400">No other categories</span>}
+                                    {categories.length <= 1 && <span className="text-sm text-gray-400">{t('lists.noOtherCategories')}</span>}
                                 </div>
                             </div>
                         )}
                     </div>
                 ))}
                 {categoryLists.length === 0 && (
-                    <p className="text-center text-gray-500 mt-8">No lists in this category.</p>
+                    <p className="text-center text-gray-500 mt-8">{t('lists.empty')}</p>
                 )}
             </div>
 
@@ -210,9 +212,9 @@ export const CategoryDetail: React.FC = () => {
                 isOpen={deleteModal.isOpen}
                 onClose={() => setDeleteModal({ isOpen: false, listId: null })}
                 onConfirm={confirmDelete}
-                title="Delete List"
-                message="Are you sure you want to delete this list? This action cannot be undone."
-                confirmText="Delete"
+                title={t('lists.deleteTitle')}
+                message={t('lists.deleteMessage')}
+                confirmText={t('lists.deleteConfirm')}
                 isDestructive
             />
         </div>

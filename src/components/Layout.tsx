@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Link } from 'react-router-dom';
 import { Moon, Sun, Search, Settings } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { SearchResults } from './SearchResults';
 import { SettingsModal } from './SettingsModal';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { t } = useTranslation();
     const { theme, toggleTheme, searchQuery, setSearchQuery } = useApp();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -25,14 +27,14 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                         <button
                             onClick={() => setIsSettingsOpen(true)}
                             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
-                            aria-label="Settings"
+                            aria-label={t('app.settings')}
                         >
                             <Settings size={20} />
                         </button>
                         <button
                             onClick={toggleTheme}
                             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
-                            aria-label="Toggle theme"
+                            aria-label={t('app.toggleTheme')}
                         >
                             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                         </button>
@@ -44,7 +46,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search lists, items, categories..."
+                        placeholder={t('app.searchPlaceholder')}
                         className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                     />
                 </div>
@@ -54,10 +56,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             </main>
             <footer className="p-6 text-center border-t border-gray-200 dark:border-gray-700 mt-auto flex flex-col items-center gap-2">
                 <Link to="/roadmap" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                    Notes
+                    {t('app.notes')}
                 </Link>
                 <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
-                    Senast uppdaterad: 2025-11-21 12:45
+                    {t('app.lastUpdated')}
                 </p>
             </footer>
             <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />

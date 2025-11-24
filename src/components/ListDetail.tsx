@@ -9,8 +9,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { Modal } from './Modal';
 
 import { useVoiceInput } from '../hooks/useVoiceInput';
+import { useTranslation } from 'react-i18next';
 
 export const ListDetail: React.FC = () => {
+    const { t } = useTranslation();
     const { listId } = useParams<{ listId: string }>();
     const { lists, updateListItems, deleteItem, updateListName } = useApp();
     const [newItemText, setNewItemText] = useState('');
@@ -62,7 +64,7 @@ export const ListDetail: React.FC = () => {
         return items;
     }, [list, sortBy]);
 
-    if (!list) return <div className="text-center py-10">List not found.</div>;
+    if (!list) return <div className="text-center py-10">{t('lists.notFound')}</div>;
 
     const handleAddItem = (e: React.FormEvent) => {
         e.preventDefault();
@@ -154,7 +156,7 @@ export const ListDetail: React.FC = () => {
                             <button
                                 onClick={() => setIsEditingTitle(true)}
                                 className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-blue-500 transition-all flex-shrink-0"
-                                title="Edit Title"
+                                title={t('lists.editTitle')}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
@@ -170,16 +172,16 @@ export const ListDetail: React.FC = () => {
                         onChange={(e) => setSortBy(e.target.value as any)}
                         className="px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors outline-none cursor-pointer"
                     >
-                        <option value="manual">Manual</option>
-                        <option value="alphabetical">A-Z</option>
-                        <option value="completed">Unchecked First</option>
+                        <option value="manual">{t('lists.sort.manual')}</option>
+                        <option value="alphabetical">{t('lists.sort.alphabetical')}</option>
+                        <option value="completed">{t('lists.sort.completed')}</option>
                     </select>
                     <button
                         onClick={() => setUncheckModalOpen(true)}
                         className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
                         <RotateCcw size={16} />
-                        Reset
+                        {t('lists.reset')}
                     </button>
                 </div>
             </div>
@@ -190,7 +192,7 @@ export const ListDetail: React.FC = () => {
                         type="text"
                         value={newItemText}
                         onChange={(e) => setNewItemText(e.target.value)}
-                        placeholder="Add item..."
+                        placeholder={t('lists.addItemPlaceholder')}
                         className="w-full p-3 pr-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                     />
                     {hasSupport && (
@@ -229,7 +231,7 @@ export const ListDetail: React.FC = () => {
                                 />
                             ))}
                             {sortedItems.length === 0 && (
-                                <p className="text-center text-gray-500 mt-8">List is empty.</p>
+                                <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
                             )}
                         </div>
                     </SortableContext>
@@ -247,7 +249,7 @@ export const ListDetail: React.FC = () => {
                         />
                     ))}
                     {sortedItems.length === 0 && (
-                        <p className="text-center text-gray-500 mt-8">List is empty.</p>
+                        <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
                     )}
                 </div>
             )}
@@ -256,9 +258,9 @@ export const ListDetail: React.FC = () => {
                 isOpen={uncheckModalOpen}
                 onClose={() => setUncheckModalOpen(false)}
                 onConfirm={confirmUncheckAll}
-                title="Reset List"
-                message="Are you sure you want to uncheck all items?"
-                confirmText="Reset"
+                title={t('lists.resetTitle')}
+                message={t('lists.resetMessage')}
+                confirmText={t('lists.reset')}
             />
         </div>
     );

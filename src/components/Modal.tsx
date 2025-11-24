@@ -1,5 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ModalProps {
     isOpen: boolean;
@@ -18,10 +19,14 @@ export const Modal: React.FC<ModalProps> = ({
     onConfirm,
     title,
     message,
-    confirmText = 'Confirm',
-    cancelText = 'Cancel',
+    confirmText,
+    cancelText,
     isDestructive = false,
 }) => {
+    const { t } = useTranslation();
+    const finalConfirmText = confirmText || t('common.confirm');
+    const finalCancelText = cancelText || t('common.cancel');
+
     if (!isOpen) return null;
 
     return (
@@ -47,7 +52,7 @@ export const Modal: React.FC<ModalProps> = ({
                             onClick={onClose}
                             className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                         >
-                            {cancelText}
+                            {finalCancelText}
                         </button>
                         <button
                             onClick={() => {
@@ -55,11 +60,11 @@ export const Modal: React.FC<ModalProps> = ({
                                 onClose();
                             }}
                             className={`px-4 py-2 text-sm font-medium text-white rounded-lg shadow-sm transition-colors ${isDestructive
-                                    ? 'bg-red-600 hover:bg-red-700'
-                                    : 'bg-blue-600 hover:bg-blue-700'
+                                ? 'bg-red-600 hover:bg-red-700'
+                                : 'bg-blue-600 hover:bg-blue-700'
                                 }`}
                         >
-                            {confirmText}
+                            {finalConfirmText}
                         </button>
                     </div>
                 </div>
