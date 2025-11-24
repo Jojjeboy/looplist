@@ -45,11 +45,7 @@ export const ListDetail: React.FC = () => {
     }, [list]);
 
     const sensors = useSensors(
-        useSensor(PointerSensor, {
-            activationConstraint: {
-                distance: 3,
-            },
-        }),
+        useSensor(PointerSensor),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         })
