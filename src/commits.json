@@ -1,5 +1,11 @@
 [
   {
+    "hash": "b3c5f15c0c6f0080d8a996a41911469fd7e0adf2",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 07:09:05 +0100",
+    "message": "feat: implement marquee for long list titles"
+  },
+  {
     "hash": "ede1c75fb6c64eb821eca59fb3905eb3db881cd9",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:05:04 +0100",
