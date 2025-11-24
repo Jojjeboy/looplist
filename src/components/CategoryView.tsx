@@ -35,7 +35,7 @@ export const CategoryView: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-xl font-semibold">{t('categories.title')}</h2>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{t('categories.title')}</h2>
             <form onSubmit={handleAdd} className="flex gap-2">
                 <input
                     type="text"
