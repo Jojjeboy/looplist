@@ -30,7 +30,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
         <div
             ref={setNodeRef}
             style={style}
-            className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm group touch-none animate-in fade-in slide-in-from-bottom-2 duration-200"
+            className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm group animate-in fade-in slide-in-from-bottom-2 duration-200"
         >
             {!disabled && (
                 <div {...attributes} {...listeners} className="cursor-grab text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1">
