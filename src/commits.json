@@ -1,5 +1,11 @@
 [
   {
+    "hash": "3e2750e0352cd7d87270967cdc2f8d1df62941be",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 06:49:19 +0100",
+    "message": "feat: add cache invalidation button to settings"
+  },
+  {
     "hash": "b55d8dd7ae4ad926d3cdd9eea145ca26c08cff83",
     "author": "Jojjeboy",
     "date": "2025-11-24 06:45:09 +0100",
