@@ -1,5 +1,11 @@
 [
   {
+    "hash": "3b0d7b23b19b3f531b1f0ec392666102c8d025ab",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 07:12:41 +0100",
+    "message": "fix: restrict list title marquee width to 180px"
+  },
+  {
     "hash": "b3c5f15c0c6f0080d8a996a41911469fd7e0adf2",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:09:05 +0100",
