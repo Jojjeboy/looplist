@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 declare module 'virtual:pwa-register/react' {
     import type { Ref } from 'react'
 
