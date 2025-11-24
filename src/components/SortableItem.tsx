@@ -19,6 +19,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
         setNodeRef,
         transform,
         transition,
+        isDragging,
     } = useSortable({ id: item.id, disabled });
 
     const style = {
@@ -33,7 +34,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
             className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm group animate-in fade-in slide-in-from-bottom-2 duration-200"
         >
             {!disabled && (
-                <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-3 -ml-2 -my-1">
+                <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-3 -ml-2 -my-1 touch-none">
                     <GripVertical size={28} strokeWidth={2.5} />
                 </div>
             )}
@@ -42,14 +43,14 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                 type="checkbox"
                 checked={item.completed}
                 onChange={() => onToggle(item.id)}
-                className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                className={`w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer ${isDragging ? 'pointer-events-none' : ''}`}
             />
 
             <input
                 type="text"
                 value={item.text}
                 onChange={(e) => onEdit(item.id, e.target.value)}
-                className={`flex-1 bg-transparent outline-none p-1 ${item.completed ? 'line-through text-gray-400' : 'text-gray-700 dark:text-gray-200'}`}
+                className={`flex-1 bg-transparent outline-none p-1 ${item.completed ? 'line-through text-gray-400' : 'text-gray-700 dark:text-gray-200'} ${isDragging ? 'pointer-events-none' : ''}`}
             />
 
             <button

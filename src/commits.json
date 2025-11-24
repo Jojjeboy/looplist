@@ -1,5 +1,29 @@
 [
   {
+    "hash": "18f03ea1bc5280e40923f60aba347a338ee68187",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 08:22:00 +0100",
+    "message": "fix: significantly increase drag handle size and remove activation delay"
+  },
+  {
+    "hash": "9e12987082d027824aff1b6f0270c2c705951796",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 08:18:45 +0100",
+    "message": "fix: increase drag handle size and reduce activation distance"
+  },
+  {
+    "hash": "0545b3205bfd0f4f56113d049978873b9666f822",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 08:14:24 +0100",
+    "message": "fix: enable scrolling by restricting drag to grip icon only"
+  },
+  {
+    "hash": "75efec5dc6dc287c06e12e8e434bcc369cee8b30",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 08:08:58 +0100",
+    "message": "fix: reduce list title width from 110px to 90px"
+  },
+  {
     "hash": "37373e22e0d08fb463e29397c4edf895c15e631a",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:26:28 +0100",
