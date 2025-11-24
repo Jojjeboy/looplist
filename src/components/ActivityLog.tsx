@@ -93,7 +93,7 @@ export const ActivityLog: React.FC = () => {
             </div>
 
             {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-2 pt-4">
+                <div className="flex justify-center items-center gap-2 pt-4 pb-20">
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
