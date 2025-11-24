@@ -1,5 +1,23 @@
 [
   {
+    "hash": "d72f9746be2ca0a7e4297e3e7a75ae26e354eb44",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 18:47:14 +0100",
+    "message": "Migrate to Firebase Firestore with offline support and data migration"
+  },
+  {
+    "hash": "2d10cbf41ed23bf8c1b52bba2166ab9067183154",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 15:49:00 +0100",
+    "message": "mc"
+  },
+  {
+    "hash": "206b3f1312eede6d89568ac166a13ac9a07e9ce2",
+    "author": "Jojjeboy",
+    "date": "2025-11-24 14:41:46 +0100",
+    "message": "ui: adjust list sorting dropdown layout"
+  },
+  {
     "hash": "5b4de4a3220812cea93888de592f441f2791aa95",
     "author": "Jojjeboy",
     "date": "2025-11-24 14:25:37 +0100",

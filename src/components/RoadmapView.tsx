@@ -23,10 +23,10 @@ export const RoadmapView: React.FC = () => {
         setExpandedNoteId(expandedNoteId === id ? null : id);
     };
 
-    const handleAdd = (e: React.FormEvent) => {
+    const handleAdd = async (e: React.FormEvent) => {
         e.preventDefault();
         if (newTitle.trim() && newContent.trim()) {
-            addNote(newTitle.trim(), newContent.trim(), newPriority);
+            await addNote(newTitle.trim(), newContent.trim(), newPriority);
             setNewTitle('');
             setNewContent('');
             setNewPriority('low');
@@ -41,9 +41,9 @@ export const RoadmapView: React.FC = () => {
         setEditPriority(note.priority || 'low');
     };
 
-    const handleUpdate = (id: string) => {
+    const handleUpdate = async (id: string) => {
         if (editTitle.trim() && editContent.trim()) {
-            updateNote(id, editTitle.trim(), editContent.trim(), editPriority);
+            await updateNote(id, editTitle.trim(), editContent.trim(), editPriority);
             setEditingNoteId(null);
         }
     };
@@ -53,9 +53,9 @@ export const RoadmapView: React.FC = () => {
         setDeleteModalOpen(true);
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (noteToDelete) {
-            deleteNote(noteToDelete);
+            await deleteNote(noteToDelete);
             setDeleteModalOpen(false);
             setNoteToDelete(null);
         }

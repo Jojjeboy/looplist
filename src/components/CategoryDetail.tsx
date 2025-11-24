@@ -39,24 +39,24 @@ export const CategoryDetail: React.FC = () => {
         );
     }
 
-    const handleAdd = (e: React.FormEvent) => {
+    const handleAdd = async (e: React.FormEvent) => {
         e.preventDefault();
         if (newListName.trim()) {
-            addList(newListName.trim(), categoryId!);
+            await addList(newListName.trim(), categoryId!);
             setNewListName('');
         }
     };
 
-    const confirmDelete = () => {
+    const confirmDelete = async () => {
         if (deleteModal.listId) {
-            deleteList(deleteModal.listId);
+            await deleteList(deleteModal.listId);
             setDeleteModal({ isOpen: false, listId: null });
         }
     };
 
-    const handleSaveTitle = () => {
+    const handleSaveTitle = async () => {
         if (editedTitle.trim()) {
-            updateCategoryName(category.id, editedTitle.trim());
+            await updateCategoryName(category.id, editedTitle.trim());
             setIsEditingTitle(false);
         }
     };
@@ -139,7 +139,7 @@ export const CategoryDetail: React.FC = () => {
                             </Link>
                             <div className="flex items-center gap-1 flex-shrink-0">
                                 <button
-                                    onClick={() => copyList(list.id)}
+                                    onClick={async () => await copyList(list.id)}
                                     className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
                                     title={t('lists.copy')}
                                 >
@@ -184,8 +184,8 @@ export const CategoryDetail: React.FC = () => {
                                     {categories.filter(c => c.id !== categoryId).map(c => (
                                         <button
                                             key={c.id}
-                                            onClick={() => {
-                                                moveList(list.id, c.id);
+                                            onClick={async () => {
+                                                await moveList(list.id, c.id);
                                                 setMovingListId(null);
                                             }}
                                             className="px-3 py-1 text-sm bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-full hover:border-blue-500 hover:text-blue-500 transition-colors"

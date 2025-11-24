@@ -66,11 +66,11 @@ export const ListDetail: React.FC = () => {
 
     if (!list) return <div className="text-center py-10">{t('lists.notFound')}</div>;
 
-    const handleAddItem = (e: React.FormEvent) => {
+    const handleAddItem = async (e: React.FormEvent) => {
         e.preventDefault();
         if (newItemText.trim()) {
             const newItem = { id: uuidv4(), text: newItemText.trim(), completed: false };
-            updateListItems(list.id, [...list.items, newItem]);
+            await updateListItems(list.id, [...list.items, newItem]);
             setNewItemText('');
             resetTranscript();
         }
@@ -84,42 +84,42 @@ export const ListDetail: React.FC = () => {
         }
     };
 
-    const handleDragEnd = (event: DragEndEvent) => {
+    const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
         if (active.id !== over?.id) {
             const oldIndex = list.items.findIndex((item) => item.id === active.id);
             const newIndex = list.items.findIndex((item) => item.id === over?.id);
-            updateListItems(list.id, arrayMove(list.items, oldIndex, newIndex));
+            await updateListItems(list.id, arrayMove(list.items, oldIndex, newIndex));
         }
     };
 
-    const handleToggle = (itemId: string) => {
+    const handleToggle = async (itemId: string) => {
         const newItems = list.items.map(item =>
             item.id === itemId ? { ...item, completed: !item.completed } : item
         );
-        updateListItems(list.id, newItems);
+        await updateListItems(list.id, newItems);
     };
 
-    const handleDelete = (itemId: string) => {
-        deleteItem(list.id, itemId);
+    const handleDelete = async (itemId: string) => {
+        await deleteItem(list.id, itemId);
     };
 
-    const handleEdit = (itemId: string, text: string) => {
+    const handleEdit = async (itemId: string, text: string) => {
         const newItems = list.items.map(item =>
             item.id === itemId ? { ...item, text } : item
         );
-        updateListItems(list.id, newItems);
+        await updateListItems(list.id, newItems);
     };
 
-    const confirmUncheckAll = () => {
+    const confirmUncheckAll = async () => {
         const newItems = list.items.map(item => ({ ...item, completed: false }));
-        updateListItems(list.id, newItems);
+        await updateListItems(list.id, newItems);
         setUncheckModalOpen(false);
     };
 
-    const handleSaveTitle = () => {
+    const handleSaveTitle = async () => {
         if (editedTitle.trim()) {
-            updateListName(list.id, editedTitle.trim());
+            await updateListName(list.id, editedTitle.trim());
             setIsEditingTitle(false);
         }
     };
