@@ -25,7 +25,7 @@ interface AppContextType {
     toggleTheme: () => void;
     notes: Note[];
     addNote: (title: string, content: string, priority: 'low' | 'medium' | 'high') => Promise<void>;
-    updateNote: (id: string, title: string, content: string, priority: 'low' | 'medium' | 'high', completed: boolean) => Promise<void>;
+    updateNote: (id: string, title: string, content: string, priority: 'low' | 'medium' | 'high') => Promise<void>;
     deleteNote: (id: string) => Promise<void>;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
@@ -210,13 +210,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             content,
             createdAt: new Date().toISOString(),
             priority,
-            completed: false,
         };
         await notesSync.addItem(newNote);
     };
 
-    const updateNote = async (id: string, title: string, content: string, priority: 'low' | 'medium' | 'high', completed: boolean) => {
-        await notesSync.updateItem(id, { title, content, priority, completed });
+    const updateNote = async (id: string, title: string, content: string, priority: 'low' | 'medium' | 'high') => {
+        await notesSync.updateItem(id, { title, content, priority });
     };
 
     const deleteNote = async (id: string) => {

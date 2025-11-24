@@ -44,8 +44,7 @@ export const NotesView: React.FC = () => {
 
     const handleUpdate = async (id: string) => {
         if (editTitle.trim() && editContent.trim()) {
-            const currentNote = notes.find(n => n.id === id);
-            await updateNote(id, editTitle.trim(), editContent.trim(), editPriority, currentNote?.completed || false);
+            await updateNote(id, editTitle.trim(), editContent.trim(), editPriority);
             setEditingNoteId(null);
         }
     };
@@ -129,22 +128,16 @@ export const NotesView: React.FC = () => {
 
                 {notes
                     .sort((a, b) => {
-                        // Sort completed notes to the bottom
-                        if (a.completed !== b.completed) {
-                            return a.completed ? 1 : -1;
-                        }
-                        // Then sort by priority
                         const priorityOrder = { high: 3, medium: 2, low: 1 };
                         const priorityA = priorityOrder[a.priority || 'low'];
                         const priorityB = priorityOrder[b.priority || 'low'];
                         if (priorityA !== priorityB) {
                             return priorityB - priorityA;
                         }
-                        // Finally sort by date
                         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                     })
                     .map((note) => (
-                        <div key={note.id} className={`bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden transition-all ${note.completed ? 'opacity-60 grayscale' : ''}`}>
+                        <div key={note.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden transition-all">
                             {editingNoteId === note.id ? (
                                 <div className="p-6 space-y-4">
                                     <input
@@ -196,28 +189,16 @@ export const NotesView: React.FC = () => {
                                         onClick={() => toggleExpand(note.id)}
                                         className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
                                     >
-                                        <div className="flex items-center gap-3 min-w-0 flex-1">
-                                            <div onClick={(e) => e.stopPropagation()}>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={note.completed}
-                                                    onChange={async (e) => {
-                                                        await updateNote(note.id, note.title, note.content, note.priority, e.target.checked);
-                                                    }}
-                                                    className="w-5 h-5 rounded-md border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                                                />
+                                        <div className="flex items-center gap-2 min-w-0">
+                                            <div className="max-w-[150px]">
+                                                <MarqueeText text={note.title} className="font-semibold text-lg text-gray-800 dark:text-gray-200" />
                                             </div>
-                                            <div className="flex items-center gap-2 min-w-0 flex-1">
-                                                <div className="max-w-[150px]">
-                                                    <MarqueeText text={note.title} className={`font-semibold text-lg ${note.completed ? 'text-gray-500 dark:text-gray-500 line-through' : 'text-gray-800 dark:text-gray-200'}`} />
-                                                </div>
-                                                <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${note.priority === 'high' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-                                                    : note.priority === 'medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                                                        : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                                                    }`}>
-                                                    {(note.priority || 'low').charAt(0).toUpperCase() + (note.priority || 'low').slice(1)}
-                                                </span>
-                                            </div>
+                                            <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${note.priority === 'high' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                                                : note.priority === 'medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+                                                    : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                                                }`}>
+                                                {(note.priority || 'low').charAt(0).toUpperCase() + (note.priority || 'low').slice(1)}
+                                            </span>
                                         </div>
                                         <div className="flex items-center gap-3 flex-shrink-0 ml-2">
                                             {expandedNoteId === note.id ? <ChevronUp className="text-gray-400" /> : <ChevronDown className="text-gray-400" />}
@@ -226,7 +207,7 @@ export const NotesView: React.FC = () => {
 
                                     {expandedNoteId === note.id && (
                                         <div className="px-6 pb-6 pt-2 border-t border-gray-100 dark:border-gray-700 animate-in fade-in slide-in-from-top-2">
-                                            <p className={`text-gray-600 dark:text-gray-300 whitespace-pre-wrap leading-relaxed mb-6 ${note.completed ? 'line-through opacity-70' : ''}`}>
+                                            <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap leading-relaxed mb-6">
                                                 {note.content}
                                             </p>
                                             <div className="flex justify-end gap-2 border-t border-gray-100 dark:border-gray-700 pt-4">
