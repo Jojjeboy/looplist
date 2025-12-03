@@ -3,9 +3,9 @@ name: CI/CD Frontend till GitHub Pages
 # Styr när workflowt ska köras
 on:
   push:
-    branches: ["main"] # Körs vid push till main-grenen
+    branches: ["master"] # Körs vid push till main-grenen
   pull_request:
-    branches: ["main"] # Körs vid pull requests mot main
+    branches: ["master"] # Körs vid pull requests mot main
 
 # Tillåter GitHub Actions att skriva till repositoryt för deployment
 permissions:
