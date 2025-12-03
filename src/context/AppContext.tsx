@@ -2,6 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import SunCalc from 'suncalc';
 import { Category, List, Item, Note } from '../types';
+
+type Priority = 'low' | 'medium' | 'high';
 import { useToast } from './ToastContext';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from './AuthContext';
@@ -26,8 +28,8 @@ interface AppContextType {
     deleteItem: (listId: string, itemId: string) => Promise<void>;
     toggleTheme: () => void;
     notes: Note[];
-    addNote: (title: string, content: string, priority: 'low' | 'medium' | 'high') => Promise<void>;
-    updateNote: (id: string, title: string, content: string, priority: 'low' | 'medium' | 'high') => Promise<void>;
+    addNote: (title: string, content: string, priority: Priority) => Promise<void>;
+    updateNote: (id: string, title: string, content: string, priority: Priority) => Promise<void>;
     deleteNote: (id: string) => Promise<void>;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
@@ -221,7 +223,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         localStorage.setItem('manual_theme', 'true');
     };
 
-    const addNote = async (title: string, content: string, priority: 'low' | 'medium' | 'high') => {
+    const addNote = async (title: string, content: string, priority: Priority) => {
         const newNote: Note = {
             id: uuidv4(),
             title,
@@ -232,7 +234,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         await notesSync.addItem(newNote);
     };
 
-    const updateNote = async (id: string, title: string, content: string, priority: 'low' | 'medium' | 'high') => {
+    const updateNote = async (id: string, title: string, content: string, priority: Priority) => {
         await notesSync.updateItem(id, { title, content, priority });
     };
 
