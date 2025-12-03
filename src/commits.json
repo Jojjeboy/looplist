@@ -1,5 +1,35 @@
 [
   {
+    "hash": "8330d663b2cdf37026119f58382f300a2edc88a4",
+    "author": "Johannes Kärnstam",
+    "date": "2025-12-03 14:54:46 +0100",
+    "message": "CI/CD 3"
+  },
+  {
+    "hash": "4b82d8cfe913352aba76f798d604e4a955a7ee31",
+    "author": "Johannes Kärnstam",
+    "date": "2025-12-03 14:39:49 +0100",
+    "message": "ci/cd 2"
+  },
+  {
+    "hash": "b5ab43e1821a48723dcb4f6548e97cc36aecea94",
+    "author": "Johannes Kärnstam",
+    "date": "2025-12-03 13:47:37 +0100",
+    "message": "mc"
+  },
+  {
+    "hash": "62f4abb3f97aa27b1a0a5735b6360de5700cb9ed",
+    "author": "Johannes Kärnstam",
+    "date": "2025-12-03 13:41:01 +0100",
+    "message": "CI/CD"
+  },
+  {
+    "hash": "209da547e37b9703e48ec9a5db649efccf683ebc",
+    "author": "Jojjeboy",
+    "date": "2025-11-30 09:01:29 +0100",
+    "message": "Replace list action buttons with dropdown menu"
+  },
+  {
     "hash": "f2aae26a9e70a0d129274281ee5e3fd74cc1fa1f",
     "author": "Jojjeboy",
     "date": "2025-11-30 08:49:58 +0100",
