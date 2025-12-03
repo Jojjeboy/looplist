@@ -139,7 +139,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 }
                 const copyMatch = l.name.match(new RegExp(`^${baseName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} kopia (\\d+)$`));
                 if (copyMatch) {
-                    const num = parseInt(copyMatch[1], 10);
+                    const num = Number.parseInt(copyMatch[1], 10);
                     if (num > maxCopyNumber) {
                         maxCopyNumber = num;
                     }
