@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import { AppProvider } from './context/AppContext'
 import { Layout } from './components/Layout'
 import { CategoryView } from './components/CategoryView'
@@ -17,7 +17,7 @@ function App() {
         <ToastProvider>
             <AuthProvider>
                 <AppProvider>
-                    <BrowserRouter>
+                    <HashRouter>
                         <ProtectedRoute>
                             <Layout>
                                 <Routes>
@@ -31,7 +31,7 @@ function App() {
                                 <UpdatePrompt />
                             </Layout>
                         </ProtectedRoute>
-                    </BrowserRouter>
+                    </HashRouter>
                 </AppProvider>
             </AuthProvider>
         </ToastProvider>

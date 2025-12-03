@@ -1,5 +1,47 @@
 [
   {
+    "hash": "6259ae8c891218a8e3528fea98be0ab37c046a80",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 20:10:18 +0100",
+    "message": "ci/cd 6"
+  },
+  {
+    "hash": "26a9a97208207256c3f5b65aab0c8da3255e13e3",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 20:09:01 +0100",
+    "message": "ci/cd 5"
+  },
+  {
+    "hash": "3831b81793410a62dd2b35b7c07b99131b4edf9c",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 17:12:32 +0100",
+    "message": "cicd 4"
+  },
+  {
+    "hash": "ebf663529d95839afde80465fd8bf94358c11556",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 17:06:56 +0100",
+    "message": "Add GitHub Actions workflow for deployment"
+  },
+  {
+    "hash": "4ee49d86272e6e2421f33f4bc824d441f7d862f0",
+    "author": "Johannes Kärnstam",
+    "date": "2025-12-03 16:01:40 +0100",
+    "message": "mc"
+  },
+  {
+    "hash": "8de79ee6407587188c61ec27d0139557cd208f11",
+    "author": "Johannes Kärnstam",
+    "date": "2025-12-03 15:58:20 +0100",
+    "message": "Firebase stuff 2"
+  },
+  {
+    "hash": "910796afafc0ed1dc2407e0b5c61d77779dd82bc",
+    "author": "Johannes Kärnstam",
+    "date": "2025-12-03 15:42:50 +0100",
+    "message": "Firebase stuff"
+  },
+  {
     "hash": "d840d230528b6a8526cba2520e0a6b74f8d0234a",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 15:12:16 +0100",
