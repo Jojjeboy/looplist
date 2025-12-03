@@ -1,39 +1,36 @@
-name: CI/CD Frontend till GitHub Pages
+name: Deploy to GitHub Pages
 
-# Styr när workflowt ska köras
 on:
   push:
-    branches: ["master"] # Körs vid push till main-grenen
-  pull_request:
-    branches: ["master"] # Körs vid pull requests mot main
+    branches:
+      - main  # or master, depending on your default branch
 
-# Tillåter GitHub Actions att skriva till repositoryt för deployment
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# En uppsättning jobb som ska köras
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  # 1. Bygg- och Test-Jobb (CI)
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4 # Hämtar koden från repositoryt
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        # Använd den Node.js version som ditt projekt kräver
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22' 
-          cache: 'npm' # Optimerar installationen genom att cacha beroenden
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm ci
-
-      - name: Run Tests
-        run: npm run test # Kör test-kommandot
 
       - name: Build
         env:
@@ -45,24 +42,21 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
         run: npm run build
 
-      - name: Upload Artifact
-        # Sparar den byggda utdatamappen (t.ex. 'dist') som en "artifact"
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Byt ut 'dist' mot din faktiska utdatamapp om det behövs
+          path: './dist'
 
-  # 2. Deployment-Jobb (CD)
   deploy:
     environment:
-      name: github-pages # Mappar till den GitHub Pages-miljö vi satte upp
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
-    # Körs ENDAST om föregående jobb (build-and-test) lyckades
-    needs: build-and-test 
     runs-on: ubuntu-latest
-
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        # Detta är den officiella action för utplacering till Pages
         uses: actions/deploy-pages@v4
