@@ -1,4 +1,4 @@
-# My List App - PWA
+# Anti List - PWA
 
 A mobile-first Progressive Web App for managing reusable lists, built with React, Tailwind CSS, and Vite.
 

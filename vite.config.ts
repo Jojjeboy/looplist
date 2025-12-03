@@ -11,8 +11,8 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', 'favicon.png'],
       manifest: {
-        name: 'My List App',
-        short_name: 'ListApp',
+        name: 'Anti List',
+        short_name: 'Anti List',
         description: 'A progressive list management app',
         theme_color: '#ffffff',
         icons: [
