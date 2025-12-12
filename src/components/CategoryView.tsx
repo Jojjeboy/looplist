@@ -78,7 +78,7 @@ export const CategoryView: React.FC = () => {
                             <SortableCategoryCard
                                 key={category.id}
                                 category={category}
-                                onDelete={(categoryId) => setDeleteModal({ isOpen: true, categoryId })}
+                                onDelete={(categoryId: string) => setDeleteModal({ isOpen: true, categoryId })}
                             />
                         ))}
                         {categories.length === 0 && (
