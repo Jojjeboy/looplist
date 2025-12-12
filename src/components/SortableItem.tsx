@@ -59,12 +59,6 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                     trailingActions={trailingActions()}
                 >
                     <div className="w-full flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm">
-                        {!disabled && (
-                            <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-3 -ml-2 -my-1 touch-none">
-                                <GripVertical size={28} strokeWidth={2.5} />
-                            </div>
-                        )}
-
                         <input
                             type="checkbox"
                             checked={item.completed}
@@ -84,6 +78,12 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                             onMouseDown={(e) => e.stopPropagation()}
                             onTouchStart={(e) => e.stopPropagation()}
                         />
+
+                        {!disabled && (
+                            <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none">
+                                <GripVertical size={24} strokeWidth={2.5} />
+                            </div>
+                        )}
 
                         <button
                             onClick={() => onDelete(item.id)}

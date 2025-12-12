@@ -1,602 +1,2214 @@
 [
   {
+    "hash": "df16188a099668eeefba24b602ef63c54da2260e",
+    "author": "Jojjeboy",
+    "date": "2025-12-12 22:06:11 +0100",
+    "message": "Fix git log in deployment by fetching full history",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      },
+      {
+        "status": "M",
+        "path": ".github/workflows/deploy.yml"
+      }
+    ]
+  },
+  {
     "hash": "93c8876a3a905643c04a727339f188eabd565ed3",
     "author": "Jojjeboy",
     "date": "2025-12-12 22:02:50 +0100",
-    "message": "Fix category reordering by sorting by order property"
+    "message": "Fix category reordering by sorting by order property",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/sv.json"
+      }
+    ]
   },
   {
     "hash": "5054d73832acd099511bbc9613efe8763746104f",
     "author": "Jojjeboy",
     "date": "2025-12-12 21:57:27 +0100",
-    "message": "Add clear completed option and swap category icons"
+    "message": "Add clear completed option and swap category icons",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableCategoryCard.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableListCard.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/en.json"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/sv.json"
+      }
+    ]
   },
   {
     "hash": "726556e316550352750ed5fbe13574021ec55b3c",
     "author": "Jojjeboy",
     "date": "2025-12-12 21:49:42 +0100",
-    "message": "Fix category grab handle alignment"
+    "message": "Fix category grab handle alignment",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/SortableCategoryCard.tsx"
+      }
+    ]
   },
   {
     "hash": "a9365c6429c265db6714cfc3e818e6090f1753af",
     "author": "Jojjeboy",
     "date": "2025-12-12 21:42:52 +0100",
-    "message": "Add missing SortableCategoryCard and fix type error"
+    "message": "Add missing SortableCategoryCard and fix type error",
+    "files": [
+      {
+        "status": "A",
+        "path": "eslint.strict.config.ts"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/SortableCategoryCard.tsx"
+      }
+    ]
   },
   {
     "hash": "873ad73ca9853977c1698925a4a86a0b4b646deb",
     "author": "Jojjeboy",
     "date": "2025-12-12 21:38:53 +0100",
-    "message": "BuildChunkSize and right aligned grab handle"
+    "message": "BuildChunkSize and right aligned grab handle",
+    "files": [
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/UpdatePrompt.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/hooks/useMigrateLocalStorage.ts"
+      },
+      {
+        "status": "M",
+        "path": "src/hooks/useVoiceInput.ts"
+      },
+      {
+        "status": "M",
+        "path": "src/vite-env.d.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
   },
   {
     "hash": "e4281976694c0e423a3238d4457700c07ed7aed4",
     "author": "Jojjeboy",
     "date": "2025-12-12 21:22:39 +0100",
-    "message": "Grab handle, check all make modal popup and linting"
+    "message": "Grab handle, check all make modal popup and linting",
+    "files": [
+      {
+        "status": "M",
+        "path": "eslint.config.ts"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SearchResults.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableListCard.tsx"
+      }
+    ]
   },
   {
     "hash": "12c44e2c0326355833fb40168925dc5e71c2eee2",
     "author": "Jojjeboy",
     "date": "2025-12-03 21:22:51 +0100",
-    "message": "Sonarfix 2"
+    "message": "Sonarfix 2",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      }
+    ]
   },
   {
     "hash": "5c1dc49c576751663ac9c3c49308a7e015a692fc",
     "author": "Jojjeboy",
     "date": "2025-12-03 21:08:35 +0100",
-    "message": "Sonarissues"
+    "message": "Sonarissues",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      }
+    ]
   },
   {
     "hash": "0a142e778b0bc4d185cc42f0ec9492ac3fb72ac1",
     "author": "Jojjeboy",
     "date": "2025-12-03 21:01:31 +0100",
-    "message": "Revert Snyk"
+    "message": "Revert Snyk",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
   },
   {
     "hash": "2038d1088b30c87167ec11f8ed70045966ac76f5",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:52:25 +0100",
-    "message": "Snyk"
+    "message": "Snyk",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      },
+      {
+        "status": "A",
+        "path": "eslint.config.ts"
+      },
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      }
+    ]
   },
   {
     "hash": "0302aebe73e57a5a874153588699594ffbc09aaf",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:34:56 +0100",
-    "message": "Rename of appname"
+    "message": "Rename of appname",
+    "files": [
+      {
+        "status": "M",
+        "path": "DOCUMENTATION.md"
+      },
+      {
+        "status": "M",
+        "path": "README.md"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
   },
   {
     "hash": "4a6edd479ac2d670a12a82ffa97d05bfb2fe33b8",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:32:01 +0100",
-    "message": "Fix Favicon paths 3"
+    "message": "Fix Favicon paths 3",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      }
+    ]
   },
   {
     "hash": "7fc0d93798b3bae595177af791c43c0eabd22828",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:28:55 +0100",
-    "message": "Fix Favicon paths 2"
+    "message": "Fix Favicon paths 2",
+    "files": [
+      {
+        "status": "M",
+        "path": "index.html"
+      }
+    ]
   },
   {
     "hash": "7b23ed0cbdd35712331f715e19e6df17656ec20b",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:26:33 +0100",
-    "message": "Fix Favicon paths"
+    "message": "Fix Favicon paths",
+    "files": [
+      {
+        "status": "M",
+        "path": "index.html"
+      }
+    ]
   },
   {
     "hash": "f613aa55aa32b25cc1430e9529d1eaacd69878f8",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:23:57 +0100",
-    "message": "Fix PWA icons and favicon paths for GitHub Pages"
+    "message": "Fix PWA icons and favicon paths for GitHub Pages",
+    "files": [
+      {
+        "status": "M",
+        "path": "index.html"
+      },
+      {
+        "status": "A",
+        "path": "public/pwa-192x192.png"
+      },
+      {
+        "status": "A",
+        "path": "public/pwa-512x512.png"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      }
+    ]
   },
   {
     "hash": "f006c6a0ca9e3f37de472934776eebc2d6f1bdd3",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:14:14 +0100",
-    "message": "Switch to HashRouter for GitHub Pages compatibility"
+    "message": "Switch to HashRouter for GitHub Pages compatibility",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/main.tsx"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
   },
   {
     "hash": "6259ae8c891218a8e3528fea98be0ab37c046a80",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:10:18 +0100",
-    "message": "ci/cd 6"
+    "message": "ci/cd 6",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
   },
   {
     "hash": "26a9a97208207256c3f5b65aab0c8da3255e13e3",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:09:01 +0100",
-    "message": "ci/cd 5"
+    "message": "ci/cd 5",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
   },
   {
     "hash": "3831b81793410a62dd2b35b7c07b99131b4edf9c",
     "author": "Jojjeboy",
     "date": "2025-12-03 17:12:32 +0100",
-    "message": "cicd 4"
+    "message": "cicd 4",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
   },
   {
     "hash": "ebf663529d95839afde80465fd8bf94358c11556",
     "author": "Jojjeboy",
     "date": "2025-12-03 17:06:56 +0100",
-    "message": "Add GitHub Actions workflow for deployment"
+    "message": "Add GitHub Actions workflow for deployment",
+    "files": [
+      {
+        "status": "A",
+        "path": ".github/workflows/deploy.yml"
+      }
+    ]
   },
   {
     "hash": "4ee49d86272e6e2421f33f4bc824d441f7d862f0",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 16:01:40 +0100",
-    "message": "mc"
+    "message": "mc",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
   },
   {
     "hash": "8de79ee6407587188c61ec27d0139557cd208f11",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 15:58:20 +0100",
-    "message": "Firebase stuff 2"
+    "message": "Firebase stuff 2",
+    "files": [
+      {
+        "status": "A",
+        "path": ".firebase/hosting.ZGlzdA.cache"
+      },
+      {
+        "status": "A",
+        "path": ".firebaserc"
+      },
+      {
+        "status": "A",
+        "path": "firebase.json"
+      },
+      {
+        "status": "A",
+        "path": "firestore.indexes.json"
+      },
+      {
+        "status": "A",
+        "path": "firestore.rules"
+      }
+    ]
   },
   {
     "hash": "910796afafc0ed1dc2407e0b5c61d77779dd82bc",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 15:42:50 +0100",
-    "message": "Firebase stuff"
+    "message": "Firebase stuff",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "D",
+        "path": "vercel.json"
+      }
+    ]
   },
   {
     "hash": "d840d230528b6a8526cba2520e0a6b74f8d0234a",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 15:12:16 +0100",
-    "message": "CI/CD 5"
+    "message": "CI/CD 5",
+    "files": [
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/main.tsx"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
   },
   {
     "hash": "bc5578f90bdeff226865b27958794c50a7e012ce",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 15:02:45 +0100",
-    "message": "CI/CD 4"
+    "message": "CI/CD 4",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.json"
+      }
+    ]
   },
   {
     "hash": "8330d663b2cdf37026119f58382f300a2edc88a4",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 14:54:46 +0100",
-    "message": "CI/CD 3"
+    "message": "CI/CD 3",
+    "files": [
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "A",
+        "path": "src/components/MarqueeText.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/setupTests.ts"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      },
+      {
+        "status": "A",
+        "path": "vitest.config.ts"
+      }
+    ]
   },
   {
     "hash": "4b82d8cfe913352aba76f798d604e4a955a7ee31",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 14:39:49 +0100",
-    "message": "ci/cd 2"
+    "message": "ci/cd 2",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
   },
   {
     "hash": "b5ab43e1821a48723dcb4f6548e97cc36aecea94",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 13:47:37 +0100",
-    "message": "mc"
+    "message": "mc",
+    "files": [
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
   },
   {
     "hash": "62f4abb3f97aa27b1a0a5735b6360de5700cb9ed",
     "author": "Johannes Kärnstam",
     "date": "2025-12-03 13:41:01 +0100",
-    "message": "CI/CD"
+    "message": "CI/CD",
+    "files": [
+      {
+        "status": "A",
+        "path": ".github/workflows/ci-cd.yml"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
   },
   {
     "hash": "209da547e37b9703e48ec9a5db649efccf683ebc",
     "author": "Jojjeboy",
     "date": "2025-11-30 09:01:29 +0100",
-    "message": "Replace list action buttons with dropdown menu"
+    "message": "Replace list action buttons with dropdown menu",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableListCard.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/en.json"
+      }
+    ]
   },
   {
     "hash": "f2aae26a9e70a0d129274281ee5e3fd74cc1fa1f",
     "author": "Jojjeboy",
     "date": "2025-11-30 08:49:58 +0100",
-    "message": "Add drag and drop functionality for lists"
+    "message": "Add drag and drop functionality for lists",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/SortableListCard.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "2d1fd2fcece5b57fd60f34bf5944cc2709c32ef7",
     "author": "Johannes Kärnstam",
     "date": "2025-11-27 13:28:23 +0100",
-    "message": "Login page"
+    "message": "Login page",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/LandingPage.tsx"
+      }
+    ]
   },
   {
     "hash": "74f0c4bae7da994300195141c40f50d877c3215a",
     "author": "Johannes Kärnstam",
     "date": "2025-11-27 13:05:39 +0100",
-    "message": "Swipe and delete for real"
+    "message": "Swipe and delete for real",
+    "files": [
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      }
+    ]
   },
   {
     "hash": "b4e8bf64532e66eacc71f47f36df3e37fc539e77",
     "author": "Johannes Kärnstam",
     "date": "2025-11-27 11:26:51 +0100",
-    "message": "Swipe to delete"
+    "message": "Swipe to delete",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      }
+    ]
   },
   {
     "hash": "eac10c71cbc5639cf9c9f144bdbc760b754592ac",
     "author": "Jojjeboy",
     "date": "2025-11-25 06:42:36 +0100",
-    "message": "Refactor UI: Activity Log pagination & Footer updates"
+    "message": "Refactor UI: Activity Log pagination & Footer updates",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ActivityLog.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/NotesView.tsx"
+      }
+    ]
   },
   {
     "hash": "0cb1ca4d6a55045786fc40bda41aeaf05622c865",
     "author": "Jojjeboy",
     "date": "2025-11-24 21:25:33 +0100",
-    "message": "fix: Add bottom padding to activity pagination for mobile visibility"
+    "message": "fix: Add bottom padding to activity pagination for mobile visibility",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ActivityLog.tsx"
+      }
+    ]
   },
   {
     "hash": "e1e91cda38cd97fe85a86b06c7a166ac99a68174",
     "author": "Jojjeboy",
     "date": "2025-11-24 21:23:06 +0100",
-    "message": "Footer fix"
+    "message": "Footer fix",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      }
+    ]
   },
   {
     "hash": "7a392ac95ca04df3afeabd57fcc3e4af898a07a7",
     "author": "Jojjeboy",
     "date": "2025-11-24 21:15:25 +0100",
-    "message": "fix: Update footer date format to DD/MMM with conditional year"
+    "message": "fix: Update footer date format to DD/MMM with conditional year",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "ac7bf4d654408f85b67eeae73ddf8c32a682f1c4",
     "author": "Jojjeboy",
     "date": "2025-11-24 21:11:26 +0100",
-    "message": "fix: Update footer date format to DD/MMM with conditional year"
+    "message": "fix: Update footer date format to DD/MMM with conditional year",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "9b6042785d8d6879e4c416845385ad819cb0eccc",
     "author": "Jojjeboy",
     "date": "2025-11-24 21:03:42 +0100",
-    "message": "fix: Display commit date in footer and unify text styles"
+    "message": "fix: Display commit date in footer and unify text styles",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      }
+    ]
   },
   {
     "hash": "a64b1734c49b3486ba9597a47dc89ac212cbac2c",
     "author": "Jojjeboy",
     "date": "2025-11-24 20:59:25 +0100",
-    "message": "fix: Restore CategoryDetail.tsx and reduce input width"
+    "message": "fix: Restore CategoryDetail.tsx and reduce input width",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "711fdf6bf57a102d1b320c0a84188b227a19fa55",
     "author": "Jojjeboy",
     "date": "2025-11-24 20:51:56 +0100",
-    "message": "fix: Reduce list input width to prevent template button overflow"
+    "message": "fix: Reduce list input width to prevent template button overflow",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "6c69e0f1595e39e74b4fa49aab20f9750f84a3c3",
     "author": "Jojjeboy",
     "date": "2025-11-24 20:17:56 +0100",
-    "message": "revert: Remove note completion feature"
+    "message": "revert: Remove note completion feature",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/NotesView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
   },
   {
     "hash": "aa338fe623e945c1ba5f1ae99e611cdbbdc6b580",
     "author": "Jojjeboy",
     "date": "2025-11-24 20:11:59 +0100",
-    "message": "feat: Remove date display from notes"
+    "message": "feat: Remove date display from notes",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/NotesView.tsx"
+      }
+    ]
   },
   {
     "hash": "9593488666870d736a009eddd8e77b086351b391",
     "author": "Jojjeboy",
     "date": "2025-11-24 20:11:03 +0100",
-    "message": "feat: Add note completion status with sorting and styling"
+    "message": "feat: Add note completion status with sorting and styling",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/NotesView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
   },
   {
     "hash": "46138a6faa35ef33b2c6c1ca55351e97da68b2bb",
     "author": "Jojjeboy",
     "date": "2025-11-24 20:05:31 +0100",
-    "message": "refactor: Rename Roadmap to Notes and fix offline icon"
+    "message": "refactor: Rename Roadmap to Notes and fix offline icon",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "R099",
+        "path": "src/components/RoadmapView.tsx src/components/NotesView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
   },
   {
     "hash": "3c90de0ba548a13ad37e68596cf933c7248d8e02",
     "author": "Jojjeboy",
     "date": "2025-11-24 19:57:36 +0100",
-    "message": "feat: Restore templates functionality with i18n support"
+    "message": "feat: Restore templates functionality with i18n support",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/data/templates.ts"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/en.json"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/sv.json"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "9b66bd6d5e91d7016b9e2a946f6914b830fe7a50",
     "author": "Jojjeboy",
     "date": "2025-11-24 19:52:28 +0100",
-    "message": "Remove legacy import/export and add offline indicator"
+    "message": "Remove legacy import/export and add offline indicator",
+    "files": [
+      {
+        "status": "M",
+        "path": "README.md"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/OfflineIndicator.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SettingsModal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "1171c636f4f10428f4b362669dbd19732ae8b4b1",
     "author": "Jojjeboy",
     "date": "2025-11-24 19:11:21 +0100",
-    "message": "Fix: Limit note title width and add marquee effect for long titles"
+    "message": "Fix: Limit note title width and add marquee effect for long titles",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/RoadmapView.tsx"
+      }
+    ]
   },
   {
     "hash": "bb2725be066cba705704c06defd6d8a84c6f02b1",
     "author": "Jojjeboy",
     "date": "2025-11-24 18:47:14 +0100",
-    "message": "Migrate to Firebase Firestore with offline support and data migration"
+    "message": "Migrate to Firebase Firestore with offline support and data migration",
+    "files": [
+      {
+        "status": "M",
+        "path": "README.md"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/RoadmapView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/firebase.ts"
+      },
+      {
+        "status": "A",
+        "path": "src/hooks/useFirestoreSync.ts"
+      },
+      {
+        "status": "A",
+        "path": "src/hooks/useMigrateLocalStorage.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "2d10cbf41ed23bf8c1b52bba2166ab9067183154",
     "author": "Jojjeboy",
     "date": "2025-11-24 15:49:00 +0100",
-    "message": "mc"
+    "message": "mc",
+    "files": [
+      {
+        "status": "M",
+        "path": "README.md"
+      }
+    ]
   },
   {
     "hash": "206b3f1312eede6d89568ac166a13ac9a07e9ce2",
     "author": "Jojjeboy",
     "date": "2025-11-24 14:41:46 +0100",
-    "message": "ui: adjust list sorting dropdown layout"
+    "message": "ui: adjust list sorting dropdown layout",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      }
+    ]
   },
   {
     "hash": "5b4de4a3220812cea93888de592f441f2791aa95",
     "author": "Jojjeboy",
     "date": "2025-11-24 14:25:37 +0100",
-    "message": ".env"
+    "message": ".env",
+    "files": [
+      {
+        "status": "D",
+        "path": ".env"
+      },
+      {
+        "status": "M",
+        "path": ".gitignore"
+      }
+    ]
   },
   {
     "hash": "0c324887a6aff50a313de6881d1a39320cb9385d",
     "author": "Jojjeboy",
     "date": "2025-11-24 14:18:37 +0100",
-    "message": "Removed line from .gitignore to show env file"
+    "message": "Removed line from .gitignore to show env file",
+    "files": [
+      {
+        "status": "A",
+        "path": ".env"
+      },
+      {
+        "status": "M",
+        "path": ".gitignore"
+      }
+    ]
   },
   {
     "hash": "e91ebb8662dbe40c54868fbd00a64c9bce5c5cb8",
     "author": "Jojjeboy",
     "date": "2025-11-24 14:12:22 +0100",
-    "message": "Vercel.json file"
+    "message": "Vercel.json file",
+    "files": [
+      {
+        "status": "A",
+        "path": "vercel.json"
+      }
+    ]
   },
   {
     "hash": "cef49dd03127b55c69afb66519c82181adf1396a",
     "author": "Jojjeboy",
     "date": "2025-11-24 13:32:35 +0100",
-    "message": "fix: adjust list title marquee width to 130px"
+    "message": "fix: adjust list title marquee width to 130px",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      }
+    ]
   },
   {
     "hash": "40654a2ce37169210ef7971e63aa86e15df68a79",
     "author": "Jojjeboy",
     "date": "2025-11-24 13:30:52 +0100",
-    "message": "ui: remove item count from list display"
+    "message": "ui: remove item count from list display",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      }
+    ]
   },
   {
     "hash": "d7500095e8deb04cdf52ecd620e3dd19499522cc",
     "author": "Jojjeboy",
     "date": "2025-11-24 13:29:52 +0100",
-    "message": "style: update login page title to match app gradient"
+    "message": "style: update login page title to match app gradient",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/LandingPage.tsx"
+      }
+    ]
   },
   {
     "hash": "76d4afff5056f40989360baa11d5e2101ec70632",
     "author": "Jojjeboy",
     "date": "2025-11-24 13:27:10 +0100",
-    "message": "style: update landing page header to match app title gradient"
+    "message": "style: update landing page header to match app title gradient",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      }
+    ]
   },
   {
     "hash": "6590b7bccb9667b071025f19711839098f63aba9",
     "author": "Jojjeboy",
     "date": "2025-11-24 13:15:15 +0100",
-    "message": "Implement Google Authentication"
+    "message": "Implement Google Authentication",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ProtectedRoute.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/vite-env.d.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "e61a94d74ded5e6d9af84c6db4676142e59d97e7",
     "author": "Jojjeboy",
     "date": "2025-11-24 12:57:59 +0100",
-    "message": "Google Authentication in place"
+    "message": "Google Authentication in place",
+    "files": [
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "A",
+        "path": "src/components/LandingPage.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/ProtectedRoute.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SettingsModal.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/context/AuthContext.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/firebase.ts"
+      }
+    ]
   },
   {
     "hash": "1dd67d4d9e96a3c2ba88abac8a2345989b1c03e1",
     "author": "Jojjeboy",
     "date": "2025-11-24 08:28:27 +0100",
-    "message": "fix: add touch-none and pointer-events handling for drag functionality"
+    "message": "fix: add touch-none and pointer-events handling for drag functionality",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      }
+    ]
   },
   {
     "hash": "18f03ea1bc5280e40923f60aba347a338ee68187",
     "author": "Jojjeboy",
     "date": "2025-11-24 08:22:00 +0100",
-    "message": "fix: significantly increase drag handle size and remove activation delay"
+    "message": "fix: significantly increase drag handle size and remove activation delay",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      }
+    ]
   },
   {
     "hash": "9e12987082d027824aff1b6f0270c2c705951796",
     "author": "Jojjeboy",
     "date": "2025-11-24 08:18:45 +0100",
-    "message": "fix: increase drag handle size and reduce activation distance"
+    "message": "fix: increase drag handle size and reduce activation distance",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      }
+    ]
   },
   {
     "hash": "0545b3205bfd0f4f56113d049978873b9666f822",
     "author": "Jojjeboy",
     "date": "2025-11-24 08:14:24 +0100",
-    "message": "fix: enable scrolling by restricting drag to grip icon only"
+    "message": "fix: enable scrolling by restricting drag to grip icon only",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      }
+    ]
   },
   {
     "hash": "75efec5dc6dc287c06e12e8e434bcc369cee8b30",
     "author": "Jojjeboy",
     "date": "2025-11-24 08:08:58 +0100",
-    "message": "fix: reduce list title width from 110px to 90px"
+    "message": "fix: reduce list title width from 110px to 90px",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/UpdatePrompt.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/vite-env.d.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
   },
   {
     "hash": "37373e22e0d08fb463e29397c4edf895c15e631a",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:26:28 +0100",
-    "message": "fix: adjust list title marquee width to 110px"
+    "message": "fix: adjust list title marquee width to 110px",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      }
+    ]
   },
   {
     "hash": "cb2a4d59799ad84aebf696cf40409a1662d6a051",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:22:30 +0100",
-    "message": "feat: sort notes by priority (high > medium > low)"
+    "message": "feat: sort notes by priority (high > medium > low)",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/RoadmapView.tsx"
+      }
+    ]
   },
   {
     "hash": "27139ca5f8d0d325cea733dbded880b8dfa50ea0",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:18:56 +0100",
-    "message": "fix: adjust list title marquee width to 130px"
+    "message": "fix: adjust list title marquee width to 130px",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      }
+    ]
   },
   {
     "hash": "6598ba79e0c2f251a10fa53ea598cf2c7687c969",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:15:18 +0100",
-    "message": "fix: adjust list title marquee width to 160px"
+    "message": "fix: adjust list title marquee width to 160px",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      }
+    ]
   },
   {
     "hash": "3b0d7b23b19b3f531b1f0ec392666102c8d025ab",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:12:41 +0100",
-    "message": "fix: restrict list title marquee width to 180px"
+    "message": "fix: restrict list title marquee width to 180px",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      }
+    ]
   },
   {
     "hash": "b3c5f15c0c6f0080d8a996a41911469fd7e0adf2",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:09:05 +0100",
-    "message": "feat: implement marquee for long list titles"
+    "message": "feat: implement marquee for long list titles",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/MarqueeText.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/index.css"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "ede1c75fb6c64eb821eca59fb3905eb3db881cd9",
     "author": "Jojjeboy",
     "date": "2025-11-24 07:05:04 +0100",
-    "message": "feat: implement activity log pagination and update docs"
+    "message": "feat: implement activity log pagination and update docs",
+    "files": [
+      {
+        "status": "M",
+        "path": "README.md"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ActivityLog.tsx"
+      }
+    ]
   },
   {
     "hash": "3e2750e0352cd7d87270967cdc2f8d1df62941be",
     "author": "Jojjeboy",
     "date": "2025-11-24 06:49:19 +0100",
-    "message": "feat: add cache invalidation button to settings"
+    "message": "feat: add cache invalidation button to settings",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SettingsModal.tsx"
+      }
+    ]
   },
   {
     "hash": "b55d8dd7ae4ad926d3cdd9eea145ca26c08cff83",
     "author": "Jojjeboy",
     "date": "2025-11-24 06:45:09 +0100",
-    "message": "feat: implement activity log with commit history"
+    "message": "feat: implement activity log with commit history",
+    "files": [
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "A",
+        "path": "scripts/generate-commits.js"
+      },
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "A",
+        "path": "src/components/ActivityLog.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "067168cf1741f329b6411e4aa276863b3ab243af",
     "author": "Jojjeboy",
     "date": "2025-11-24 06:31:49 +0100",
-    "message": "fix: allow list titles to wrap instead of truncating"
+    "message": "fix: allow list titles to wrap instead of truncating",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      }
+    ]
   },
   {
     "hash": "33188f7bfbdf8c6bf73e27e87bf03afabd1e195a",
     "author": "Jojjeboy",
     "date": "2025-11-24 06:23:57 +0100",
-    "message": "refactor: remove pin list functionality"
+    "message": "refactor: remove pin list functionality",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SearchResults.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
   },
   {
     "hash": "192327f7b33f061f55e84659f2b740f471cb56f8",
     "author": "Jojjeboy",
     "date": "2025-11-24 06:18:57 +0100",
-    "message": "feat: implement note prioritization"
+    "message": "feat: implement note prioritization",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/RoadmapView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
   },
   {
     "hash": "7ac082d290debea79939df31e34853035d2b1666",
     "author": "Jojjeboy",
     "date": "2025-11-24 06:16:18 +0100",
-    "message": "feat: implement internationalization (i18n) support"
+    "message": "feat: implement internationalization (i18n) support",
+    "files": [
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Modal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/RoadmapView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SettingsModal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/i18n.ts"
+      },
+      {
+        "status": "A",
+        "path": "src/locales/en.json"
+      },
+      {
+        "status": "A",
+        "path": "src/locales/sv.json"
+      },
+      {
+        "status": "M",
+        "path": "src/main.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "cb86cedc6b4c9f15718fb60d3a458028ae399442",
     "author": "Jojjeboy",
     "date": "2025-11-23 12:42:01 +0100",
-    "message": "fix: update SearchResults component"
+    "message": "fix: update SearchResults component",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/SearchResults.tsx"
+      }
+    ]
   },
   {
     "hash": "f054b4fc75acbf7f6f1281d76f1668fefbaf65a8",
     "author": "Jojjeboy",
     "date": "2025-11-23 12:27:17 +0100",
-    "message": "Removed list templates"
+    "message": "Removed list templates",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "D",
+        "path": "src/data/templates.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "4a8767b2c2099c2e0f58ff62c24d21b0deee5714",
     "author": "Jojjeboy",
     "date": "2025-11-23 12:18:01 +0100",
-    "message": "fix: prevent horizontal scroll on mobile devices"
+    "message": "fix: prevent horizontal scroll on mobile devices",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/index.css"
+      }
+    ]
   },
   {
     "hash": "a33d36d0d4a9dec225979628d5fba6e06cf60526",
     "author": "Jojjeboy",
     "date": "2025-11-23 12:07:23 +0100",
-    "message": "feat: allow editing of category and list titles"
+    "message": "feat: allow editing of category and list titles",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      }
+    ]
   },
   {
     "hash": "dc0ac5f8f263b0e0ba04c8972853ab8e4f20983a",
     "author": "Jojjeboy",
     "date": "2025-11-22 10:46:00 +0100",
-    "message": "Error fix"
+    "message": "Error fix",
+    "files": [
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "e467bca74fb78ca7da7faa0cb8f930ffa23f551e",
     "author": "Jojjeboy",
     "date": "2025-11-22 10:45:23 +0100",
-    "message": "Error fix"
+    "message": "Error fix",
+    "files": [
+      {
+        "status": "M",
+        "path": "PromptsMade.md"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "ef357f894aa0ceee7d1a02ab62488aba7f811507",
     "author": "Jojjeboy",
     "date": "2025-11-21 14:15:37 +0100",
-    "message": "docs: Update documentation with new features"
+    "message": "docs: Update documentation with new features",
+    "files": [
+      {
+        "status": "M",
+        "path": "DOCUMENTATION.md"
+      },
+      {
+        "status": "M",
+        "path": "PromptsMade.md"
+      }
+    ]
   },
   {
     "hash": "c8988589daa0109e32f44d6bcd5ad02633ff27db",
     "author": "Jojjeboy",
     "date": "2025-11-21 14:10:06 +0100",
-    "message": "feat: Add voice input for adding items"
+    "message": "feat: Add voice input for adding items",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SettingsModal.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/hooks/useVoiceInput.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
   },
   {
     "hash": "527261819b9b0e445ba89bf28be4b26f9608c8df",
     "author": "Jojjeboy",
     "date": "2025-11-21 14:01:19 +0100",
-    "message": "style: Add micro-animations and visual polish"
+    "message": "style: Add micro-animations and visual polish",
+    "files": [
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tailwind.config.js"
+      }
+    ]
   },
   {
     "hash": "b687c289839ec2c423d7e45deaa72a2e2ff04395",
     "author": "Jojjeboy",
     "date": "2025-11-21 13:58:35 +0100",
-    "message": "feat: Add data import/export functionality"
+    "message": "feat: Add data import/export functionality",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/SettingsModal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      }
+    ]
   },
   {
     "hash": "d5e26b3c59a7006a0240cddf030c4d5332deac91",
     "author": "Jojjeboy",
     "date": "2025-11-21 13:54:49 +0100",
-    "message": "feat: Add undo functionality with toast notifications"
+    "message": "feat: Add undo functionality with toast notifications",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/ToastContainer.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/context/ToastContext.tsx"
+      }
+    ]
   },
   {
     "hash": "3baadbfb36eb7ddaaf039b3ef2607a3521717cf3",
     "author": "Jojjeboy",
     "date": "2025-11-21 13:52:33 +0100",
-    "message": "feat: Add sorting options to lists"
+    "message": "feat: Add sorting options to lists",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      }
+    ]
   },
   {
     "hash": "1546b1aed260937886b871d46d5ce691ee077e13",
     "author": "Jojjeboy",
     "date": "2025-11-21 13:50:23 +0100",
-    "message": "feat: Add template library functionality"
+    "message": "feat: Add template library functionality",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/data/templates.ts"
+      }
+    ]
   },
   {
     "hash": "59568c96e7450882779d396d42e29eeb8f7fd9d1",
     "author": "Jojjeboy",
     "date": "2025-11-21 13:46:42 +0100",
-    "message": "feat: Add progress indicators to lists"
+    "message": "feat: Add progress indicators to lists",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SearchResults.tsx"
+      }
+    ]
   },
   {
     "hash": "8e3d2dc536bf0b253456b46b69c0805bbd5caac2",
     "author": "Jojjeboy",
     "date": "2025-11-21 13:43:54 +0100",
-    "message": "feat: Add pinned lists functionality"
+    "message": "feat: Add pinned lists functionality",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SearchResults.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
   },
   {
     "hash": "2d9fd4e215d05041990757259c107ce7414b5b17",
     "author": "Jojjeboy",
     "date": "2025-11-21 13:36:53 +0100",
-    "message": "feat: Add global search functionality"
+    "message": "feat: Add global search functionality",
+    "files": [
+      {
+        "status": "M",
+        "path": "PromptsMade.md"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/SearchResults.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      }
+    ]
   },
   {
     "hash": "4aa9daf114d178782b0fc515f461acb495d17a8e",
     "author": "Jojjeboy",
     "date": "2025-11-21 12:51:13 +0100",
-    "message": "Saves theme state in ls"
+    "message": "Saves theme state in ls",
+    "files": [
+      {
+        "status": "M",
+        "path": "PromptsMade.md"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/RoadmapView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      }
+    ]
   },
   {
     "hash": "13e113713ff34fa0264599f05b30dc5b14ccf7f7",
     "author": "Jojjeboy",
     "date": "2025-11-21 12:46:06 +0100",
-    "message": "minor fix"
+    "message": "minor fix",
+    "files": [
+      {
+        "status": "M",
+        "path": "PromptsMade.md"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      }
+    ]
   },
   {
     "hash": "5f1a265e67b70418b5e7ae43a6227e23f70db5ab",
     "author": "Jojjeboy",
     "date": "2025-11-21 12:41:15 +0100",
-    "message": "Moved link to footer"
+    "message": "Moved link to footer",
+    "files": [
+      {
+        "status": "M",
+        "path": "PromptsMade.md"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      }
+    ]
   },
   {
     "hash": "2dcb696fe777348e3dfa2e37453de797b07f0a4b",
     "author": "Jojjeboy",
     "date": "2025-11-21 12:19:24 +0100",
-    "message": "Roadmap feature"
+    "message": "Roadmap feature",
+    "files": [
+      {
+        "status": "M",
+        "path": "PromptsMade.md"
+      },
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/RoadmapView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
   },
   {
     "hash": "8f525295c618c392c3db4e3910738f71ba3b53bb",
     "author": "Jojjeboy",
     "date": "2025-11-21 09:55:56 +0100",
-    "message": "Initial commit"
+    "message": "Initial commit",
+    "files": [
+      {
+        "status": "A",
+        "path": ".gitignore"
+      },
+      {
+        "status": "A",
+        "path": ".vscode/extensions.json"
+      },
+      {
+        "status": "A",
+        "path": "DOCUMENTATION.md"
+      },
+      {
+        "status": "A",
+        "path": "PromptsMade.md"
+      },
+      {
+        "status": "A",
+        "path": "README.md"
+      },
+      {
+        "status": "A",
+        "path": "index.html"
+      },
+      {
+        "status": "A",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "A",
+        "path": "package.json"
+      },
+      {
+        "status": "A",
+        "path": "postcss.config.js"
+      },
+      {
+        "status": "A",
+        "path": "public/favicon.png"
+      },
+      {
+        "status": "A",
+        "path": "public/vite.svg"
+      },
+      {
+        "status": "A",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/assets/vue.svg"
+      },
+      {
+        "status": "A",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/HelloWorld.vue"
+      },
+      {
+        "status": "A",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/Modal.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/SortableItem.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/hooks/useLocalStorage.ts"
+      },
+      {
+        "status": "A",
+        "path": "src/index.css"
+      },
+      {
+        "status": "A",
+        "path": "src/main.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/types/index.ts"
+      },
+      {
+        "status": "A",
+        "path": "tailwind.config.js"
+      },
+      {
+        "status": "A",
+        "path": "tsconfig.app.json"
+      },
+      {
+        "status": "A",
+        "path": "tsconfig.app.tsbuildinfo"
+      },
+      {
+        "status": "A",
+        "path": "tsconfig.json"
+      },
+      {
+        "status": "A",
+        "path": "tsconfig.node.json"
+      },
+      {
+        "status": "A",
+        "path": "vite.config.ts"
+      }
+    ]
   }
 ]
