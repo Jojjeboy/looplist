@@ -31,4 +31,8 @@ export interface Commit {
     author: string;
     date: string;
     message: string;
+    files?: {
+        status: string;
+        path: string;
+    }[];
 }

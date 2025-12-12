@@ -13,8 +13,27 @@ try {
 
     const commits = logOutput.split('\n').map(line => {
         const [hash, author, date, message] = line.split('|');
-        return { hash, author, date, message };
-    }).filter(commit => commit.hash); // Filter out empty lines
+        if (!hash) return null;
+        
+        // Get the files changed in this commit
+        try {
+            const filesOutput = execSync(`git show --name-status --pretty="" ${hash}`, { encoding: 'utf-8' });
+            const files = filesOutput.trim().split('\n')
+                .filter(line => line.trim())
+                .map(line => {
+                    const parts = line.trim().split(/\s+/);
+                    return {
+                        status: parts[0], // M (modified), A (added), D (deleted), etc.
+                        path: parts.slice(1).join(' ')
+                    };
+                });
+            
+            return { hash, author, date, message, files };
+        } catch (error) {
+            // If we can't get files for some reason, just return without them
+            return { hash, author, date, message, files: [] };
+        }
+    }).filter(commit => commit !== null);
 
     fs.writeFileSync(outputPath, JSON.stringify(commits, null, 2));
     console.log(`Generated src/commits.json with ${commits.length} commits.`);

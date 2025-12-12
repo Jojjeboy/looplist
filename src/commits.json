@@ -1,5 +1,29 @@
 [
   {
+    "hash": "93c8876a3a905643c04a727339f188eabd565ed3",
+    "author": "Jojjeboy",
+    "date": "2025-12-12 22:02:50 +0100",
+    "message": "Fix category reordering by sorting by order property"
+  },
+  {
+    "hash": "5054d73832acd099511bbc9613efe8763746104f",
+    "author": "Jojjeboy",
+    "date": "2025-12-12 21:57:27 +0100",
+    "message": "Add clear completed option and swap category icons"
+  },
+  {
+    "hash": "726556e316550352750ed5fbe13574021ec55b3c",
+    "author": "Jojjeboy",
+    "date": "2025-12-12 21:49:42 +0100",
+    "message": "Fix category grab handle alignment"
+  },
+  {
+    "hash": "a9365c6429c265db6714cfc3e818e6090f1753af",
+    "author": "Jojjeboy",
+    "date": "2025-12-12 21:42:52 +0100",
+    "message": "Add missing SortableCategoryCard and fix type error"
+  },
+  {
     "hash": "873ad73ca9853977c1698925a4a86a0b4b646deb",
     "author": "Jojjeboy",
     "date": "2025-12-12 21:38:53 +0100",
