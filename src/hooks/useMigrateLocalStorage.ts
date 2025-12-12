@@ -3,6 +3,7 @@ import { collection, getDocs, writeBatch, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useToast } from '../context/ToastContext';
 import { useTranslation } from 'react-i18next';
+import { Category, List, Note } from '../types';
 
 export function useMigrateLocalStorage(userId: string | null | undefined) {
     const [migrating, setMigrating] = useState(false);
@@ -36,7 +37,7 @@ export function useMigrateLocalStorage(userId: string | null | undefined) {
 
                 if (localCategories) {
                     const categories = JSON.parse(localCategories);
-                    categories.forEach((cat: any) => {
+                    categories.forEach((cat: Category) => {
                         const ref = doc(db, `users/${userId}/categories`, cat.id);
                         batch.set(ref, cat);
                     });
@@ -44,7 +45,7 @@ export function useMigrateLocalStorage(userId: string | null | undefined) {
 
                 if (localLists) {
                     const lists = JSON.parse(localLists);
-                    lists.forEach((list: any) => {
+                    lists.forEach((list: List) => {
                         const ref = doc(db, `users/${userId}/lists`, list.id);
                         batch.set(ref, list);
                     });
@@ -52,7 +53,7 @@ export function useMigrateLocalStorage(userId: string | null | undefined) {
 
                 if (localNotes) {
                     const notes = JSON.parse(localNotes);
-                    notes.forEach((note: any) => {
+                    notes.forEach((note: Note) => {
                         const ref = doc(db, `users/${userId}/notes`, note.id);
                         batch.set(ref, note);
                     });

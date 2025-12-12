@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { Link } from 'react-router-dom';
-import { Plus, Trash2, Folder } from 'lucide-react';
+import { Plus, Folder } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { SortableCategoryCard } from './SortableCategoryCard';
 
 export const CategoryView: React.FC = () => {
     const { t } = useTranslation();
-    const { categories, addCategory, deleteCategory } = useApp();
+    const { categories, addCategory, deleteCategory, reorderCategories } = useApp();
     const [newCategoryName, setNewCategoryName] = useState('');
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; categoryId: string | null }>({
         isOpen: false,
         categoryId: null,
     });
+
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
 
     useEffect(() => {
         document.title = 'Anti';
@@ -30,6 +39,16 @@ export const CategoryView: React.FC = () => {
         if (deleteModal.categoryId) {
             deleteCategory(deleteModal.categoryId);
             setDeleteModal({ isOpen: false, categoryId: null });
+        }
+    };
+
+    const handleDragEnd = async (event: DragEndEvent) => {
+        const { active, over } = event;
+        if (active.id !== over?.id) {
+            const oldIndex = categories.findIndex((c) => c.id === active.id);
+            const newIndex = categories.findIndex((c) => c.id === over?.id);
+            const reordered = arrayMove(categories, oldIndex, newIndex);
+            await reorderCategories(reordered);
         }
     };
 
@@ -52,38 +71,28 @@ export const CategoryView: React.FC = () => {
                 </button>
             </form>
 
-            <div className="grid gap-3">
-                {categories.map((category) => (
-                    <div
-                        key={category.id}
-                        className="group flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all animate-in fade-in slide-in-from-bottom-4 duration-300"
-                    >
-                        <Link
-                            to={`/category/${category.id}`}
-                            className="flex items-center gap-3 flex-1 text-lg font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
-                        >
-                            <Folder className="text-blue-500" />
-                            {category.name}
-                        </Link>
-                        <button
-                            onClick={() => setDeleteModal({ isOpen: true, categoryId: category.id })}
-                            className="p-2 text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
-                            aria-label={t('categories.deleteTitle')}
-                        >
-                            <Trash2 size={20} />
-                        </button>
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext items={categories.map(c => c.id)} strategy={verticalListSortingStrategy}>
+                    <div className="grid gap-3">
+                        {categories.map((category) => (
+                            <SortableCategoryCard
+                                key={category.id}
+                                category={category}
+                                onDelete={(categoryId) => setDeleteModal({ isOpen: true, categoryId })}
+                            />
+                        ))}
+                        {categories.length === 0 && (
+                            <div className="text-center py-10">
+                                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
+                                    <Folder size={32} className="text-gray-400" />
+                                </div>
+                                <p className="text-gray-500">{t('categories.empty')}</p>
+                                <p className="text-sm text-gray-400">{t('categories.emptyHint')}</p>
+                            </div>
+                        )}
                     </div>
-                ))}
-                {categories.length === 0 && (
-                    <div className="text-center py-10">
-                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
-                            <Folder size={32} className="text-gray-400" />
-                        </div>
-                        <p className="text-gray-500">{t('categories.empty')}</p>
-                        <p className="text-sm text-gray-400">{t('categories.emptyHint')}</p>
-                    </div>
-                )}
-            </div>
+                </SortableContext>
+            </DndContext>
 
             <Modal
                 isOpen={deleteModal.isOpen}
