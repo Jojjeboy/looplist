@@ -16,6 +16,8 @@ export const CategoryView: React.FC = () => {
         categoryId: null,
     });
 
+    const sortedCategories = [...categories].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
     const sensors = useSensors(
         useSensor(PointerSensor),
         useSensor(KeyboardSensor, {
@@ -45,9 +47,9 @@ export const CategoryView: React.FC = () => {
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
         if (active.id !== over?.id) {
-            const oldIndex = categories.findIndex((c) => c.id === active.id);
-            const newIndex = categories.findIndex((c) => c.id === over?.id);
-            const reordered = arrayMove(categories, oldIndex, newIndex);
+            const oldIndex = sortedCategories.findIndex((c) => c.id === active.id);
+            const newIndex = sortedCategories.findIndex((c) => c.id === over?.id);
+            const reordered = arrayMove(sortedCategories, oldIndex, newIndex);
             await reorderCategories(reordered);
         }
     };
@@ -72,16 +74,16 @@ export const CategoryView: React.FC = () => {
             </form>
 
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                <SortableContext items={categories.map(c => c.id)} strategy={verticalListSortingStrategy}>
+                <SortableContext items={sortedCategories.map(c => c.id)} strategy={verticalListSortingStrategy}>
                     <div className="grid gap-3">
-                        {categories.map((category) => (
+                        {sortedCategories.map((category) => (
                             <SortableCategoryCard
                                 key={category.id}
                                 category={category}
                                 onDelete={(categoryId: string) => setDeleteModal({ isOpen: true, categoryId })}
                             />
                         ))}
-                        {categories.length === 0 && (
+                        {sortedCategories.length === 0 && (
                             <div className="text-center py-10">
                                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
                                     <Folder size={32} className="text-gray-400" />
