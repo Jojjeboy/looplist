@@ -51,23 +51,24 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
         >
             <div className="flex items-center justify-between p-4 gap-2">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div
-                        {...attributes}
-                        {...listeners}
-                        className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 -ml-2 touch-none flex-shrink-0"
-                    >
-                        <GripVertical size={24} strokeWidth={2.5} />
-                    </div>
+
                     <Link
                         to={`/list/${list.id}`}
                         className="flex-1 min-w-0 text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                     >
                         <div className="flex items-center gap-2">
-                            <div className="max-w-[130px] truncate" title={list.name}>
+                            <div className="max-w-[250px] truncate" title={list.name}>
                                 {list.name}
                             </div>
                         </div>
                     </Link>
+                    <div
+                        {...attributes}
+                        {...listeners}
+                        className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none flex-shrink-0 mr-2"
+                    >
+                        <GripVertical size={24} strokeWidth={2.5} />
+                    </div>
                 </div>
                 <div className="relative flex-shrink-0">
                     <button

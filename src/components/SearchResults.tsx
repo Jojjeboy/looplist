@@ -19,7 +19,7 @@ export const SearchResults: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-xl font-semibold">Search Results for "{searchQuery}"</h2>
+            <h2 className="text-xl font-semibold">Search Results for &quot;{searchQuery}&quot;</h2>
 
             {filteredCategories.length > 0 && (
                 <div className="space-y-3">

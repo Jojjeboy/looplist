@@ -55,7 +55,7 @@ export const ListDetail: React.FC = () => {
 
     const sortedItems = React.useMemo(() => {
         if (!list) return [];
-        let items = [...list.items];
+        const items = [...list.items];
         if (sortBy === 'alphabetical') {
             items.sort((a, b) => a.text.localeCompare(b.text));
         } else if (sortBy === 'completed') {
@@ -98,6 +98,12 @@ export const ListDetail: React.FC = () => {
             item.id === itemId ? { ...item, completed: !item.completed } : item
         );
         await updateListItems(list.id, newItems);
+
+        // Check if all items are now completed
+        const allCompleted = newItems.every(item => item.completed);
+        if (allCompleted && newItems.length > 0) {
+            setUncheckModalOpen(true);
+        }
     };
 
     const handleDelete = async (itemId: string) => {
@@ -169,7 +175,7 @@ export const ListDetail: React.FC = () => {
                 <div className="flex items-center gap-2 w-full">
                     <select
                         value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value as any)}
+                        onChange={(e) => setSortBy(e.target.value as 'manual' | 'alphabetical' | 'completed')}
                         className="w-[70%] px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors outline-none cursor-pointer"
                     >
                         <option value="manual">{t('lists.sort.manual')}</option>

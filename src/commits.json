@@ -1,5 +1,59 @@
 [
   {
+    "hash": "12c44e2c0326355833fb40168925dc5e71c2eee2",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 21:22:51 +0100",
+    "message": "Sonarfix 2"
+  },
+  {
+    "hash": "5c1dc49c576751663ac9c3c49308a7e015a692fc",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 21:08:35 +0100",
+    "message": "Sonarissues"
+  },
+  {
+    "hash": "0a142e778b0bc4d185cc42f0ec9492ac3fb72ac1",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 21:01:31 +0100",
+    "message": "Revert Snyk"
+  },
+  {
+    "hash": "2038d1088b30c87167ec11f8ed70045966ac76f5",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 20:52:25 +0100",
+    "message": "Snyk"
+  },
+  {
+    "hash": "0302aebe73e57a5a874153588699594ffbc09aaf",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 20:34:56 +0100",
+    "message": "Rename of appname"
+  },
+  {
+    "hash": "4a6edd479ac2d670a12a82ffa97d05bfb2fe33b8",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 20:32:01 +0100",
+    "message": "Fix Favicon paths 3"
+  },
+  {
+    "hash": "7fc0d93798b3bae595177af791c43c0eabd22828",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 20:28:55 +0100",
+    "message": "Fix Favicon paths 2"
+  },
+  {
+    "hash": "7b23ed0cbdd35712331f715e19e6df17656ec20b",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 20:26:33 +0100",
+    "message": "Fix Favicon paths"
+  },
+  {
+    "hash": "f613aa55aa32b25cc1430e9529d1eaacd69878f8",
+    "author": "Jojjeboy",
+    "date": "2025-12-03 20:23:57 +0100",
+    "message": "Fix PWA icons and favicon paths for GitHub Pages"
+  },
+  {
     "hash": "f006c6a0ca9e3f37de472934776eebc2d6f1bdd3",
     "author": "Jojjeboy",
     "date": "2025-12-03 20:14:14 +0100",
