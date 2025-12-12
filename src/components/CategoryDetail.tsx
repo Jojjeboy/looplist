@@ -20,6 +20,10 @@ export const CategoryDetail: React.FC = () => {
         isOpen: false,
         listId: null,
     });
+    const [clearCompletedModal, setClearCompletedModal] = useState<{ isOpen: boolean; listId: string | null }>({
+        isOpen: false,
+        listId: null,
+    });
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [editedTitle, setEditedTitle] = useState('');
 
@@ -86,6 +90,21 @@ export const CategoryDetail: React.FC = () => {
     const handleMoveToCategory = async (listId: string, newCategoryId: string) => {
         await moveList(listId, newCategoryId);
         setMovingListId(null);
+    };
+
+    const handleClearCompleted = (listId: string) => {
+        setClearCompletedModal({ isOpen: true, listId });
+    };
+
+    const confirmClearCompleted = async () => {
+        if (clearCompletedModal.listId) {
+            const list = lists.find(l => l.id === clearCompletedModal.listId);
+            if (list) {
+                const updatedItems = list.items.filter(item => !item.completed);
+                await updateListItems(list.id, updatedItems);
+            }
+            setClearCompletedModal({ isOpen: false, listId: null });
+        }
     };
 
     return (
@@ -190,6 +209,7 @@ export const CategoryDetail: React.FC = () => {
                                 onCopy={copyList}
                                 onMove={(listId) => setMovingListId(movingListId === listId ? null : listId)}
                                 onDelete={(listId) => setDeleteModal({ isOpen: true, listId })}
+                                onClearCompleted={handleClearCompleted}
                                 isMoving={movingListId === list.id}
                                 categories={categories}
                                 currentCategoryId={categoryId!}
@@ -212,6 +232,14 @@ export const CategoryDetail: React.FC = () => {
                 message={t('lists.deleteMessage')}
                 confirmText={t('lists.deleteConfirm')}
                 isDestructive
+            />
+            <Modal
+                isOpen={clearCompletedModal.isOpen}
+                onClose={() => setClearCompletedModal({ isOpen: false, listId: null })}
+                onConfirm={confirmClearCompleted}
+                title={t('lists.clearCompletedTitle')}
+                message={t('lists.clearCompletedMessage')}
+                confirmText={t('lists.clearCompleted')}
             />
         </div>
     );

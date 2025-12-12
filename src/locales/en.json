@@ -46,7 +46,10 @@
         "addItemPlaceholder": "Add item...",
         "emptyList": "List is empty.",
         "resetTitle": "Reset List",
-        "resetMessage": "Are you sure you want to uncheck all items?"
+        "resetMessage": "Are you sure you want to uncheck all items?",
+        "clearCompleted": "Clear Completed",
+        "clearCompletedTitle": "Clear Completed Items",
+        "clearCompletedMessage": "Are you sure you want to remove all completed items from this list?"
     },
     "notes": {
         "title": "Notes",

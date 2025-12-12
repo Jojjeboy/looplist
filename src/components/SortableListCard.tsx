@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Link } from 'react-router-dom';
-import { Copy, ArrowRight, Trash2, GripVertical, MoreVertical } from 'lucide-react';
+import { Copy, ArrowRight, Trash2, GripVertical, MoreVertical, CheckCheck } from 'lucide-react';
 import type { List, Category } from '../types';
 import { useTranslation } from 'react-i18next';
 
@@ -11,6 +11,7 @@ interface SortableListCardProps {
     onCopy: (listId: string) => Promise<void>;
     onMove: (listId: string) => void;
     onDelete: (listId: string) => void;
+    onClearCompleted: (listId: string) => void;
     isMoving: boolean;
     categories: Category[];
     currentCategoryId: string;
@@ -22,6 +23,7 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
     onCopy,
     onMove,
     onDelete,
+    onClearCompleted,
     isMoving,
     categories,
     currentCategoryId,
@@ -100,6 +102,21 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
                             >
                                 <ArrowRight size={16} />
                                 {t('lists.move')}
+                            </button>
+                            <button
+                                onClick={() => {
+                                    onClearCompleted(list.id);
+                                    setDropdownOpen(false);
+                                }}
+                                disabled={!list.items.some(item => item.completed)}
+                                className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors ${
+                                    list.items.some(item => item.completed)
+                                        ? 'text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-green-900/30'
+                                        : 'text-gray-400 dark:text-gray-600 cursor-not-allowed'
+                                }`}
+                            >
+                                <CheckCheck size={16} />
+                                {t('lists.clearCompleted')}
                             </button>
                             <button
                                 onClick={() => {

@@ -40,13 +40,6 @@ export const SortableCategoryCard: React.FC<SortableCategoryCardProps> = ({ cate
                 <Folder className="text-blue-500 flex-shrink-0" />
                 <span className="truncate">{category.name}</span>
             </Link>
-            <div
-                {...attributes}
-                {...listeners}
-                className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none flex-shrink-0"
-            >
-                <GripVertical size={24} strokeWidth={2.5} />
-            </div>
             <button
                 onClick={() => onDelete(category.id)}
                 className="p-2 text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100 flex-shrink-0"
@@ -54,6 +47,13 @@ export const SortableCategoryCard: React.FC<SortableCategoryCardProps> = ({ cate
             >
                 <Trash2 size={20} />
             </button>
+            <div
+                {...attributes}
+                {...listeners}
+                className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none flex-shrink-0"
+            >
+                <GripVertical size={24} strokeWidth={2.5} />
+            </div>
         </div>
     );
 };

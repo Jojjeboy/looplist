@@ -45,7 +45,10 @@
         "addItemPlaceholder": "Lägg till objekt...",
         "emptyList": "Listan är tom.",
         "resetTitle": "Återställ lista",
-        "resetMessage": "Är du säker på att du vill avmarkera alla objekt?"
+        "resetMessage": "Är du säker på att du vill avmarkera alla objekt?",
+        "clearCompleted": "Rensa klara",
+        "clearCompletedTitle": "Rensa klara objekt",
+        "clearCompletedMessage": "Är du säker på att du vill ta bort alla avklarade objekt från denna lista?"
     },
     "notes": {
         "title": "Anteckningar",
