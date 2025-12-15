@@ -33,6 +33,15 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1300,
   },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.ts',
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+    },
+  },
 })
 
 

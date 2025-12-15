@@ -7,7 +7,8 @@
     "dev": "node scripts/generate-commits.js && vite",
     "build": "node scripts/generate-commits.js && tsc -b && vite build",
     "preview": "vite preview",
-    "test": "vitest run",
+    "test": "vitest run --coverage",
+    "test:ci": "vitest run --coverage --reporter=junit --outputFile=test-results.xml",
     "lint": "eslint .",
     "check-any": "eslint . --config eslint.strict.config.ts",
     "validate": "npm run build && npm run lint && npm run check-any && npm run test"
