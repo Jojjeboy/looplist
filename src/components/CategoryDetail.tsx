@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { Plus, ChevronLeft, LayoutTemplate } from 'lucide-react';
+import { Plus, ChevronLeft, LayoutTemplate, PlayCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
+import { SessionPicker } from './SessionPicker';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableListCard } from './SortableListCard';
@@ -13,7 +14,8 @@ import { templates } from '../data/templates';
 export const CategoryDetail: React.FC = () => {
     const { t } = useTranslation();
     const { categoryId } = useParams<{ categoryId: string }>();
-    const { categories, lists, addList, deleteList, copyList, moveList, updateCategoryName, updateListItems, reorderLists } = useApp();
+    const navigate = useNavigate();
+    const { categories, lists, addList, deleteList, copyList, moveList, updateCategoryName, updateListItems, reorderLists, addSession } = useApp();
     const [newListName, setNewListName] = useState('');
     const [movingListId, setMovingListId] = useState<string | null>(null);
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; listId: string | null }>({
@@ -26,6 +28,7 @@ export const CategoryDetail: React.FC = () => {
     });
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [editedTitle, setEditedTitle] = useState('');
+    const [sessionPickerOpen, setSessionPickerOpen] = useState(false);
 
     const category = categories.find((c) => c.id === categoryId);
     const categoryLists = lists
@@ -105,6 +108,11 @@ export const CategoryDetail: React.FC = () => {
             }
             setClearCompletedModal({ isOpen: false, listId: null });
         }
+    };
+
+    const handleCreateSession = async (name: string, listIds: string[]) => {
+        const sessionId = await addSession(name, listIds, categoryId);
+        navigate(`/session/${sessionId}`);
     };
 
     return (
@@ -196,6 +204,17 @@ export const CategoryDetail: React.FC = () => {
                         </div>
                     </div>
                 </div>
+                <button
+                    onClick={() => setSessionPickerOpen(true)}
+                    className="p-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl shadow-md hover:from-purple-700 hover:to-blue-700 transition-all flex items-center gap-2"
+                    title={t('sessions.createTitle', 'Skapa Multi-Session')}
+                    disabled={categoryLists.length === 0}
+                >
+                    <PlayCircle size={24} />
+                    <span className="hidden sm:inline text-sm font-medium">
+                        {t('sessions.multiSession', 'Multi-Session')}
+                    </span>
+                </button>
             </div>
 
 
@@ -240,6 +259,12 @@ export const CategoryDetail: React.FC = () => {
                 title={t('lists.clearCompletedTitle')}
                 message={t('lists.clearCompletedMessage')}
                 confirmText={t('lists.clearCompleted')}
+            />
+            <SessionPicker
+                isOpen={sessionPickerOpen}
+                onClose={() => setSessionPickerOpen(false)}
+                onCreateSession={handleCreateSession}
+                lists={categoryLists}
             />
         </div>
     );

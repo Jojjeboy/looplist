@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { Plus, Folder } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Plus, Folder, PlayCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
+import { SessionPicker } from './SessionPicker';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableCategoryCard } from './SortableCategoryCard';
 
 export const CategoryView: React.FC = () => {
     const { t } = useTranslation();
-    const { categories, addCategory, deleteCategory, reorderCategories } = useApp();
+    const navigate = useNavigate();
+    const { categories, lists, addCategory, deleteCategory, reorderCategories, addSession } = useApp();
     const [newCategoryName, setNewCategoryName] = useState('');
+    const [sessionPickerOpen, setSessionPickerOpen] = useState(false);
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; categoryId: string | null }>({
         isOpen: false,
         categoryId: null,
@@ -54,9 +58,27 @@ export const CategoryView: React.FC = () => {
         }
     };
 
+    const handleCreateSession = async (name: string, listIds: string[]) => {
+        const sessionId = await addSession(name, listIds); // No categoryId for cross-category
+        navigate(`/session/${sessionId}`);
+    };
+
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{t('categories.title')}</h2>
+            <div className="flex items-center justify-between gap-4">
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{t('categories.title')}</h2>
+                <button
+                    onClick={() => setSessionPickerOpen(true)}
+                    className="p-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl shadow-md hover:from-purple-700 hover:to-blue-700 transition-all flex items-center gap-2"
+                    title={t('sessions.createTitle', 'Skapa Multi-Session')}
+                    disabled={lists.length === 0}
+                >
+                    <PlayCircle size={24} />
+                    <span className="hidden sm:inline text-sm font-medium">
+                        {t('sessions.multiSession', 'Multi-Session')}
+                    </span>
+                </button>
+            </div>
             <form onSubmit={handleAdd} className="flex gap-2">
                 <input
                     type="text"
@@ -104,6 +126,13 @@ export const CategoryView: React.FC = () => {
                 message={t('categories.deleteMessage')}
                 confirmText={t('categories.deleteConfirm')}
                 isDestructive
+            />
+            <SessionPicker
+                isOpen={sessionPickerOpen}
+                onClose={() => setSessionPickerOpen(false)}
+                onCreateSession={handleCreateSession}
+                lists={lists}
+                categories={categories}
             />
         </div>
     );
