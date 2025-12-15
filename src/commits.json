@@ -1,5 +1,257 @@
 [
   {
+    "hash": "046fad4d220f7410131082b3d31e18c0ad43f44c",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 11:19:13 +0100",
+    "message": "Sorting combined lists",
+    "files": [
+      {
+        "status": "M",
+        "path": ".gitignore"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/eslint.strict.config.ts.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/index.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/postcss.config.js.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/scripts/generate-commits.js.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/scripts/index.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/App.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/ActivityLog.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/CategoryDetail.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/CategoryView.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/HelloWorld.vue.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/LandingPage.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/Layout.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/ListDetail.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/MarqueeText.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/Modal.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/NotesView.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/OfflineIndicator.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/ProtectedRoute.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/SearchResults.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/SessionDetail.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/SessionPicker.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/SettingsModal.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/SortableCategoryCard.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/SortableItem.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/SortableListCard.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/ToastContainer.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/UpdatePrompt.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/components/index.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/context/AppContext.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/context/AuthContext.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/context/ToastContext.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/context/index.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/data/index.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/data/templates.ts.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/firebase.ts.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/hooks/index.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/hooks/useFirestoreSync.ts.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/hooks/useLocalStorage.ts.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/hooks/useMigrateLocalStorage.ts.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/hooks/useVoiceInput.ts.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/i18n.ts.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/index.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/main.tsx.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/types/index.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/src/types/index.ts.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/anti/tailwind.config.js.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/base.css"
+      },
+      {
+        "status": "D",
+        "path": "coverage/block-navigation.js"
+      },
+      {
+        "status": "D",
+        "path": "coverage/clover.xml"
+      },
+      {
+        "status": "D",
+        "path": "coverage/coverage-final.json"
+      },
+      {
+        "status": "D",
+        "path": "coverage/favicon.png"
+      },
+      {
+        "status": "D",
+        "path": "coverage/index.html"
+      },
+      {
+        "status": "D",
+        "path": "coverage/prettify.css"
+      },
+      {
+        "status": "D",
+        "path": "coverage/prettify.js"
+      },
+      {
+        "status": "D",
+        "path": "coverage/sort-arrow-sprite.png"
+      },
+      {
+        "status": "D",
+        "path": "coverage/sorter.js"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SessionDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SessionPicker.tsx"
+      }
+    ]
+  },
+  {
     "hash": "e1663e08c36794f7445da4cd822b8f7e78185359",
     "author": "Jojjeboy",
     "date": "2025-12-15 10:59:59 +0100",

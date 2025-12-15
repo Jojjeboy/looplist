@@ -7,17 +7,27 @@ import { Modal } from './Modal';
 import { SessionPicker } from './SessionPicker';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CombinationCard } from './CombinationCard';
+import { CombinationEditor } from './CombinationEditor';
+import { ListCombination } from '../types';
 import { SortableCategoryCard } from './SortableCategoryCard';
 
 export const CategoryView: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { categories, lists, addCategory, deleteCategory, reorderCategories, addSession } = useApp();
+    const { categories, lists, addCategory, deleteCategory, reorderCategories, addSession, combinations, addCombination, updateCombination, deleteCombination } = useApp();
     const [newCategoryName, setNewCategoryName] = useState('');
     const [sessionPickerOpen, setSessionPickerOpen] = useState(false);
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; categoryId: string | null }>({
         isOpen: false,
         categoryId: null,
+    });
+    const [editorState, setEditorState] = useState<{ isOpen: boolean; combination?: ListCombination }>({
+        isOpen: false,
+    });
+    const [deleteCombinationModal, setDeleteCombinationModal] = useState<{ isOpen: boolean; combinationId: string | null }>({
+        isOpen: false,
+        combinationId: null,
     });
 
     const sortedCategories = [...categories].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -59,8 +69,32 @@ export const CategoryView: React.FC = () => {
     };
 
     const handleCreateSession = async (name: string, listIds: string[]) => {
-        const sessionId = await addSession(name, listIds); // No categoryId for cross-category
+        const sessionId = await addSession(name, listIds);
         navigate(`/session/${sessionId}`);
+    };
+
+    const handleSaveCombination = async (name: string, listIds: string[]) => {
+        if (editorState.combination) {
+            await updateCombination(editorState.combination.id, { name, listIds });
+        } else {
+            await addCombination(name, listIds);
+        }
+    };
+
+    const handleStartFromCombination = async (listIds: string[]) => {
+        // Find combination name for the session or use a default
+        const combination = combinations.find(c => JSON.stringify(c.listIds) === JSON.stringify(listIds)); // Simple lookup, might be ambiguous but works for name
+        const name = combination ? combination.name : t('sessions.newSession', 'Ny Session');
+        
+        const sessionId = await addSession(name, listIds);
+        navigate(`/session/${sessionId}`);
+    };
+
+    const confirmDeleteCombination = async () => {
+        if (deleteCombinationModal.combinationId) {
+            await deleteCombination(deleteCombinationModal.combinationId);
+            setDeleteCombinationModal({ isOpen: false, combinationId: null });
+        }
     };
 
     return (
@@ -118,6 +152,42 @@ export const CategoryView: React.FC = () => {
                 </SortableContext>
             </DndContext>
 
+            {/* Saved Combinations Section */}
+            <div>
+                <div className="flex items-center justify-between mb-3 mt-8">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                        {t('combinations.title', 'Sparade Mallar')}
+                    </h3>
+                    <button
+                        onClick={() => setEditorState({ isOpen: true })}
+                        className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                        {t('combinations.createRaw', '+ Skapa ny mall')}
+                    </button>
+                </div>
+                
+                {combinations.length === 0 ? (
+                    <div className="text-center py-6 bg-gray-50 dark:bg-gray-900/50 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
+                        <p className="text-gray-500 text-sm">
+                            {t('combinations.empty', 'Du har inga sparade mallar än.')}
+                        </p>
+                    </div>
+                ) : (
+                    <div className="grid gap-3 sm:grid-cols-2">
+                        {combinations.map(combo => (
+                            <CombinationCard
+                                key={combo.id}
+                                combination={combo}
+                                lists={lists}
+                                onStart={handleStartFromCombination}
+                                onEdit={(id) => setEditorState({ isOpen: true, combination: combinations.find(c => c.id === id) })}
+                                onDelete={(id) => setDeleteCombinationModal({ isOpen: true, combinationId: id })}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+
             <Modal
                 isOpen={deleteModal.isOpen}
                 onClose={() => setDeleteModal({ isOpen: false, categoryId: null })}
@@ -127,12 +197,33 @@ export const CategoryView: React.FC = () => {
                 confirmText={t('categories.deleteConfirm')}
                 isDestructive
             />
+
+            <Modal
+                isOpen={deleteCombinationModal.isOpen}
+                onClose={() => setDeleteCombinationModal({ isOpen: false, combinationId: null })}
+                onConfirm={confirmDeleteCombination}
+                title={t('combinations.deleteTitle', 'Radera mall')}
+                message={t('combinations.deleteMessage', 'Är du säker på att du vill radera denna mall? Listorna kommer inte att raderas.')}
+                confirmText={t('common.delete', 'Radera')}
+                isDestructive
+            />
+
             <SessionPicker
                 isOpen={sessionPickerOpen}
                 onClose={() => setSessionPickerOpen(false)}
                 onCreateSession={handleCreateSession}
                 lists={lists}
                 categories={categories}
+                onSaveCombination={async (name, listIds) => { await addCombination(name, listIds); }}
+            />
+
+            <CombinationEditor
+                isOpen={editorState.isOpen}
+                onClose={() => setEditorState({ isOpen: false })}
+                onSave={handleSaveCombination}
+                lists={lists}
+                categories={categories}
+                combination={editorState.combination}
             />
         </div>
     );
