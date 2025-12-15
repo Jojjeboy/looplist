@@ -9,6 +9,7 @@ interface SessionPickerProps {
     onCreateSession: (name: string, listIds: string[]) => void;
     lists: List[];
     categories?: Category[]; // Optional for backward compatibility
+    onSaveCombination?: (name: string, listIds: string[]) => Promise<void>;
 }
 
 export const SessionPicker: React.FC<SessionPickerProps> = ({
@@ -17,11 +18,13 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
     onCreateSession,
     lists,
     categories,
+    onSaveCombination,
 }) => {
     const { t } = useTranslation();
     const [sessionName, setSessionName] = useState('');
     const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [saveAsTemplate, setSaveAsTemplate] = useState(false);
 
     // Helper function to get category name
     const getCategoryName = (categoryId: string): string => {
@@ -58,13 +61,17 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
         ...filteredLists.filter(list => !selectedListIds.includes(list.id)).sort((a, b) => a.name.localeCompare(b.name))
     ];
 
-    const handleCreate = () => {
+    const handleCreate = async () => {
         if (sessionName.trim() && selectedListIds.length >= 2) { // Minimum 2 lists required
+            if (saveAsTemplate && onSaveCombination) {
+                await onSaveCombination(sessionName.trim(), selectedListIds);
+            }
             onCreateSession(sessionName.trim(), selectedListIds);
             // Reset state
             setSessionName('');
             setSelectedListIds([]);
             setSearchQuery('');
+            setSaveAsTemplate(false);
             onClose();
         }
     };
@@ -74,6 +81,7 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
         setSessionName('');
         setSelectedListIds([]);
         setSearchQuery('');
+        setSaveAsTemplate(false);
         onClose();
     };
 
@@ -106,6 +114,20 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
                             autoFocus
                         />
                     </div>
+                    
+                    {onSaveCombination && (
+                        <div className="mb-4">
+                            <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <input
+                                    type="checkbox"
+                                    checked={saveAsTemplate}
+                                    onChange={(e) => setSaveAsTemplate(e.target.checked)}
+                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                                />
+                                <span>{t('combinations.saveAsTemplate', 'Spara som mall för återanvändning')}</span>
+                            </label>
+                        </div>
+                    )}
 
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

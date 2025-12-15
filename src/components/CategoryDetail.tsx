@@ -15,7 +15,7 @@ export const CategoryDetail: React.FC = () => {
     const { t } = useTranslation();
     const { categoryId } = useParams<{ categoryId: string }>();
     const navigate = useNavigate();
-    const { categories, lists, addList, deleteList, copyList, moveList, updateCategoryName, updateListItems, reorderLists, addSession } = useApp();
+    const { categories, lists, addList, deleteList, copyList, moveList, updateCategoryName, updateListItems, reorderLists, addSession, combinations } = useApp();
     const [newListName, setNewListName] = useState('');
     const [movingListId, setMovingListId] = useState<string | null>(null);
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; listId: string | null }>({
@@ -248,7 +248,17 @@ export const CategoryDetail: React.FC = () => {
                 onClose={() => setDeleteModal({ isOpen: false, listId: null })}
                 onConfirm={confirmDelete}
                 title={t('lists.deleteTitle')}
-                message={t('lists.deleteMessage')}
+                message={(() => {
+                    const listToDelete = lists.find(l => l.id === deleteModal.listId);
+                    if (listToDelete) {
+                        const affected = combinations.filter(c => c.listIds.includes(listToDelete.id));
+                        const willBeDeleted = affected.filter(c => c.listIds.length <= 2);
+                        if (willBeDeleted.length > 0) {
+                            return t('lists.deleteMessageWithCombinations', `⚠️ Denna lista ingår i ${willBeDeleted.length} mall(ar) (t.ex. "${willBeDeleted[0].name}") som kommer att raderas eftersom de kräver minst 2 listor. Vill du fortsätta?`);
+                        }
+                    }
+                    return t('lists.deleteMessage');
+                })()}
                 confirmText={t('lists.deleteConfirm')}
                 isDestructive
             />

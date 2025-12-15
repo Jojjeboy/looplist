@@ -45,3 +45,11 @@ export interface ExecutionSession {
     completedAt?: string;
     categoryId?: string;
 }
+
+export interface ListCombination {
+    id: string;
+    name: string;
+    listIds: string[];
+    createdAt: string;
+    updatedAt?: string;
+}
