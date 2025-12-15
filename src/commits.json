@@ -1,5 +1,29 @@
 [
   {
+    "hash": "e1663e08c36794f7445da4cd822b8f7e78185359",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 10:59:59 +0100",
+    "message": "Combined List 2",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SessionPicker.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      }
+    ]
+  },
+  {
     "hash": "61ba15715bb841f2b9bbcd15934d6266dd235c68",
     "author": "Jojjeboy",
     "date": "2025-12-15 10:44:22 +0100",

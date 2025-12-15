@@ -21,6 +21,7 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
     const { t } = useTranslation();
     const [sessionName, setSessionName] = useState('');
     const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     // Helper function to get category name
     const getCategoryName = (categoryId: string): string => {
@@ -34,17 +35,36 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
     const toggleList = (listId: string) => {
         setSelectedListIds(prev =>
             prev.includes(listId)
-                ? prev.filter(id => id !== listId)
-                : [...prev, listId]
+                ? prev.filter(id => id !== listId) // Remove - maintains order
+                : [...prev, listId] // Add to end - preserves selection order
         );
     };
 
+    // Filter lists based on search query
+    const filteredLists = lists.filter(list => {
+        const searchLower = searchQuery.toLowerCase();
+        const matchesName = list.name.toLowerCase().includes(searchLower);
+        const matchesCategory = categories 
+            ? getCategoryName(list.categoryId).toLowerCase().includes(searchLower)
+            : false;
+        return matchesName || matchesCategory;
+    });
+
+    // Sort lists: selected first (in selection order), then unselected (alphabetically)
+    const sortedLists = [
+        // Selected lists in selection order
+        ...selectedListIds.map(id => filteredLists.find(list => list.id === id)).filter(Boolean) as typeof filteredLists,
+        // Unselected lists alphabetically
+        ...filteredLists.filter(list => !selectedListIds.includes(list.id)).sort((a, b) => a.name.localeCompare(b.name))
+    ];
+
     const handleCreate = () => {
-        if (sessionName.trim() && selectedListIds.length > 0) {
+        if (sessionName.trim() && selectedListIds.length >= 2) { // Minimum 2 lists required
             onCreateSession(sessionName.trim(), selectedListIds);
             // Reset state
             setSessionName('');
             setSelectedListIds([]);
+            setSearchQuery('');
             onClose();
         }
     };
@@ -53,6 +73,7 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
         // Reset state
         setSessionName('');
         setSelectedListIds([]);
+        setSearchQuery('');
         onClose();
     };
 
@@ -86,17 +107,29 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
                         />
                     </div>
 
-                    <div className="mb-6">
+                    <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             {t('sessions.selectLists', 'Välj listor')} ({selectedListIds.length})
+                            {selectedListIds.length < 2 && (
+                                <span className="ml-2 text-xs text-orange-600 dark:text-orange-400">
+                                    {t('sessions.minTwoLists', '(minst 2 listor krävs)')}
+                                </span>
+                            )}
                         </label>
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder={t('sessions.searchPlaceholder', 'Sök listor...')}
+                            className="w-full p-2 mb-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                        />
                         <div className="max-h-64 overflow-y-auto space-y-2 border border-gray-200 dark:border-gray-700 rounded-xl p-2">
-                            {lists.length === 0 ? (
+                            {sortedLists.length === 0 ? (
                                 <p className="text-center text-gray-500 py-4">
-                                    {t('sessions.noLists', 'Inga listor tillgängliga')}
+                                    {searchQuery ? t('sessions.noResults', 'Inga listor hittades') : t('sessions.noLists', 'Inga listor tillgängliga')}
                                 </p>
                             ) : (
-                                lists.map((list) => {
+                                sortedLists.map((list) => {
                                     const isSelected = selectedListIds.includes(list.id);
                                     return (
                                         <button
@@ -137,9 +170,9 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
                         </button>
                         <button
                             onClick={handleCreate}
-                            disabled={!sessionName.trim() || selectedListIds.length === 0}
+                            disabled={!sessionName.trim() || selectedListIds.length < 2}
                             className={`px-4 py-2 text-sm font-medium text-white rounded-lg shadow-sm transition-colors ${
-                                !sessionName.trim() || selectedListIds.length === 0
+                                !sessionName.trim() || selectedListIds.length < 2
                                     ? 'bg-gray-400 cursor-not-allowed'
                                     : 'bg-blue-600 hover:bg-blue-700'
                             }`}

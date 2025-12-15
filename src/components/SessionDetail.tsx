@@ -14,7 +14,9 @@ export const SessionDetail: React.FC = () => {
 
     const session = sessions.find((s) => s.id === sessionId);
     const sessionLists = session
-        ? lists.filter((l) => session.listIds.includes(l.id))
+        ? session.listIds
+            .map(listId => lists.find(l => l.id === listId))
+            .filter(Boolean) as typeof lists // Preserve order from listIds
         : [];
 
     React.useEffect(() => {
