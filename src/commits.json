@@ -1,5 +1,70 @@
 [
   {
+    "hash": "ef9aa72971f4568d2ca346d7467e0580e4558d6c",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 15:16:51 +0100",
+    "message": "MC",
+    "files": [
+      {
+        "status": "M",
+        "path": "package.json"
+      }
+    ]
+  },
+  {
+    "hash": "7aa5ef1c96704c2ae03a3290b5ba1495aae3338e",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 15:12:42 +0100",
+    "message": "Merge branch 'master' of https://github.com/Jojjeboy/anti",
+    "files": []
+  },
+  {
+    "hash": "1f0104102aedffa464f13af64f60b65453c0d522",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 15:12:07 +0100",
+    "message": "Sonar 5",
+    "files": [
+      {
+        "status": "M",
+        "path": "sonar-project.properties"
+      },
+      {
+        "status": "A",
+        "path": "test-results.xml"
+      }
+    ]
+  },
+  {
+    "hash": "eaf1630bf52a3b453dc1ea0eefdf6b72a6749401",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 15:03:21 +0100",
+    "message": "Merge pull request #4 from Jojjeboy/develop",
+    "files": []
+  },
+  {
+    "hash": "ef1d5e186912e125d4cb62d7e58bfb49e3b7e649",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 15:02:00 +0100",
+    "message": "vite test conf fix",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
+  },
+  {
+    "hash": "36e8200d546557f4f386a16fc8f0a09c7aa3f09f",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 14:52:08 +0100",
+    "message": "Merge pull request #3 from Jojjeboy/develop",
+    "files": []
+  },
+  {
     "hash": "379d283eab4613676f010d8b9c23d9e31bf2d7c7",
     "author": "Jojjeboy",
     "date": "2025-12-15 14:51:31 +0100",
@@ -92,6 +157,13 @@
     ]
   },
   {
+    "hash": "dd9a13cbb47cd0ec775bb0f032653edeef2ad74a",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 11:53:51 +0100",
+    "message": "Persisted combinations from Jojjeboy/develop",
+    "files": []
+  },
+  {
     "hash": "b96886d107537391f8342df01cae136f87c2fa01",
     "author": "Jojjeboy",
     "date": "2025-12-15 11:52:45 +0100",
@@ -138,6 +210,13 @@
         "path": "tsconfig.app.tsbuildinfo"
       }
     ]
+  },
+  {
+    "hash": "deafdaee5b241b587de94dd8504766ac56312fff",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 11:27:13 +0100",
+    "message": "Merge pull request #1 from Jojjeboy/develop",
+    "files": []
   },
   {
     "hash": "046fad4d220f7410131082b3d31e18c0ad43f44c",
