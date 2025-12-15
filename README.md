@@ -5,7 +5,8 @@ A mobile-first Progressive Web App for managing reusable lists, built with React
 - **Categories**: Group lists into categories (e.g., Jobb, Privat, Resor).
 - **Lists**: Create, copy, move, and delete lists.
 - **Items**: Add, edit, delete, check/uncheck items.
-- **Templates**: Create lists from predefined templates (Grocery, Gym, etc.).
+- **Templates (Saved Combinations)**: Create permanent reusable templates from list combinations (e.g., Morning Routine, Travel).
+- **Quick Sessions**: Group multiple lists into temporary executable sessions.
 - **Sorting**: Sort items manually, alphabetically, or by completion status.
 - **Voice Input**: Add items using voice dictation.
 - **Undo**: Undo accidental deletions of lists and items.
@@ -28,6 +29,7 @@ The application uses **Google Cloud Firestore** as its primary data store.
 - **Migration**: A custom hook `useMigrateLocalStorage` detects if a user has existing local data but no cloud data, and automatically migrates it to Firestore on their first login.
 
 ## Tech Stack
+
 - **Frontend Framework**: React (TypeScript)
 - **Styling**: Tailwind CSS
 - **Build Tool**: Vite
@@ -40,10 +42,12 @@ The application uses **Google Cloud Firestore** as its primary data store.
 - **Utils**: suncalc (for auto theme), uuid
 
 ## Documentation & Prompts
+
 For a detailed log of the prompts used to build this application, please refer to:
 [PromptsMade.md](./PromptsMade.md)
 
 ## Setup & Run
+
 1. Install dependencies:
    ```bash
    npm install
@@ -57,10 +61,28 @@ For a detailed log of the prompts used to build this application, please refer t
    npm run build
    ```
 
+## Testing
+
+Run the test suite using Vitest:
+
+```bash
+# Run all tests
+npm run test
+
+# Run with UI
+npm run test:ui
+
+# Check coverage
+npm run coverage
+```
+
+## License
+
+MIT
+
 ## PWA Icons
+
 To fully enable PWA installation, please add the following icons to the `public` directory:
+
 - `pwa-192x192.png`
 - `pwa-512x512.png`
-
-
-
