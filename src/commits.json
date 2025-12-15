@@ -1,5 +1,145 @@
 [
   {
+    "hash": "379d283eab4613676f010d8b9c23d9e31bf2d7c7",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 14:51:31 +0100",
+    "message": "Sonarcloud integration v1",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      },
+      {
+        "status": "A",
+        "path": "sonar-project.properties"
+      }
+    ]
+  },
+  {
+    "hash": "db95c4528083eeaefecabf2efddc9c6e700be611",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 14:40:11 +0100",
+    "message": "Added loooots of tests",
+    "files": [
+      {
+        "status": "M",
+        "path": "README.md"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "A",
+        "path": "src/components/CategoryDetail.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/CategoryView.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/CombinationEditor.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/ListDetail.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/Modal.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/SearchResults.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/SessionDetail.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/SessionPicker.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/context/AppContext.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/context/AuthContext.test.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/context/ToastContext.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      },
+      {
+        "status": "A",
+        "path": "vitest.config.ts.timestamp-1765802313428-384ff11b9a784.mjs"
+      },
+      {
+        "status": "A",
+        "path": "vitest.config.ts.timestamp-1765802500622-a32ce221e3c7e.mjs"
+      },
+      {
+        "status": "A",
+        "path": "vitest.config.ts.timestamp-1765803398734-413a7603ca36b.mjs"
+      }
+    ]
+  },
+  {
+    "hash": "b96886d107537391f8342df01cae136f87c2fa01",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 11:52:45 +0100",
+    "message": "Persisted combinations",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/CombinationCard.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/CombinationEditor.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SessionPicker.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/sv.json"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
+  },
+  {
     "hash": "046fad4d220f7410131082b3d31e18c0ad43f44c",
     "author": "Jojjeboy",
     "date": "2025-12-15 11:19:13 +0100",
