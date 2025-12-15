@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { X, Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { List } from '../types';
+import { List, Category } from '../types';
 
 interface SessionPickerProps {
     isOpen: boolean;
     onClose: () => void;
     onCreateSession: (name: string, listIds: string[]) => void;
     lists: List[];
+    categories?: Category[]; // Optional for backward compatibility
 }
 
 export const SessionPicker: React.FC<SessionPickerProps> = ({
@@ -15,10 +16,18 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
     onClose,
     onCreateSession,
     lists,
+    categories,
 }) => {
     const { t } = useTranslation();
     const [sessionName, setSessionName] = useState('');
     const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
+
+    // Helper function to get category name
+    const getCategoryName = (categoryId: string): string => {
+        if (!categories) return '';
+        const category = categories.find(c => c.id === categoryId);
+        return category ? category.name : '';
+    };
 
     if (!isOpen) return null;
 
@@ -99,11 +108,18 @@ export const SessionPicker: React.FC<SessionPickerProps> = ({
                                                     : 'bg-gray-50 dark:bg-gray-700 border-2 border-transparent hover:bg-gray-100 dark:hover:bg-gray-600'
                                             }`}
                                         >
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                {list.name}
-                                            </span>
+                                            <div className="flex flex-col items-start gap-1 flex-1 min-w-0">
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                    {list.name}
+                                                </span>
+                                                {categories && (
+                                                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                        {getCategoryName(list.categoryId)}
+                                                    </span>
+                                                )}
+                                            </div>
                                             {isSelected && (
-                                                <Check size={18} className="text-blue-600 dark:text-blue-400" />
+                                                <Check size={18} className="text-blue-600 dark:text-blue-400 flex-shrink-0" />
                                             )}
                                         </button>
                                     );

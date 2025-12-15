@@ -254,7 +254,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             name,
             listIds,
             createdAt: new Date().toISOString(),
-            categoryId,
+            ...(categoryId && { categoryId }), // Only include if defined
         };
         await sessionsSync.addItem(newSession);
         return id;
