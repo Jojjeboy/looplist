@@ -1,5 +1,45 @@
 [
   {
+    "hash": "f19e6b55bfb1f0ca2a272405ac65a2309c440b51",
+    "author": "Jojjeboy",
+    "date": "2025-12-12 22:26:29 +0100",
+    "message": "Move list item grab handle to right for consistency",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      }
+    ]
+  },
+  {
+    "hash": "57aa483dbf93e8744b0d3a4e12eb4adc06c9619b",
+    "author": "Jojjeboy",
+    "date": "2025-12-12 22:13:18 +0100",
+    "message": "Add file changes accordion and GitHub links to git log",
+    "files": [
+      {
+        "status": "M",
+        "path": "scripts/generate-commits.js"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ActivityLog.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
+  },
+  {
     "hash": "df16188a099668eeefba24b602ef63c54da2260e",
     "author": "Jojjeboy",
     "date": "2025-12-12 22:06:11 +0100",

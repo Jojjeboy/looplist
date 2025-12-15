@@ -36,3 +36,12 @@ export interface Commit {
         path: string;
     }[];
 }
+
+export interface ExecutionSession {
+    id: string;
+    name: string;
+    listIds: string[];
+    createdAt: string;
+    completedAt?: string;
+    categoryId?: string;
+}

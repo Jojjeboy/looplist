@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import SunCalc from 'suncalc';
-import { Category, List, Item, Note } from '../types';
+import { Category, List, Item, Note, ExecutionSession } from '../types';
 
 type Priority = 'low' | 'medium' | 'high';
 import { useToast } from './ToastContext';
@@ -34,6 +34,10 @@ interface AppContextType {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     loading: boolean;
+    sessions: ExecutionSession[];
+    addSession: (name: string, listIds: string[], categoryId?: string) => Promise<string>;
+    completeSession: (sessionId: string) => Promise<void>;
+    deleteSession: (id: string) => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -45,6 +49,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const categoriesSync = useFirestoreSync<Category>('users/{uid}/categories', user?.uid);
     const listsSync = useFirestoreSync<List>('users/{uid}/lists', user?.uid);
     const notesSync = useFirestoreSync<Note>('users/{uid}/notes', user?.uid);
+    const sessionsSync = useFirestoreSync<ExecutionSession>('users/{uid}/sessions', user?.uid);
 
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
     const [searchQuery, setSearchQuery] = useState('');
@@ -242,6 +247,44 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         await notesSync.deleteItem(id);
     };
 
+    const addSession = async (name: string, listIds: string[], categoryId?: string) => {
+        const id = uuidv4();
+        const newSession: ExecutionSession = {
+            id,
+            name,
+            listIds,
+            createdAt: new Date().toISOString(),
+            categoryId,
+        };
+        await sessionsSync.addItem(newSession);
+        return id;
+    };
+
+    const completeSession = async (sessionId: string) => {
+        const session = sessionsSync.data.find(s => s.id === sessionId);
+        if (session) {
+            // Reset all lists in the session
+            const resetPromises = session.listIds.map(listId => {
+                const list = listsSync.data.find(l => l.id === listId);
+                if (list) {
+                    const resetItems = list.items.map(item => ({ ...item, completed: false }));
+                    return updateListItems(listId, resetItems);
+                }
+                return Promise.resolve();
+            });
+            await Promise.all(resetPromises);
+
+            // Mark session as completed
+            await sessionsSync.updateItem(sessionId, {
+                completedAt: new Date().toISOString()
+            });
+        }
+    };
+
+    const deleteSession = async (id: string) => {
+        await sessionsSync.deleteItem(id);
+    };
+
     return (
         <AppContext.Provider
             value={{
@@ -268,6 +311,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 searchQuery,
                 setSearchQuery,
                 loading: categoriesSync.loading || listsSync.loading || notesSync.loading || migrating,
+                sessions: sessionsSync.data,
+                addSession,
+                completeSession,
+                deleteSession,
             }}
         >
             {children}
