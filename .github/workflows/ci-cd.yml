@@ -44,6 +44,9 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
         run: npm run build
 
+      - name: Run Tests
+        run: npm run test
+
       # --- STEG 3: SonarCloud Analys ---
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
