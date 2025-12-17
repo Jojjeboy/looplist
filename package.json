@@ -8,7 +8,7 @@
     "build": "node scripts/generate-commits.js && tsc -b && vite build",
     "postbuild": "vitest run --coverage --reporter=junit --outputFile=dist/test-results.xml",
     "preview": "vite preview",
-    "test": "vitest run --coverage --reporter=junit --outputFile=dist/test-results.xml",
+    "test": "vitest run --coverage",
     "lint": "eslint .",
     "check-any": "eslint . --config eslint.strict.config.ts",
     "validate": "npm run build && npm run lint && npm run check-any && npm run test"
@@ -57,6 +57,7 @@
     "typescript-eslint": "^8.48.1",
     "vite": "^7.2.4",
     "vite-plugin-pwa": "^1.1.0",
-    "vitest": "^2.1.9"
+    "vitest": "^2.1.9",
+    "vitest-sonar-reporter": "^3.0.0"
   }
 }
