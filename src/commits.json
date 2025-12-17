@@ -1,5 +1,57 @@
 [
   {
+    "hash": "ea367f79efb34a8957a7c96e94fcbb6a53c64a1f",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 11:54:09 +0100",
+    "message": "Added Security Audit , SonarCloud Caching  and Lighthouse Check",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
+  },
+  {
+    "hash": "2d433158a759bcf544c86a6a51c69fdea5def04e",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 11:43:23 +0100",
+    "message": "Update version of sonarqube",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
+  },
+  {
+    "hash": "8c196f2ae01b26b836e4f3296d7c5a0c364217ee",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 11:35:06 +0100",
+    "message": "Improved ci/cd yml spec",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
+  },
+  {
+    "hash": "27558663da3637b44d18099085a0de161e0f9c9a",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 11:21:15 +0100",
+    "message": "Sonar badge",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      }
+    ]
+  },
+  {
     "hash": "7f173a4052c49603b2877389a878dcdbaafff86a",
     "author": "Jojjeboy",
     "date": "2025-12-17 10:31:52 +0100",

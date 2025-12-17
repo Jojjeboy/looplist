@@ -11,7 +11,7 @@ vi.mock('react-i18next', () => ({
 
 // Mock dnd-kit
 vi.mock('@dnd-kit/core', () => ({
-    DndContext: ({ children }: any) => <div>{children}</div>,
+    DndContext: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
     closestCenter: vi.fn(),
     PointerSensor: vi.fn(),
     KeyboardSensor: vi.fn(),
@@ -20,7 +20,7 @@ vi.mock('@dnd-kit/core', () => ({
 }));
 
 vi.mock('@dnd-kit/sortable', () => ({
-    SortableContext: ({ children }: any) => <div>{children}</div>,
+    SortableContext: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
     sortableKeyboardCoordinates: vi.fn(),
     verticalListSortingStrategy: vi.fn(),
     arrayMove: vi.fn(),
@@ -28,7 +28,7 @@ vi.mock('@dnd-kit/sortable', () => ({
 
 // Mock child components
 vi.mock('./SortableListCard', () => ({
-    SortableListCard: ({ list, onDelete }: any) => (
+    SortableListCard: ({ list, onDelete }: { list: { id: string; name: string }; onDelete: (id: string) => void }) => (
         <div data-testid="list-card">
             {list.name}
             <button onClick={() => onDelete(list.id)}>Delete</button>
@@ -41,7 +41,7 @@ vi.mock('./SessionPicker', () => ({
 }));
 
 vi.mock('./Modal', () => ({
-    Modal: ({ isOpen, onConfirm, title }: any) => isOpen ? (
+    Modal: ({ isOpen, onConfirm, title }: { isOpen: boolean; onConfirm: () => void; title: string }) => isOpen ? (
         <div data-testid="modal">
             {title}
             <button onClick={onConfirm}>Confirm Delete</button>
@@ -78,7 +78,7 @@ describe('CategoryDetail', () => {
             deleteCategory: vi.fn(),
             reorderCategories: vi.fn(),
             addSession: vi.fn(),
-            combinationsSync: {} as any,
+            combinationsSync: {},
             addCombination: vi.fn(),
             updateCombination: vi.fn(),
             deleteCombination: vi.fn(),
@@ -86,12 +86,12 @@ describe('CategoryDetail', () => {
             updateListItems: vi.fn(),
             completeSession: vi.fn(),
             deleteSession: vi.fn(),
-            copyList: vi.fn(), 
-            moveList: vi.fn(), 
-            updateListName: vi.fn(), 
-            reorderLists: vi.fn(), 
+            copyList: vi.fn(),
+            moveList: vi.fn(),
+            updateListName: vi.fn(),
+            reorderLists: vi.fn(),
             loading: false,
-        } as any);
+        } as ReturnType<typeof AppContext.useApp>);
     });
 
     const renderComponent = () => {
@@ -115,7 +115,7 @@ describe('CategoryDetail', () => {
         renderComponent();
         const input = screen.getByPlaceholderText('lists.newPlaceholder');
         fireEvent.change(input, { target: { value: 'New List' } });
-        
+
         const form = input.closest('form');
         fireEvent.submit(form!);
 
@@ -124,7 +124,7 @@ describe('CategoryDetail', () => {
 
     it('opens delete modal and deletes list', async () => {
         renderComponent();
-        
+
         const deleteButtons = screen.getAllByText('Delete');
         fireEvent.click(deleteButtons[0]);
 
@@ -132,9 +132,9 @@ describe('CategoryDetail', () => {
             expect(screen.getByTestId('modal')).toBeDefined();
             expect(screen.getByText('lists.deleteTitle')).toBeDefined();
         });
-        
+
         fireEvent.click(screen.getByText('Confirm Delete'));
-        
+
         expect(mockDeleteList).toHaveBeenCalledWith('l1');
     });
 });

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { CategoryView } from './CategoryView';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
@@ -11,7 +11,7 @@ vi.mock('react-i18next', () => ({
 
 // Mock dnd-kit to avoid issues in test environment
 vi.mock('@dnd-kit/core', () => ({
-    DndContext: ({ children }: any) => <div>{children}</div>,
+    DndContext: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
     closestCenter: vi.fn(),
     PointerSensor: vi.fn(),
     KeyboardSensor: vi.fn(),
@@ -20,22 +20,22 @@ vi.mock('@dnd-kit/core', () => ({
 }));
 
 vi.mock('@dnd-kit/sortable', () => ({
-    SortableContext: ({ children }: any) => <div>{children}</div>,
+    SortableContext: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
     sortableKeyboardCoordinates: vi.fn(),
     verticalListSortingStrategy: vi.fn(),
 }));
 
 // Mock child components to simplify testing CategoryView logic
 vi.mock('./SortableCategoryCard', () => ({
-    SortableCategoryCard: ({ category }: any) => <div data-testid="category-card">{category.name}</div>
+    SortableCategoryCard: ({ category }: { category: { name: string } }) => <div data-testid="category-card">{category.name}</div>
 }));
 
 vi.mock('./CombinationCard', () => ({
-    CombinationCard: ({ combination }: any) => <div data-testid="combination-card">{combination.name}</div>
+    CombinationCard: ({ combination }: { combination: { name: string } }) => <div data-testid="combination-card">{combination.name}</div>
 }));
 
 vi.mock('./SessionPicker', () => ({
-    SessionPicker: ({ isOpen }: any) => isOpen ? <div data-testid="session-picker" /> : null
+    SessionPicker: ({ isOpen }: { isOpen: boolean }) => isOpen ? <div data-testid="session-picker" /> : null
 }));
 
 // Mock Lucide icons
@@ -74,13 +74,13 @@ describe('CategoryView', () => {
             deleteSession: vi.fn(),
             addList: vi.fn(),
             deleteList: vi.fn(),
-            copyList: vi.fn(), 
-            moveList: vi.fn(), 
-            updateCategoryName: vi.fn(), 
-            updateListName: vi.fn(), 
-            reorderLists: vi.fn(), 
+            copyList: vi.fn(),
+            moveList: vi.fn(),
+            updateCategoryName: vi.fn(),
+            updateListName: vi.fn(),
+            reorderLists: vi.fn(),
             loading: false,
-        } as any);
+        } as ReturnType<typeof AppContext.useApp>);
     });
 
     const renderComponent = () => {
@@ -103,7 +103,7 @@ describe('CategoryView', () => {
         renderComponent();
         const input = screen.getByPlaceholderText('categories.newPlaceholder');
         fireEvent.change(input, { target: { value: 'New Category' } });
-        
+
         const form = input.closest('form');
         fireEvent.submit(form!);
 
@@ -114,17 +114,17 @@ describe('CategoryView', () => {
         renderComponent();
         const button = screen.getByTitle('sessions.createTitle');
         fireEvent.click(button);
-        
+
         expect(screen.getByTestId('session-picker')).toBeDefined();
     });
-    
+
     it('disables multi-session button if no lists', () => {
-         vi.spyOn(AppContext, 'useApp').mockReturnValue({
+        vi.spyOn(AppContext, 'useApp').mockReturnValue({
             categories: [], lists: [], combinations: [],
             addCategory: vi.fn(),
             // ... defaults
-        } as any);
-        
+        } as ReturnType<typeof AppContext.useApp>);
+
         renderComponent();
         const button = screen.getByTitle('sessions.createTitle');
         expect(button).toBeDisabled();
