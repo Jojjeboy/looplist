@@ -1,6 +1,6 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { AuthProvider, useAuth } from './AuthContext';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 
 // Mock Firebase Auth
@@ -28,7 +28,6 @@ describe('AuthContext', () => {
             return () => { };
         });
 
-        const { result } = renderHook(() => useAuth(), { wrapper: AuthProvider });
 
         // Should start loading
         // Note: The AuthProvider only renders children when !loading. 

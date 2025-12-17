@@ -1,6 +1,6 @@
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { ToastProvider, useToast } from './ToastContext';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 describe('ToastContext', () => {
     beforeEach(() => {
@@ -32,7 +32,7 @@ describe('ToastContext', () => {
         act(() => {
             result.current.showToast('Test Message', 'success');
         });
-        
+
         const toastId = result.current.toasts[0].id;
 
         act(() => {
