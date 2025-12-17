@@ -39,8 +39,12 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
+    // Här konfigurerar vi specifika filer för specifika reporters
     reporters: ['default', 'vitest-sonar-reporter'],
-    outputFile: 'dist/test-results.xml',
+    outputFile: {
+      'vitest-sonar-reporter': 'dist/sonar-report.xml', // Denna behövs för Sonar
+      'junit': 'dist/test-results.xml' // Om du även vill ha JUnit (valfritt)
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],

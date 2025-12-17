@@ -1,5 +1,93 @@
 [
   {
+    "hash": "bb4066fa864071f86686e3cf5ac359d09cc830ff",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 09:46:48 +0100",
+    "message": "Downgrade vitest-sonar-reporter to 2.0.0 for vitest@2 compatibility",
+    "files": [
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      }
+    ]
+  },
+  {
+    "hash": "afac562b8ff7d8f4dc6a6e52a359f6e63473b6a0",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 09:40:11 +0100",
+    "message": "Configure vitest-sonar-reporter for correct Generic Test Data format",
+    "files": [
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "sonar-project.properties"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
+  },
+  {
+    "hash": "c5d64024df790db866beefcdec6ba3be361c67d9",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 09:25:47 +0100",
+    "message": "Fix CI tests failing due to missing Firebase env vars",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
+  },
+  {
+    "hash": "b635ec30e02a41e47f583fea581c95b92898a440",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 09:19:31 +0100",
+    "message": "Configure SonarQube integration",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      },
+      {
+        "status": "M",
+        "path": "sonar-project.properties"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      }
+    ]
+  },
+  {
+    "hash": "cf875c6ab574ae7e143d4301912cbe47e82ecedd",
+    "author": "Jojjeboy",
+    "date": "2025-12-15 15:26:32 +0100",
+    "message": "Sonar 6",
+    "files": [
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      }
+    ]
+  },
+  {
     "hash": "ef9aa72971f4568d2ca346d7467e0580e4558d6c",
     "author": "Jojjeboy",
     "date": "2025-12-15 15:16:51 +0100",
