@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node scripts/generate-commits.js && vite",
     "build": "node scripts/generate-commits.js && tsc -b && vite build",
-    "postbuild": "vitest run --coverage --reporter=junit --outputFile=dist/test-results.xml",
+    "postbuild": "vitest run --coverage",
     "preview": "vite preview",
     "test": "vitest run --coverage",
     "lint": "eslint .",

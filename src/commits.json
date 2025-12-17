@@ -1,5 +1,37 @@
 [
   {
+    "hash": "5fad57130b6fc6c4fa05eaf1fd877534fe56de05",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 10:22:01 +0100",
+    "message": "Updated config to include sonar report file",
+    "files": [
+      {
+        "status": "M",
+        "path": "sonar-project.properties"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "vite.config.ts"
+      },
+      {
+        "status": "D",
+        "path": "vitest.config.ts.timestamp-1765802313428-384ff11b9a784.mjs"
+      },
+      {
+        "status": "D",
+        "path": "vitest.config.ts.timestamp-1765802500622-a32ce221e3c7e.mjs"
+      },
+      {
+        "status": "D",
+        "path": "vitest.config.ts.timestamp-1765803398734-413a7603ca36b.mjs"
+      }
+    ]
+  },
+  {
     "hash": "bb4066fa864071f86686e3cf5ac359d09cc830ff",
     "author": "Jojjeboy",
     "date": "2025-12-17 09:46:48 +0100",
