@@ -23,13 +23,13 @@ describe('AuthContext', () => {
 
     it('initializes with loading state and checks auth status', async () => {
         // Mock onAuthStateChanged to delay
-        (onAuthStateChanged as any).mockImplementation((auth: any, callback: any) => {
-             // Do nothing immediately to simulate loading
-             return () => {};
+        (onAuthStateChanged as unknown as ReturnType<typeof vi.fn>).mockImplementation((_auth: unknown, _callback: (user: unknown) => void) => {
+            // Do nothing immediately to simulate loading
+            return () => { };
         });
 
         const { result } = renderHook(() => useAuth(), { wrapper: AuthProvider });
-        
+
         // Should start loading
         // Note: The AuthProvider only renders children when !loading. 
         // So effectively, we can't test "loading=true" through useAuth hook return if the provider blocks render.
@@ -38,9 +38,9 @@ describe('AuthContext', () => {
 
     it('updates user when auth state changes', async () => {
         const mockUser = { uid: '123', email: 'test@example.com' };
-        (onAuthStateChanged as any).mockImplementation((auth: any, callback: any) => {
+        (onAuthStateChanged as unknown as ReturnType<typeof vi.fn>).mockImplementation((_auth: unknown, callback: (user: unknown) => void) => {
             callback(mockUser);
-            return () => {};
+            return () => { };
         });
 
         const { result } = renderHook(() => useAuth(), { wrapper: AuthProvider });
@@ -52,14 +52,14 @@ describe('AuthContext', () => {
     });
 
     it('signInWithGoogle calls firebase signInWithPopup', async () => {
-         // Setup valid user state first to ensure hook renders
-         (onAuthStateChanged as any).mockImplementation((auth: any, callback: any) => {
+        // Setup valid user state first to ensure hook renders
+        (onAuthStateChanged as unknown as ReturnType<typeof vi.fn>).mockImplementation((_auth: unknown, callback: (user: unknown) => void) => {
             callback({ uid: 'guest' });
-            return () => {};
+            return () => { };
         });
 
         const { result } = renderHook(() => useAuth(), { wrapper: AuthProvider });
-        
+
         await waitFor(() => expect(result.current.loading).toBe(false));
 
         await act(async () => {
@@ -70,9 +70,9 @@ describe('AuthContext', () => {
     });
 
     it('logout calls firebase signOut', async () => {
-        (onAuthStateChanged as any).mockImplementation((auth: any, callback: any) => {
+        (onAuthStateChanged as unknown as ReturnType<typeof vi.fn>).mockImplementation((_auth: unknown, callback: (user: unknown) => void) => {
             callback({ uid: 'user1' });
-            return () => {};
+            return () => { };
         });
 
         const { result } = renderHook(() => useAuth(), { wrapper: AuthProvider });

@@ -79,8 +79,7 @@ describe('CategoryView', () => {
             updateCategoryName: vi.fn(),
             updateListName: vi.fn(),
             reorderLists: vi.fn(),
-            loading: false,
-        } as ReturnType<typeof AppContext.useApp>);
+        } as Partial<ReturnType<typeof AppContext.useApp>> as ReturnType<typeof AppContext.useApp>);
     });
 
     const renderComponent = () => {
@@ -122,8 +121,7 @@ describe('CategoryView', () => {
         vi.spyOn(AppContext, 'useApp').mockReturnValue({
             categories: [], lists: [], combinations: [],
             addCategory: vi.fn(),
-            // ... defaults
-        } as ReturnType<typeof AppContext.useApp>);
+        } as Partial<ReturnType<typeof AppContext.useApp>> as ReturnType<typeof AppContext.useApp>);
 
         renderComponent();
         const button = screen.getByTitle('sessions.createTitle');

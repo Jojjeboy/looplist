@@ -12,11 +12,11 @@ const mockShowToast = vi.fn();
 vi.mock('../hooks/useFirestoreSync', () => ({
     useFirestoreSync: (path: string) => {
         // Return different data based on path for basic structure
-        let data: any[] = [];
+        let data: Array<Category | List | ListCombination> = [];
         if (path.includes('combinations')) {
             data = [
-                { id: 'combo1', name: 'Combo 1', listIds: ['list1', 'list2'], createdAt: '2023-01-01' }, 
-                { id: 'combo2', name: 'Combo 2', listIds: ['list1', 'list2', 'list3'], createdAt: '2023-01-01' } 
+                { id: 'combo1', name: 'Combo 1', listIds: ['list1', 'list2'], createdAt: '2023-01-01' },
+                { id: 'combo2', name: 'Combo 2', listIds: ['list1', 'list2', 'list3'], createdAt: '2023-01-01' }
             ];
         } else if (path.includes('lists')) {
             data = [
@@ -28,10 +28,10 @@ vi.mock('../hooks/useFirestoreSync', () => ({
             data = [];
         } else if (path.includes('categories')) {
             data = [
-                 { id: 'cat1', name: 'Category 1', order: 0 }
+                { id: 'cat1', name: 'Category 1', order: 0 }
             ];
         }
-        
+
         return {
             data,
             loading: false,
@@ -67,9 +67,9 @@ describe('AppContext - Combinations', () => {
 
     it('addCombination calls firestore addItem', async () => {
         const { result } = renderHook(() => useApp(), { wrapper: AppProvider });
-        
+
         await act(async () => {
-             await result.current.addCombination('New Combo', ['list1', 'list2']);
+            await result.current.addCombination('New Combo', ['list1', 'list2']);
         });
 
         expect(mockAddItem).toHaveBeenCalledWith(expect.objectContaining({
@@ -79,15 +79,15 @@ describe('AppContext - Combinations', () => {
     });
 
     it('updateCombination calls firestore updateItem', async () => {
-         const { result } = renderHook(() => useApp(), { wrapper: AppProvider });
-         
-         await act(async () => {
-             await result.current.updateCombination('combo1', { name: 'Updated Name' });
-         });
+        const { result } = renderHook(() => useApp(), { wrapper: AppProvider });
 
-         expect(mockUpdateItem).toHaveBeenCalledWith('combo1', expect.objectContaining({
-             name: 'Updated Name'
-         }));
+        await act(async () => {
+            await result.current.updateCombination('combo1', { name: 'Updated Name' });
+        });
+
+        expect(mockUpdateItem).toHaveBeenCalledWith('combo1', expect.objectContaining({
+            name: 'Updated Name'
+        }));
     });
 
     it('deleteCombination calls firestore deleteItem', async () => {
@@ -102,7 +102,7 @@ describe('AppContext - Combinations', () => {
 
     it('deleteList cascades correctly (Update 3+ lists, Delete 2 lists)', async () => {
         const { result } = renderHook(() => useApp(), { wrapper: AppProvider });
-        
+
         // Deleting 'list1' should:
         // 1. Delete 'list1'
         // 2. Delete 'combo1' (because it has only list1, list2 -> becomes 1 list -> invalid)
@@ -120,13 +120,13 @@ describe('AppContext - Combinations', () => {
 
         // 3. Update combo2 (3 lists -> 2 lists)
         expect(mockUpdateItem).toHaveBeenCalledWith('combo2', expect.objectContaining({
-             listIds: ['list2', 'list3']
+            listIds: ['list2', 'list3']
         }));
     });
 
     it('addList calls firestore addItem', async () => {
         const { result } = renderHook(() => useApp(), { wrapper: AppProvider });
-        
+
         await act(async () => {
             await result.current.addList('New List', 'cat1');
         });
@@ -140,7 +140,7 @@ describe('AppContext - Combinations', () => {
 
     it('addSession calls firestore addItem', async () => {
         const { result } = renderHook(() => useApp(), { wrapper: AppProvider });
-        
+
         await act(async () => {
             await result.current.addSession('New Session', ['list1', 'list2']);
         });
@@ -153,24 +153,24 @@ describe('AppContext - Combinations', () => {
 
     it('addCategory calls firestore addItem', async () => {
         const { result } = renderHook(() => useApp(), { wrapper: AppProvider });
-        
+
         await act(async () => {
-             await result.current.addCategory('New Category');
+            await result.current.addCategory('New Category');
         });
 
         expect(mockAddItem).toHaveBeenCalledWith(expect.objectContaining({
-             name: 'New Category',
+            name: 'New Category',
         }));
     });
 
     it('deleteCategory calls firestore deleteItem', async () => {
         const { result } = renderHook(() => useApp(), { wrapper: AppProvider });
-        
+
         // Deleting category should also cascade delete lists? 
         // Logic check: deleteCategory in AppContext usually calls deleteItem for the category.
         // It might also delete lists within it. Let's check AppContext impl or assume just category delete for now unless verified.
         // Actually, let's just check the deleteCategory call first.
-        
+
         await act(async () => {
             await result.current.deleteCategory('cat1');
         });

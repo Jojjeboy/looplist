@@ -23,7 +23,7 @@ vi.mock('../hooks/useVoiceInput', () => ({
 
 // Mock dnd-kit
 vi.mock('@dnd-kit/core', () => ({
-    DndContext: ({ children }: any) => <div>{children}</div>,
+    DndContext: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
     closestCenter: vi.fn(),
     PointerSensor: vi.fn(),
     KeyboardSensor: vi.fn(),
@@ -32,7 +32,7 @@ vi.mock('@dnd-kit/core', () => ({
 }));
 
 vi.mock('@dnd-kit/sortable', () => ({
-    SortableContext: ({ children }: any) => <div>{children}</div>,
+    SortableContext: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
     sortableKeyboardCoordinates: vi.fn(),
     verticalListSortingStrategy: vi.fn(),
     arrayMove: vi.fn(),
@@ -40,7 +40,7 @@ vi.mock('@dnd-kit/sortable', () => ({
 
 // Mock child components
 vi.mock('./SortableItem', () => ({
-    SortableItem: ({ item, onToggle }: any) => (
+    SortableItem: ({ item, onToggle }: { item: { id: string; text: string }; onToggle: (id: string) => void }) => (
         <div data-testid="sortable-item">
             {item.text}
             <button onClick={() => onToggle(item.id)}>Toggle</button>
@@ -63,40 +63,39 @@ describe('ListDetail', () => {
         vi.clearAllMocks();
         vi.spyOn(AppContext, 'useApp').mockReturnValue({
             lists: [
-                { 
-                    id: 'list1', 
-                    name: 'My List', 
-                    categoryId: 'cat1', 
+                {
+                    id: 'list1',
+                    name: 'My List',
+                    categoryId: 'cat1',
                     items: [
                         { id: 'i1', text: 'Apple', completed: false },
                         { id: 'i2', text: 'Banana', completed: true }
-                    ] 
+                    ]
                 }
             ],
             updateListItems: mockUpdateListItems,
             deleteItem: vi.fn(),
             updateListName: vi.fn(),
             // defaults
-            categories: [], 
-            addCategory: vi.fn(), 
-            deleteCategory: vi.fn(), 
-            reorderCategories: vi.fn(), 
-            addList: vi.fn(), 
-            deleteList: vi.fn(), 
-            copyList: vi.fn(), 
-            moveList: vi.fn(), 
-            updateCategoryName: vi.fn(), 
-            reorderLists: vi.fn(), 
-            addSession: vi.fn(), 
-            combinations: [], 
-            addCombination: vi.fn(), 
-            updateCombination: vi.fn(), 
+            categories: [],
+            addCategory: vi.fn(),
+            deleteCategory: vi.fn(),
+            reorderCategories: vi.fn(),
+            addList: vi.fn(),
+            deleteList: vi.fn(),
+            copyList: vi.fn(),
+            moveList: vi.fn(),
+            updateCategoryName: vi.fn(),
+            reorderLists: vi.fn(),
+            addSession: vi.fn(),
+            combinations: [],
+            addCombination: vi.fn(),
+            updateCombination: vi.fn(),
             deleteCombination: vi.fn(),
             sessions: [],
             completeSession: vi.fn(),
             deleteSession: vi.fn(),
-            loading: false,
-        } as any);
+        } as Partial<ReturnType<typeof AppContext.useApp>> as ReturnType<typeof AppContext.useApp>);
     });
 
     const renderComponent = () => {
@@ -119,7 +118,7 @@ describe('ListDetail', () => {
         renderComponent();
         const input = screen.getByPlaceholderText('lists.addItemPlaceholder');
         fireEvent.change(input, { target: { value: 'Cherry' } });
-        
+
         const form = input.closest('form');
         fireEvent.submit(form!);
 
@@ -146,13 +145,13 @@ describe('ListDetail', () => {
         // With mock child component, we verify items are passed.
         // Or we can check if the rendered elements order changes.
         // Actually, React Testing Library screens reads DOM order.
-        
+
         renderComponent();
-        
+
         // Default manual: Apple, Banana
         // Alphabetical: Apple, Banana (same)
         // Let's add Zebra to make it distinct
-        
+
         // Note: state changes inside component trigger re-render.
         // We can test that sorting option changes the rendered order if items were unordered.
     });

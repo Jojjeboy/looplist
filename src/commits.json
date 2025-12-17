@@ -1,5 +1,25 @@
 [
   {
+    "hash": "c6b479cc972a9659ddc5956fbf99ad9a73a8d620",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 12:49:06 +0100",
+    "message": "Linting errors",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.test.tsx"
+      }
+    ]
+  },
+  {
     "hash": "ea367f79efb34a8957a7c96e94fcbb6a53c64a1f",
     "author": "Jojjeboy",
     "date": "2025-12-17 11:54:09 +0100",

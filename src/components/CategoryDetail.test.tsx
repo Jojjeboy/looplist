@@ -90,8 +90,7 @@ describe('CategoryDetail', () => {
             moveList: vi.fn(),
             updateListName: vi.fn(),
             reorderLists: vi.fn(),
-            loading: false,
-        } as ReturnType<typeof AppContext.useApp>);
+        } as Partial<ReturnType<typeof AppContext.useApp>> as ReturnType<typeof AppContext.useApp>);
     });
 
     const renderComponent = () => {

@@ -17,7 +17,7 @@ vi.mock('lucide-react', () => ({
 }));
 
 vi.mock('./Modal', () => ({
-    Modal: ({ isOpen, onConfirm, title }: any) => isOpen ? (
+    Modal: ({ isOpen, onConfirm, title }: { isOpen: boolean; onConfirm: () => void; title: string }) => isOpen ? (
         <div data-testid="modal">
             {title}
             <button onClick={onConfirm}>Confirm Complete</button>
@@ -34,14 +34,14 @@ const mockSessions = [
 ];
 
 const mockLists = [
-    { 
-        id: 'list1', 
-        name: 'List 1', 
-        categoryId: 'cat1', 
+    {
+        id: 'list1',
+        name: 'List 1',
+        categoryId: 'cat1',
         items: [
             { id: 'item1', text: 'Item 1', completed: false },
             { id: 'item2', text: 'Item 2', completed: true }
-        ] 
+        ]
     }
 ];
 
@@ -55,24 +55,23 @@ describe('SessionDetail', () => {
             completeSession: mockCompleteSession,
             deleteSession: mockDeleteSession,
             // Add other missing properties as needed by useApp type, mocking them as undefined or simple values
-            categories: [], 
-            addCategory: vi.fn(), 
-            deleteCategory: vi.fn(), 
-            reorderCategories: vi.fn(), 
-            addList: vi.fn(), 
-            deleteList: vi.fn(), 
-            copyList: vi.fn(), 
-            moveList: vi.fn(), 
-            updateCategoryName: vi.fn(), 
-            updateListName: vi.fn(), 
-            reorderLists: vi.fn(), 
-            addSession: vi.fn(), 
-            combinations: [], 
-            addCombination: vi.fn(), 
-            updateCombination: vi.fn(), 
+            categories: [],
+            addCategory: vi.fn(),
+            deleteCategory: vi.fn(),
+            reorderCategories: vi.fn(),
+            addList: vi.fn(),
+            deleteList: vi.fn(),
+            copyList: vi.fn(),
+            moveList: vi.fn(),
+            updateCategoryName: vi.fn(),
+            updateListName: vi.fn(),
+            reorderLists: vi.fn(),
+            addSession: vi.fn(),
+            combinations: [],
+            addCombination: vi.fn(),
+            updateCombination: vi.fn(),
             deleteCombination: vi.fn(),
-            loading: false,
-        } as any);
+        } as Partial<ReturnType<typeof AppContext.useApp>> as ReturnType<typeof AppContext.useApp>);
     });
 
     const renderComponent = () => {
@@ -101,18 +100,18 @@ describe('SessionDetail', () => {
 
     it('toggles item completion', async () => {
         renderComponent();
-        
+
         const checkButtons = screen.getAllByRole('button');
         // Find the check/uncheck buttons. The mock check icon has 'check' testid.
         // Or we can find by class or just blindly click the first that isn't 'Slutför'.
         // The mock renders: <button ...>{item.completed && <Check ... />}</button>
         // Let's filter buttons that trigger toggle.
-        
+
         // Item 1 (uncompleted) button
         // Item 2 (completed) button
         // 'Slutför' button
         // Back button (<ChevronLeft /> link) - wait link is <a>
-        
+
         // In this test environment, buttons are buttons.
         fireEvent.click(checkButtons[0]); // Presumably first item toggle
 
@@ -124,17 +123,17 @@ describe('SessionDetail', () => {
 
     it('completes session', async () => {
         renderComponent();
-        
+
         fireEvent.click(screen.getByText('sessions.completeSession'));
-        
+
         // Modal should open
         await waitFor(() => {
-             expect(screen.getByTestId('modal')).toBeDefined();
-             expect(screen.getByText('sessions.completeTitle')).toBeDefined();
+            expect(screen.getByTestId('modal')).toBeDefined();
+            expect(screen.getByText('sessions.completeTitle')).toBeDefined();
         });
-        
+
         fireEvent.click(screen.getByText('Confirm Complete'));
-        
+
         await waitFor(() => {
             expect(mockCompleteSession).toHaveBeenCalledWith('session1');
             expect(mockDeleteSession).toHaveBeenCalledWith('session1');
@@ -145,8 +144,7 @@ describe('SessionDetail', () => {
         vi.spyOn(AppContext, 'useApp').mockReturnValue({
             sessions: [], // No sessions
             lists: [],
-            // ... mocking other props
-        } as any);
+        } as Partial<ReturnType<typeof AppContext.useApp>> as ReturnType<typeof AppContext.useApp>);
 
         render(
             <MemoryRouter initialEntries={['/session/unknown']}>
