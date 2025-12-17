@@ -51,7 +51,7 @@ jobs:
         run: npm run test # Denna genererar nu sonar-report.xml och lcov.info i dist/coverage
 
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4 # Använd stabil v4 eller v5
+        uses: SonarSource/sonarqube-scan-action@v6 # Använd stabil v4 eller v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
