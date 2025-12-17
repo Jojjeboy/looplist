@@ -62,28 +62,62 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             <main className="flex-1 p-4 max-w-3xl mx-auto w-full overflow-hidden">
                 {searchQuery ? <SearchResults /> : children}
             </main>
-            <footer className="p-6 text-center border-t border-gray-200 dark:border-gray-700 mt-auto flex flex-col items-center gap-2">
-                <Link to="/notes" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                    {t('app.notes')}
+            <footer className="mt-auto flex flex-col items-center gap-3 border-t border-gray-100 p-8 text-center dark:border-gray-800">
+                {/* Länk till Anteckningar */}
+                <Link
+                    to="/notes"
+                    className="text-sm font-medium tracking-wide text-gray-600 transition-colors hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
+                >
+                    {t('app.notes').toUpperCase()}
                 </Link>
+
                 {latestCommit && (
                     <div className="flex flex-col items-center gap-1">
-                        <p className="text-[10px] text-gray-400 dark:text-gray-500">
-                            {(() => {
-                                const commitDate = new Date(latestCommit.date);
-                                const now = new Date();
-                                const isCurrentYear = commitDate.getFullYear() === now.getFullYear();
-                                const day = commitDate.getDate().toString().padStart(2, '0');
-                                const month = commitDate.toLocaleString('sv-SE', { month: 'short' });
-                                const year = isCurrentYear ? '' : ` ${commitDate.getFullYear()}`;
-                                return `${day}/${month}${year}`;
-                            })()}
-                            <Link to="/activity" className="ml-1 text-[10px] text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
-                                {latestCommit.message.length > 30 ? `${latestCommit.message.substring(0, 30)}....` : latestCommit.message}
+                        <div className="flex items-center gap-2 font-mono text-[10px] text-gray-400 dark:text-gray-500">
+                            {/* Datumformatering */}
+                            <span className="uppercase">
+                                {(() => {
+                                    const commitDate = new Date(latestCommit.date);
+                                    const now = new Date();
+                                    const isCurrentYear = commitDate.getFullYear() === now.getFullYear();
+                                    const day = commitDate.getDate().toString().padStart(2, '0');
+                                    const month = commitDate.toLocaleString('sv-SE', { month: 'short' });
+                                    const year = isCurrentYear ? '' : ` ${commitDate.getFullYear()}`;
+                                    return `${day} ${month}${year}`;
+                                })()}
+                            </span>
+
+                            {/* Separator-punkt */}
+                            <span className="h-1 w-1 rounded-full bg-gray-200 dark:bg-gray-700" />
+
+                            {/* Commit meddelande */}
+                            <Link
+                                to="/activity"
+                                className="transition-colors hover:text-blue-500 dark:hover:text-blue-400"
+                            >
+                                {latestCommit.message.length > 35
+                                    ? `${latestCommit.message.substring(0, 35)}...`
+                                    : latestCommit.message}
                             </Link>
-                        </p>
+                        </div>
                     </div>
                 )}
+
+                {/* SonarCloud Badge */}
+                <div className="mt-1 transition-opacity duration-300 hover:opacity-100 opacity-70 dark:opacity-60">
+                    <a
+                        href="https://sonarcloud.io/summary/new_code?id=jojjeboy_anti"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="block"
+                    >
+                        <img
+                            src="https://sonarcloud.io/api/project_badges/measure?project=jojjeboy_anti&metric=alert_status"
+                            alt="Quality Gate Status"
+                            className="h-[18px] w-auto" // Gör badgen aningen mindre och mer slimmad
+                        />
+                    </a>
+                </div>
             </footer>
             <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
         </div>
