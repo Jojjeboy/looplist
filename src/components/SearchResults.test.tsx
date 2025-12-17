@@ -41,7 +41,7 @@ describe('SearchResults', () => {
             // defaults
             loading: false,
             // ...
-        } as any);
+        } as Partial<ReturnType<typeof AppContext.useApp>> as ReturnType<typeof AppContext.useApp>);
 
         render(
             <MemoryRouter>

@@ -1,5 +1,57 @@
 [
   {
+    "hash": "2f055aadf18c86ce9c5d8e12e375b2d51544ec55",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 13:40:48 +0100",
+    "message": "Linting errors 3",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/context/AuthContext.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/ToastContext.test.tsx"
+      }
+    ]
+  },
+  {
+    "hash": "1dbb221e594a3da1e8468cd9c8f8197eea702a00",
+    "author": "Jojjeboy",
+    "date": "2025-12-17 13:27:21 +0100",
+    "message": "Linting errors 2",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SessionDetail.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AuthContext.test.tsx"
+      }
+    ]
+  },
+  {
     "hash": "c6b479cc972a9659ddc5956fbf99ad9a73a8d620",
     "author": "Jojjeboy",
     "date": "2025-12-17 12:49:06 +0100",
