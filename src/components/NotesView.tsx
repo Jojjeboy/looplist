@@ -121,9 +121,9 @@ export const NotesView: React.FC = () => {
                 </form>
             )}
 
-            <div className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {notes.length === 0 && !isAdding && (
-                    <p className="text-center text-gray-500 dark:text-gray-400 py-10">{t('notes.empty')}</p>
+                    <p className="text-center text-gray-500 dark:text-gray-400 py-10 col-span-full">{t('notes.empty')}</p>
                 )}
 
                 {notes
@@ -137,7 +137,7 @@ export const NotesView: React.FC = () => {
                         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                     })
                     .map((note) => (
-                        <div key={note.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden transition-all">
+                        <div key={note.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden transition-all h-fit">
                             {editingNoteId === note.id ? (
                                 <div className="p-6 space-y-4">
                                     <input

@@ -23,6 +23,7 @@ vi.mock('@dnd-kit/sortable', () => ({
     SortableContext: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
     sortableKeyboardCoordinates: vi.fn(),
     verticalListSortingStrategy: vi.fn(),
+    rectSortingStrategy: vi.fn(),
 }));
 
 // Mock child components to simplify testing CategoryView logic
