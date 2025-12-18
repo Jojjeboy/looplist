@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
 import { SessionPicker } from './SessionPicker';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from '@dnd-kit/sortable';
 import { CombinationCard } from './CombinationCard';
 import { CombinationEditor } from './CombinationEditor';
 import { ListCombination } from '../types';
@@ -85,7 +85,7 @@ export const CategoryView: React.FC = () => {
         // Find combination name for the session or use a default
         const combination = combinations.find(c => JSON.stringify(c.listIds) === JSON.stringify(listIds)); // Simple lookup, might be ambiguous but works for name
         const name = combination ? combination.name : t('sessions.newSession', 'Ny Session');
-        
+
         const sessionId = await addSession(name, listIds);
         navigate(`/session/${sessionId}`);
     };
@@ -130,8 +130,8 @@ export const CategoryView: React.FC = () => {
             </form>
 
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                <SortableContext items={sortedCategories.map(c => c.id)} strategy={verticalListSortingStrategy}>
-                    <div className="grid gap-3">
+                <SortableContext items={sortedCategories.map(c => c.id)} strategy={rectSortingStrategy}>
+                    <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                         {sortedCategories.map((category) => (
                             <SortableCategoryCard
                                 key={category.id}
@@ -165,7 +165,7 @@ export const CategoryView: React.FC = () => {
                         {t('combinations.createRaw', '+ Skapa ny mall')}
                     </button>
                 </div>
-                
+
                 {combinations.length === 0 ? (
                     <div className="text-center py-6 bg-gray-50 dark:bg-gray-900/50 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
                         <p className="text-gray-500 text-sm">
@@ -173,7 +173,7 @@ export const CategoryView: React.FC = () => {
                         </p>
                     </div>
                 ) : (
-                    <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                         {combinations.map(combo => (
                             <CombinationCard
                                 key={combo.id}
