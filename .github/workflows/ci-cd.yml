@@ -1,9 +1,10 @@
-name: Deploy to GitHub Pages
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
       - master
+      - develop # Lägg till develop här
 
 permissions:
   contents: read
@@ -17,13 +18,14 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Dessa används för miljövariabler i bygget eller för sed-ersättning
     env:
-      VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
-      VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
-      VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
-      VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
-      VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
-      VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+      FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+      FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+      FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+      FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+      FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+      FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
 
     steps:
       - name: Checkout
@@ -64,15 +66,30 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # NYTT STEG: Injicera hemligheter i din Angular config-fil före bygget
+      - name: Inject Firebase Secrets
+        run: |
+          CONFIG_FILE="./src/app/core/firebase.config.ts"
+          sed -i "s|PLACEHOLDER_API_KEY|$FIREBASE_API_KEY|g" $CONFIG_FILE
+          sed -i "s|PLACEHOLDER_AUTH_DOMAIN|$FIREBASE_AUTH_DOMAIN|g" $CONFIG_FILE
+          sed -i "s|PLACEHOLDER_PROJECT_ID|$FIREBASE_PROJECT_ID|g" $CONFIG_FILE
+          sed -i "s|PLACEHOLDER_STORAGE_BUCKET|$FIREBASE_STORAGE_BUCKET|g" $CONFIG_FILE
+          sed -i "s|PLACEHOLDER_MESSAGING_SENDER_ID|$FIREBASE_MESSAGING_SENDER_ID|g" $CONFIG_FILE
+          sed -i "s|PLACEHOLDER_APP_ID|$FIREBASE_APP_ID|g" $CONFIG_FILE
+
       - name: Build
         run: npm run build
 
+      # Vi laddar bara upp artifact om vi faktiskt ska deploya (på master)
       - name: Upload artifact
+        if: github.ref == 'refs/heads/master'
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
 
   deploy:
+    # Denna körs nu ENDAST om vi är på master-branchen
+    if: github.ref == 'refs/heads/master'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -84,6 +101,8 @@ jobs:
         uses: actions/deploy-pages@v4
 
   lighthouse:
+    # Denna körs också ENDAST på master efter lyckad deploy
+    if: github.ref == 'refs/heads/master'
     needs: deploy
     runs-on: ubuntu-latest
     steps:
@@ -96,7 +115,6 @@ jobs:
           urls: "https://jojjeboy.github.io/anti/"
           uploadArtifacts: true
           temporaryPublicStorage: true
-          # Här sätter vi kraven för att bygget ska godkännas
           assertions: |
             {
               "categories:performance": ["error", {"minScore": 0.9}],
