@@ -40,6 +40,10 @@ vi.mock('./SessionPicker', () => ({
     SessionPicker: () => <div data-testid="session-picker" />
 }));
 
+vi.mock('./ImportListModal', () => ({
+    ImportListModal: () => <div data-testid="import-list-modal" />
+}));
+
 vi.mock('./Modal', () => ({
     Modal: ({ isOpen, onConfirm, title }: { isOpen: boolean; onConfirm: () => void; title: string }) => isOpen ? (
         <div data-testid="modal">
@@ -53,7 +57,8 @@ vi.mock('lucide-react', () => ({
     Plus: () => <div />,
     ChevronLeft: () => <div />,
     LayoutTemplate: () => <div />,
-    PlayCircle: () => <div />
+    PlayCircle: () => <div />,
+    FileJson: () => <div />
 }));
 
 const mockAddList = vi.fn();

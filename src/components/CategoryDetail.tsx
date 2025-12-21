@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { Plus, ChevronLeft, LayoutTemplate, PlayCircle } from 'lucide-react';
+import { Plus, ChevronLeft, LayoutTemplate, PlayCircle, FileJson } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
 import { SessionPicker } from './SessionPicker';
+import { ImportListModal } from './ImportListModal';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableListCard } from './SortableListCard';
+import { Item } from '../types';
 
 import { templates } from '../data/templates';
 
@@ -29,6 +31,7 @@ export const CategoryDetail: React.FC = () => {
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [editedTitle, setEditedTitle] = useState('');
     const [sessionPickerOpen, setSessionPickerOpen] = useState(false);
+    const [importModalOpen, setImportModalOpen] = useState(false);
 
     const category = categories.find((c) => c.id === categoryId);
     const categoryLists = lists
@@ -115,6 +118,11 @@ export const CategoryDetail: React.FC = () => {
         navigate(`/session/${sessionId}`);
     };
 
+    const handleImportList = async (name: string, items: Item[]) => {
+        const newListId = await addList(name, categoryId!);
+        await updateListItems(newListId, items);
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex items-center gap-2">
@@ -172,6 +180,13 @@ export const CategoryDetail: React.FC = () => {
                         <Plus />
                     </button>
                 </form>
+                <button
+                    onClick={() => setImportModalOpen(true)}
+                    className="p-3 bg-green-600 text-white rounded-xl hover:bg-green-700 shadow-md transition-colors"
+                    title="Import from JSON"
+                >
+                    <FileJson size={24} />
+                </button>
                 <div className="relative group">
                     <button
                         className="p-3 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
@@ -275,6 +290,11 @@ export const CategoryDetail: React.FC = () => {
                 onClose={() => setSessionPickerOpen(false)}
                 onCreateSession={handleCreateSession}
                 lists={categoryLists}
+            />
+            <ImportListModal
+                isOpen={importModalOpen}
+                onClose={() => setImportModalOpen(false)}
+                onImport={handleImportList}
             />
         </div>
     );
