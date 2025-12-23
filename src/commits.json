@@ -1,5 +1,148 @@
 [
   {
+    "hash": "164c2e015d5db4cbb4b3c4bc86ead73c66234b93",
+    "author": "Jojjeboy",
+    "date": "2025-12-21 23:03:56 +0100",
+    "message": "feat: Add JSON import functionality for lists",
+    "files": [
+      {
+        "status": "A",
+        "path": ".env.example"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/ImportListModal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/setupTests.ts"
+      }
+    ]
+  },
+  {
+    "hash": "416edf821a1dbdeecebdb836ceea25eb79899b96",
+    "author": "Jojjeboy",
+    "date": "2025-12-18 09:34:08 +0100",
+    "message": "Fix Lighthouse CI and remove MarqueeText",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/pages.yml"
+      }
+    ]
+  },
+  {
+    "hash": "05d4a2e7d151fd2b39cc16761866b7d74f8dba0e",
+    "author": "Jojjeboy",
+    "date": "2025-12-18 09:22:52 +0100",
+    "message": "Merge pull request #5 from Jojjeboy/develop",
+    "files": []
+  },
+  {
+    "hash": "afda7ef011ff0e6ce9516eef64e93b6a25ba8cbc",
+    "author": "Jojjeboy",
+    "date": "2025-12-18 09:18:42 +0100",
+    "message": "CI/CD improvements (hopefully)",
+    "files": [
+      {
+        "status": "A",
+        "path": ".github/workflows/backup/ci-cd.yml.txt"
+      },
+      {
+        "status": "A",
+        "path": ".github/workflows/backup/deploy.yml.txt"
+      },
+      {
+        "status": "A",
+        "path": ".github/workflows/ci.yml"
+      },
+      {
+        "status": "A",
+        "path": ".github/workflows/pages.yml"
+      }
+    ]
+  },
+  {
+    "hash": "306275d89426eed218693deb1cdf70130575eba6",
+    "author": "Jojjeboy",
+    "date": "2025-12-18 09:16:23 +0100",
+    "message": "CI/CD improvements (hopefully)",
+    "files": [
+      {
+        "status": "D",
+        "path": ".github/workflows/ci-cd.yml"
+      },
+      {
+        "status": "D",
+        "path": ".github/workflows/deploy.yml"
+      },
+      {
+        "status": "D",
+        "path": "src/components/MarqueeText.test.tsx"
+      },
+      {
+        "status": "D",
+        "path": "src/components/MarqueeText.tsx"
+      }
+    ]
+  },
+  {
+    "hash": "f81c4c86d3d223c29b9b7eb0f69395e3fdc71d14",
+    "author": "Jojjeboy",
+    "date": "2025-12-18 09:02:33 +0100",
+    "message": "Github actions runner for develop also",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci-cd.yml"
+      }
+    ]
+  },
+  {
+    "hash": "bb765fa698bc629eeee45ea91f01022e388d3043",
+    "author": "Jojjeboy",
+    "date": "2025-12-18 08:54:12 +0100",
+    "message": "Desktop style",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/NotesView.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/Sidebar.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
+  },
+  {
     "hash": "7f310df2a50f67754610f392c1e9cce2a7623309",
     "author": "Jojjeboy",
     "date": "2025-12-17 13:55:13 +0100",
