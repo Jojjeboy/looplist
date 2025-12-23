@@ -204,12 +204,6 @@ export const ListDetail: React.FC = () => {
                         </div>
                     )}
                 </div>
-                <button
-                    onClick={() => setSettingsOpen(true)}
-                    className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
-                >
-                    <Settings size={20} />
-                </button>
             </div>
 
             <form onSubmit={handleAddItem} className="flex gap-2">
@@ -227,6 +221,12 @@ export const ListDetail: React.FC = () => {
                     className="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md transition-colors"
                 >
                     <Plus />
+                </button>
+                <button
+                    onClick={() => setSettingsOpen(true)}
+                    className="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
+                >
+                    <Settings size={20} />
                 </button>
             </form>
 
