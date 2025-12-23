@@ -40,7 +40,7 @@
         "sort": {
             "manual": "Manual",
             "alphabetical": "A-Z",
-            "completed": "Unchecked First"
+            "completed": "Unresolved First"
         },
         "reset": "Reset",
         "addItemPlaceholder": "Add item...",
@@ -49,7 +49,20 @@
         "resetMessage": "Are you sure you want to uncheck all items?",
         "clearCompleted": "Clear Completed",
         "clearCompletedTitle": "Clear Completed Items",
-        "clearCompletedMessage": "Are you sure you want to remove all completed items from this list?"
+        "clearCompletedMessage": "Are you sure you want to remove all completed items from this list?",
+        "settings": {
+            "title": "List Settings",
+            "threeStage": {
+                "title": "Three-stage items",
+                "description": "Unresolved → Prepared → Done"
+            },
+            "sort": "Sort Order"
+        },
+        "states": {
+            "unresolved": "Unresolved",
+            "prepared": "Prepared",
+            "completed": "Completed"
+        }
     },
     "notes": {
         "title": "Notes",
@@ -71,7 +84,8 @@
         "delete": "Delete",
         "save": "Save",
         "undo": "Undo",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "done": "Done"
     },
     "settings": {
         "title": "Settings",

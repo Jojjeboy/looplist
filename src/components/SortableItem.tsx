@@ -2,7 +2,7 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import type { Item } from '../types';
-import { Trash2, GripVertical } from 'lucide-react';
+import { Trash2, GripVertical, Circle, CheckCircle2, MinusCircle } from 'lucide-react';
 import {
     SwipeableList,
     SwipeableListItem,
@@ -18,9 +18,10 @@ interface SortableItemProps {
     onDelete: (id: string) => void;
     onEdit: (id: string, text: string) => void;
     disabled?: boolean;
+    threeStageMode?: boolean;
 }
 
-export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDelete, onEdit, disabled }) => {
+export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDelete, onEdit, disabled, threeStageMode }) => {
     const {
         attributes,
         listeners,
@@ -59,21 +60,42 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                     trailingActions={trailingActions()}
                 >
                     <div className="w-full flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm">
-                        <input
-                            type="checkbox"
-                            checked={item.completed}
-                            onChange={() => onToggle(item.id)}
-                            className={`w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer ${isDragging ? 'pointer-events-none' : ''}`}
-                            // Stop propagation to prevent swipe start when clicking checkbox
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onToggle(item.id);
+                            }}
+                            className={`flex-shrink-0 transition-colors ${isDragging ? 'pointer-events-none' : ''}`}
+                            aria-label={item.completed ? "Mark as incomplete" : "Mark as complete"}
                             onMouseDown={(e) => e.stopPropagation()}
                             onTouchStart={(e) => e.stopPropagation()}
-                        />
+                        >
+                            {/* Render different icons based on state */}
+                            {(threeStageMode && item.state === 'prepared') ? (
+                                <div className="text-yellow-500 hover:text-yellow-600">
+                                    <MinusCircle size={24} />
+                                </div>
+                            ) : item.completed ? (
+                                <div className="text-blue-500 hover:text-blue-600">
+                                    <CheckCircle2 size={24} />
+                                </div>
+                            ) : (
+                                <div className="text-gray-300 hover:text-gray-400">
+                                    <Circle size={24} />
+                                </div>
+                            )}
+                        </button>
 
                         <input
                             type="text"
                             value={item.text}
                             onChange={(e) => onEdit(item.id, e.target.value)}
-                            className={`flex-1 bg-transparent outline-none p-1 ${item.completed ? 'line-through text-gray-400' : 'text-gray-700 dark:text-gray-200'} ${isDragging ? 'pointer-events-none' : ''}`}
+                            className={`flex-1 bg-transparent outline-none p-1 ${item.completed
+                                ? 'line-through text-gray-400'
+                                : (threeStageMode && item.state === 'prepared')
+                                    ? 'text-gray-800 dark:text-gray-100' // Prepared items are not crossed out
+                                    : 'text-gray-700 dark:text-gray-200'
+                                } ${isDragging ? 'pointer-events-none' : ''}`}
                             // Stop propagation to prevent swipe start when interacting with input
                             onMouseDown={(e) => e.stopPropagation()}
                             onTouchStart={(e) => e.stopPropagation()}

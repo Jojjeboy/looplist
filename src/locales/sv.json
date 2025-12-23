@@ -48,7 +48,20 @@
         "resetMessage": "Är du säker på att du vill avmarkera alla objekt?",
         "clearCompleted": "Rensa klara",
         "clearCompletedTitle": "Rensa klara objekt",
-        "clearCompletedMessage": "Är du säker på att du vill ta bort alla avklarade objekt från denna lista?"
+        "clearCompletedMessage": "Är du säker på att du vill ta bort alla avklarade objekt från denna lista?",
+        "settings": {
+            "title": "Listinställningar",
+            "threeStage": {
+                "title": "Trestegsobjekt",
+                "description": "Olöst → Förberedd → Klar"
+            },
+            "sort": "Sortering"
+        },
+        "states": {
+            "unresolved": "Olöst",
+            "prepared": "Förberedd",
+            "completed": "Avklarad"
+        }
     },
     "notes": {
         "title": "Anteckningar",
@@ -70,7 +83,8 @@
         "delete": "Ta bort",
         "save": "Spara",
         "undo": "Ångra",
-        "confirm": "Bekräfta"
+        "confirm": "Bekräfta",
+        "done": "Klar"
     },
     "settings": {
         "title": "Inställningar",

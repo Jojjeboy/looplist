@@ -1,39 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import type { Item, ListSettings } from '../types';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from './SortableItem';
-import { Plus, ChevronLeft, RotateCcw, Mic, MicOff } from 'lucide-react';
+import { Plus, ChevronLeft, Settings, RotateCcw } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import { Modal } from './Modal';
 
-import { useVoiceInput } from '../hooks/useVoiceInput';
 import { useTranslation } from 'react-i18next';
 
 export const ListDetail: React.FC = () => {
     const { t } = useTranslation();
     const { listId } = useParams<{ listId: string }>();
-    const { lists, updateListItems, deleteItem, updateListName } = useApp();
+    const { lists, updateListItems, deleteItem, updateListName, updateListSettings } = useApp();
     const [newItemText, setNewItemText] = useState('');
     const [uncheckModalOpen, setUncheckModalOpen] = useState(false);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [editedTitle, setEditedTitle] = useState('');
-
-    const { isListening, transcript, startListening, stopListening, resetTranscript, hasSupport } = useVoiceInput();
-
-    // Update input text when transcript changes
-    React.useEffect(() => {
-        if (transcript) {
-            setNewItemText(() => {
-                // If we are appending, we might want a space, but for now let's just replace or append intelligently
-                // Simple approach: if input is empty, set to transcript. If not, append.
-                // Actually, for a simple "add item" flow, usually you speak the whole item.
-                // But let's make it so it updates the current text.
-                return transcript;
-            });
-        }
-    }, [transcript]);
+    const [settingsOpen, setSettingsOpen] = useState(false);
 
     const list = lists.find((l) => l.id === listId);
 
@@ -52,6 +38,14 @@ export const ListDetail: React.FC = () => {
     );
 
     const [sortBy, setSortBy] = useState<'manual' | 'alphabetical' | 'completed'>('manual');
+    const threeStageMode = list?.settings?.threeStageMode ?? false;
+
+    // Load sort setting from list or default to manual
+    useEffect(() => {
+        if (list?.settings?.defaultSort) {
+            setSortBy(list.settings.defaultSort);
+        }
+    }, [list?.settings?.defaultSort]);
 
     const sortedItems = React.useMemo(() => {
         if (!list) return [];
@@ -59,10 +53,23 @@ export const ListDetail: React.FC = () => {
         if (sortBy === 'alphabetical') {
             items.sort((a, b) => a.text.localeCompare(b.text));
         } else if (sortBy === 'completed') {
-            items.sort((a, b) => (a.completed === b.completed ? 0 : a.completed ? 1 : -1));
+            items.sort((a, b) => {
+                // Sort order: Prepared -> Unchecked -> Completed
+                // Assign weights: Prepared = 0, Unchecked = 1, Completed = 2
+                const getWeight = (item: Item) => {
+                    if (item.completed) return 2;
+                    if (threeStageMode && item.state === 'prepared') return 0;
+                    return 1;
+                };
+                const weightA = getWeight(a);
+                const weightB = getWeight(b);
+                if (weightA !== weightB) return weightA - weightB;
+                // Secondary sort: Alphabetical
+                return a.text.localeCompare(b.text);
+            });
         }
         return items;
-    }, [list, sortBy]);
+    }, [list, sortBy, threeStageMode]);
 
     if (!list) return <div className="text-center py-10">{t('lists.notFound')}</div>;
 
@@ -72,15 +79,6 @@ export const ListDetail: React.FC = () => {
             const newItem = { id: uuidv4(), text: newItemText.trim(), completed: false };
             await updateListItems(list.id, [...list.items, newItem]);
             setNewItemText('');
-            resetTranscript();
-        }
-    };
-
-    const toggleListening = () => {
-        if (isListening) {
-            stopListening();
-        } else {
-            startListening();
         }
     };
 
@@ -94,9 +92,36 @@ export const ListDetail: React.FC = () => {
     };
 
     const handleToggle = async (itemId: string) => {
-        const newItems = list.items.map(item =>
-            item.id === itemId ? { ...item, completed: !item.completed } : item
-        );
+        const newItems = list.items.map(item => {
+            if (item.id !== itemId) return item;
+
+            // Logic for state cycling
+            let newState: 'unresolved' | 'prepared' | 'completed';
+            let newCompleted: boolean;
+
+            if (threeStageMode) {
+                // Cycle: unresolved -> prepared -> completed -> unresolved
+                if (item.completed) {
+                    // Was completed, go to unresolved
+                    newState = 'unresolved';
+                    newCompleted = false;
+                } else if (item.state === 'prepared') {
+                    // Was prepared, go to completed
+                    newState = 'completed';
+                    newCompleted = true;
+                } else {
+                    // Was unresolved, go to prepared
+                    newState = 'prepared';
+                    newCompleted = false;
+                }
+            } else {
+                // Normal toggle
+                newCompleted = !item.completed;
+                newState = newCompleted ? 'completed' : 'unresolved';
+            }
+
+            return { ...item, completed: newCompleted, state: newState };
+        });
         await updateListItems(list.id, newItems);
 
         // Check if all items are now completed
@@ -128,6 +153,13 @@ export const ListDetail: React.FC = () => {
             await updateListName(list.id, editedTitle.trim());
             setIsEditingTitle(false);
         }
+    };
+
+    const updateSettings = async (newSettings: Partial<typeof list.settings>) => {
+        if (!list) return;
+        const currentSettings = list.settings || { threeStageMode: false, defaultSort: 'manual' };
+        const updated: ListSettings = { ...currentSettings, ...newSettings } as ListSettings;
+        await updateListSettings(list.id, updated);
     };
 
     return (
@@ -172,24 +204,12 @@ export const ListDetail: React.FC = () => {
                         </div>
                     )}
                 </div>
-                <div className="flex items-center gap-2 w-full">
-                    <select
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value as 'manual' | 'alphabetical' | 'completed')}
-                        className="w-[70%] px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors outline-none cursor-pointer"
-                    >
-                        <option value="manual">{t('lists.sort.manual')}</option>
-                        <option value="alphabetical">{t('lists.sort.alphabetical')}</option>
-                        <option value="completed">{t('lists.sort.completed')}</option>
-                    </select>
-                    <button
-                        onClick={() => setUncheckModalOpen(true)}
-                        className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                        <RotateCcw size={16} />
-                        {t('lists.reset')}
-                    </button>
-                </div>
+                <button
+                    onClick={() => setSettingsOpen(true)}
+                    className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
+                >
+                    <Settings size={20} />
+                </button>
             </div>
 
             <form onSubmit={handleAddItem} className="flex gap-2">
@@ -199,21 +219,8 @@ export const ListDetail: React.FC = () => {
                         value={newItemText}
                         onChange={(e) => setNewItemText(e.target.value)}
                         placeholder={t('lists.addItemPlaceholder')}
-                        className="w-full p-3 pr-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                        className="w-full p-3 pr-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                     />
-                    {hasSupport && (
-                        <button
-                            type="button"
-                            onClick={toggleListening}
-                            className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all ${isListening
-                                ? 'bg-red-100 text-red-600 animate-pulse'
-                                : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
-                                }`}
-                            title={isListening ? "Stop listening" : "Start voice input"}
-                        >
-                            {isListening ? <MicOff size={18} /> : <Mic size={18} />}
-                        </button>
-                    )}
                 </div>
                 <button
                     type="submit"
@@ -223,42 +230,46 @@ export const ListDetail: React.FC = () => {
                 </button>
             </form>
 
-            {sortBy === 'manual' ? (
-                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                    <SortableContext items={sortedItems.map(i => i.id)} strategy={verticalListSortingStrategy}>
-                        <div className="space-y-2">
-                            {sortedItems.map((item) => (
-                                <SortableItem
-                                    key={item.id}
-                                    item={item}
-                                    onToggle={handleToggle}
-                                    onDelete={handleDelete}
-                                    onEdit={handleEdit}
-                                />
-                            ))}
-                            {sortedItems.length === 0 && (
-                                <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
-                            )}
-                        </div>
-                    </SortableContext>
-                </DndContext>
-            ) : (
-                <div className="space-y-2">
-                    {sortedItems.map((item) => (
-                        <SortableItem
-                            key={item.id}
-                            item={item}
-                            onToggle={handleToggle}
-                            onDelete={handleDelete}
-                            onEdit={handleEdit}
-                            disabled={true} // We need to update SortableItem to accept a disabled prop or just hide the drag handle
-                        />
-                    ))}
-                    {sortedItems.length === 0 && (
-                        <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
-                    )}
-                </div>
-            )}
+            {
+                sortBy === 'manual' ? (
+                    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                        <SortableContext items={sortedItems.map(i => i.id)} strategy={verticalListSortingStrategy}>
+                            <div className="space-y-2">
+                                {sortedItems.map((item) => (
+                                    <SortableItem
+                                        key={item.id}
+                                        item={item}
+                                        onToggle={handleToggle}
+                                        onDelete={handleDelete}
+                                        onEdit={handleEdit}
+                                        threeStageMode={threeStageMode}
+                                    />
+                                ))}
+                                {sortedItems.length === 0 && (
+                                    <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
+                                )}
+                            </div>
+                        </SortableContext>
+                    </DndContext>
+                ) : (
+                    <div className="space-y-2">
+                        {sortedItems.map((item) => (
+                            <SortableItem
+                                key={item.id}
+                                item={item}
+                                onToggle={handleToggle}
+                                onDelete={handleDelete}
+                                onEdit={handleEdit}
+                                disabled={true} // We need to update SortableItem to accept a disabled prop or just hide the drag handle
+                                threeStageMode={threeStageMode}
+                            />
+                        ))}
+                        {sortedItems.length === 0 && (
+                            <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
+                        )}
+                    </div>
+                )
+            }
 
             <Modal
                 isOpen={uncheckModalOpen}
@@ -268,6 +279,69 @@ export const ListDetail: React.FC = () => {
                 message={t('lists.resetMessage')}
                 confirmText={t('lists.reset')}
             />
-        </div>
+            <Modal
+                isOpen={settingsOpen}
+                onClose={() => setSettingsOpen(false)}
+                title={t('lists.settings.title')}
+                message="" // Custom content
+                confirmText={t('common.done')} // Or just close
+                onConfirm={() => setSettingsOpen(false)}
+            >
+                <div className="space-y-6 pt-2">
+                    {/* Three Stage Mode Toggle */}
+                    <div className="flex items-center justify-between">
+                        <div className="flex flex-col">
+                            <span className="font-medium text-gray-900 dark:text-gray-100">{t('lists.settings.threeStage.title')}</span>
+                            <span className="text-sm text-gray-500">{t('lists.settings.threeStage.description')}</span>
+                        </div>
+                        <button
+                            onClick={() => updateSettings({ threeStageMode: !threeStageMode })}
+                            className={`w-12 h-6 rounded-full transition-colors relative ${threeStageMode ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'}`}
+                        >
+                            <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${threeStageMode ? 'translate-x-6' : ''}`} />
+                        </button>
+                    </div>
+
+                    {/* Sorting Options */}
+                    <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            {t('lists.settings.sort')}
+                        </label>
+                        <div className="space-y-2">
+                            {(['manual', 'alphabetical', 'completed'] as const).map((mode) => (
+                                <button
+                                    key={mode}
+                                    onClick={() => {
+                                        setSortBy(mode);
+                                        updateSettings({ defaultSort: mode });
+                                    }}
+                                    className={`w-full flex items-center justify-between p-3 rounded-lg border ${sortBy === mode
+                                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+                                        : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'
+                                        }`}
+                                >
+                                    <span className="capitalize">{t(`lists.sort.${mode}`)}</span>
+                                    {sortBy === mode && <div className="w-2 h-2 rounded-full bg-blue-500" />}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Reset List Action */}
+                    <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
+                        <button
+                            onClick={() => {
+                                setSettingsOpen(false);
+                                setUncheckModalOpen(true);
+                            }}
+                            className="w-full flex items-center justify-center gap-2 p-3 text-red-600 bg-red-50 dark:bg-red-900/10 hover:bg-red-100 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                        >
+                            <RotateCcw size={18} />
+                            {t('lists.reset')}
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+        </div >
     );
 };

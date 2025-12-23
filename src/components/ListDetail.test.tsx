@@ -9,17 +9,7 @@ vi.mock('react-i18next', () => ({
     useTranslation: () => ({ t: (key: string) => key }),
 }));
 
-// Mock hooks
-vi.mock('../hooks/useVoiceInput', () => ({
-    useVoiceInput: () => ({
-        isListening: false,
-        transcript: '',
-        startListening: vi.fn(),
-        stopListening: vi.fn(),
-        resetTranscript: vi.fn(),
-        hasSupport: true
-    })
-}));
+
 
 // Mock dnd-kit
 vi.mock('@dnd-kit/core', () => ({
@@ -52,8 +42,7 @@ vi.mock('lucide-react', () => ({
     Plus: () => <div />,
     ChevronLeft: () => <div />,
     RotateCcw: () => <div />,
-    Mic: () => <div />,
-    MicOff: () => <div />
+    Settings: () => <div data-testid="settings-icon" />
 }));
 
 const mockUpdateListItems = vi.fn();
@@ -76,6 +65,7 @@ describe('ListDetail', () => {
             updateListItems: mockUpdateListItems,
             deleteItem: vi.fn(),
             updateListName: vi.fn(),
+            updateListSettings: vi.fn(),
             // defaults
             categories: [],
             addCategory: vi.fn(),
@@ -140,19 +130,52 @@ describe('ListDetail', () => {
         ]));
     });
 
-    it('sorts alphabetical', () => {
-        // Change default mocked return to test sorting order if SortableItem was rendering in order
-        // With mock child component, we verify items are passed.
-        // Or we can check if the rendered elements order changes.
-        // Actually, React Testing Library screens reads DOM order.
+    it('toggles item 3-stage unresolved -> prepared -> completed', async () => {
+        // Mock list with 3-stage enabled
+        vi.spyOn(AppContext, 'useApp').mockReturnValue({
+            lists: [
+                {
+                    id: 'list1',
+                    name: 'My List',
+                    categoryId: 'cat1',
+                    items: [
+                        { id: 'i1', text: 'Apple', completed: false, state: 'unresolved' }
+                    ],
+                    settings: { threeStageMode: true, defaultSort: 'manual' }
+                }
+            ],
+            updateListItems: mockUpdateListItems,
+            deleteItem: vi.fn(),
+            updateListName: vi.fn(),
+            updateListSettings: vi.fn(),
+            categories: [],
+            addCategory: vi.fn(),
+            deleteCategory: vi.fn(),
+            reorderCategories: vi.fn(),
+            addList: vi.fn(),
+            deleteList: vi.fn(),
+            copyList: vi.fn(),
+            moveList: vi.fn(),
+            updateCategoryName: vi.fn(),
+            reorderLists: vi.fn(),
+            addSession: vi.fn(),
+            combinations: [],
+            addCombination: vi.fn(),
+            updateCombination: vi.fn(),
+            deleteCombination: vi.fn(),
+            sessions: [],
+            completeSession: vi.fn(),
+            deleteSession: vi.fn(),
+            // Add other required mock properties if missing from previous context
+        } as any);
 
         renderComponent();
+        const toggleButtons = screen.getAllByText('Toggle');
+        fireEvent.click(toggleButtons[0]); // Apple: unresolved -> prepared
 
-        // Default manual: Apple, Banana
-        // Alphabetical: Apple, Banana (same)
-        // Let's add Zebra to make it distinct
-
-        // Note: state changes inside component trigger re-render.
-        // We can test that sorting option changes the rendered order if items were unordered.
+        expect(mockUpdateListItems).toHaveBeenCalledWith('list1', expect.arrayContaining([
+            expect.objectContaining({ id: 'i1', completed: false, state: 'prepared' })
+        ]));
     });
+
 });

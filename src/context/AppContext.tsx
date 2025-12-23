@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import SunCalc from 'suncalc';
-import { Category, List, Item, Note, ExecutionSession, ListCombination } from '../types';
+import { Category, List, Item, Note, ExecutionSession, ListCombination, ListSettings } from '../types';
 
 type Priority = 'low' | 'medium' | 'high';
 import { useToast } from './ToastContext';
@@ -20,6 +20,7 @@ interface AppContextType {
     reorderCategories: (categories: Category[]) => Promise<void>;
     addList: (name: string, categoryId: string) => Promise<string>;
     updateListName: (id: string, name: string) => Promise<void>;
+    updateListSettings: (id: string, settings: ListSettings) => Promise<void>;
     deleteList: (id: string) => Promise<void>;
     copyList: (listId: string) => Promise<void>;
     moveList: (listId: string, newCategoryId: string) => Promise<void>;
@@ -120,6 +121,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         await listsSync.updateItem(id, { name });
     };
 
+    const updateListSettings = async (id: string, settings: ListSettings) => {
+        await listsSync.updateItem(id, { settings });
+    };
+
     const addCombination = async (name: string, listIds: string[]) => {
         const id = uuidv4();
         const newCombination: ListCombination = {
@@ -166,7 +171,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             for (const combo of combinationsToDelete) {
                 await combinationsSync.deleteItem(combo.id);
             }
-            
+
             for (const combo of combinationsToUpdate) {
                 await combinationsSync.updateItem(combo.id, {
                     listIds: combo.listIds.filter(lid => lid !== id),
@@ -364,6 +369,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 reorderCategories,
                 addList,
                 updateListName,
+                updateListSettings,
                 deleteList,
                 copyList,
                 moveList,
