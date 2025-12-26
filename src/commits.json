@@ -1,5 +1,49 @@
 [
   {
+    "hash": "d7a5d365f11d74342b6b619211057110e6775db7",
+    "author": "Jojjeboy",
+    "date": "2025-12-26 21:05:58 +0100",
+    "message": "More fix",
+    "files": [
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategorySection.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Sidebar.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableListCard.tsx"
+      }
+    ]
+  },
+  {
     "hash": "c73f037b90ee5eb153cdd609fbc76b61b0cb68bc",
     "author": "Jojjeboy",
     "date": "2025-12-26 20:45:34 +0100",

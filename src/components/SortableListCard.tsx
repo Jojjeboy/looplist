@@ -70,7 +70,8 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
                         <div
                             {...attributes}
                             {...listeners}
-                            className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none flex-shrink-0 mr-2"
+                            className="cursor-grab active:cursor-grabbing hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none flex-shrink-0 mr-2"
+                            style={{ color: '#e1e1e1' }}
                         >
                             <GripVertical size={24} strokeWidth={2.5} />
                         </div>

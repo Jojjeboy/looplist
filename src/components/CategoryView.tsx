@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { Folder } from 'lucide-react';
+import { Folder, ChevronDown, ChevronRight, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
 import { SessionPicker } from './SessionPicker';
@@ -18,6 +18,7 @@ export const CategoryView: React.FC = () => {
     const { categories, lists, addCategory, deleteCategory, updateCategoryName, addList, deleteList, copyList, moveList, updateListItems, reorderLists, addSession, combinations, addCombination, updateCombination, deleteCombination, reorderCategories } = useApp();
     const [sessionPickerOpen, setSessionPickerOpen] = useState(false);
     const [manageCategoriesOpen, setManageCategoriesOpen] = useState(false);
+    const [combinationsOpen, setCombinationsOpen] = useState(false);
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; categoryId: string | null }>({
         isOpen: false,
         categoryId: null,
@@ -116,44 +117,61 @@ export const CategoryView: React.FC = () => {
             <div className="flex justify-center mt-8">
                 <button
                     onClick={() => setManageCategoriesOpen(true)}
-                    className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:underline transition-colors"
+                    className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-colors"
                 >
                     {t('categories.manage', 'Hantera kategorier')}
                 </button>
             </div>
 
-            {/* Saved Combinations Section */}
-            <div>
-                <div className="flex items-center justify-between mb-3 mt-8">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                        {t('combinations.title', 'Sparade Mallar')}
-                    </h3>
-                    <button
-                        onClick={() => setEditorState({ isOpen: true })}
-                        className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-                    >
-                        {t('combinations.createRaw', '+ Skapa ny mall')}
-                    </button>
-                </div>
-
-                {combinations.length === 0 ? (
-                    <div className="text-center py-6 bg-gray-50 dark:bg-gray-900/50 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
-                        <p className="text-gray-500 text-sm">
-                            {t('combinations.empty', 'Du har inga sparade mallar än.')}
-                        </p>
+            {/* Combinations / Templates Section - Collapsed by default */}
+            <div className="border-t border-gray-100 dark:border-gray-800 pt-8">
+                <button
+                    onClick={() => setCombinationsOpen(!combinationsOpen)}
+                    className="flex items-center gap-2 w-full text-left group mb-4"
+                >
+                    <div className={`p-1 rounded-md transition-colors ${combinationsOpen ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300'}`}>
+                        {combinationsOpen ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                     </div>
-                ) : (
-                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                        {combinations.map(combo => (
-                            <CombinationCard
-                                key={combo.id}
-                                combination={combo}
-                                lists={lists}
-                                onStart={handleStartFromCombination}
-                                onEdit={(id) => setEditorState({ isOpen: true, combination: combinations.find(c => c.id === id) })}
-                                onDelete={(id) => setDeleteCombinationModal({ isOpen: true, combinationId: id })}
-                            />
-                        ))}
+                    <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                        {t('combinations.title', 'Mina mallar')}
+                    </span>
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500">
+                        {combinations.length}
+                    </span>
+                </button>
+
+                {combinationsOpen && (
+                    <div className="animate-in slide-in-from-top-2 fade-in duration-200 pl-2">
+                        <div className="flex justify-end mb-4">
+                            <button
+                                onClick={() => setEditorState({ isOpen: true })}
+                                className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                            >
+                                <Plus size={16} />
+                                {t('combinations.createRaw', 'Skapa ny mall')}
+                            </button>
+                        </div>
+
+                        {combinations.length === 0 ? (
+                            <div className="text-center py-6 bg-gray-50 dark:bg-gray-900/50 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
+                                <p className="text-gray-500 text-sm">
+                                    {t('combinations.empty', 'Du har inga sparade mallar än.')}
+                                </p>
+                            </div>
+                        ) : (
+                            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                                {combinations.map(combo => (
+                                    <CombinationCard
+                                        key={combo.id}
+                                        combination={combo}
+                                        lists={lists}
+                                        onStart={handleStartFromCombination}
+                                        onEdit={(id) => setEditorState({ isOpen: true, combination: combinations.find(c => c.id === id) })}
+                                        onDelete={(id) => setDeleteCombinationModal({ isOpen: true, combinationId: id })}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

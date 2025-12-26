@@ -47,7 +47,9 @@ vi.mock('./SessionPicker', () => ({
 vi.mock('lucide-react', () => ({
     Plus: () => <div data-testid="plus" />,
     Folder: () => <div data-testid="folder" />,
-    PlayCircle: () => <div data-testid="play-circle" />
+    PlayCircle: () => <div data-testid="play-circle" />,
+    ChevronDown: () => <div data-testid="chevron-down" />,
+    ChevronRight: () => <div data-testid="chevron-right" />
 }));
 
 const mockAddCategory = vi.fn();
@@ -99,6 +101,11 @@ describe('CategoryView', () => {
 
         expect(screen.getByText('Work')).toBeDefined();
         expect(screen.getByText('Personal')).toBeDefined();
+
+        // Open combinations accordion
+        const accordion = screen.getByText('combinations.title');
+        fireEvent.click(accordion);
+
         expect(screen.getByText('Morning Routine')).toBeDefined();
     });
 
