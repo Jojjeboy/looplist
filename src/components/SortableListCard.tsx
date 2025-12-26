@@ -16,6 +16,7 @@ interface SortableListCardProps {
     categories: Category[];
     currentCategoryId: string;
     onMoveToCategory: (listId: string, categoryId: string) => Promise<void>;
+    showHandle: boolean;
 }
 
 export const SortableListCard: React.FC<SortableListCardProps> = ({
@@ -28,6 +29,7 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
     categories,
     currentCategoryId,
     onMoveToCategory,
+    showHandle,
 }) => {
     const { t } = useTranslation();
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -64,13 +66,15 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
                             </div>
                         </div>
                     </Link>
-                    <div
-                        {...attributes}
-                        {...listeners}
-                        className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none flex-shrink-0 mr-2"
-                    >
-                        <GripVertical size={24} strokeWidth={2.5} />
-                    </div>
+                    {showHandle && (
+                        <div
+                            {...attributes}
+                            {...listeners}
+                            className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none flex-shrink-0 mr-2"
+                        >
+                            <GripVertical size={24} strokeWidth={2.5} />
+                        </div>
+                    )}
                 </div>
                 <div className="relative flex-shrink-0">
                     <button
@@ -109,11 +113,10 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
                                     setDropdownOpen(false);
                                 }}
                                 disabled={!list.items.some(item => item.completed)}
-                                className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors ${
-                                    list.items.some(item => item.completed)
-                                        ? 'text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-green-900/30'
-                                        : 'text-gray-400 dark:text-gray-600 cursor-not-allowed'
-                                }`}
+                                className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors ${list.items.some(item => item.completed)
+                                    ? 'text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-green-900/30'
+                                    : 'text-gray-400 dark:text-gray-600 cursor-not-allowed'
+                                    }`}
                             >
                                 <CheckCheck size={16} />
                                 {t('lists.clearCompleted')}
@@ -132,21 +135,6 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
                     )}
                 </div>
             </div>
-
-            {list.items.length > 0 && (
-                <div className="px-4 pb-4">
-                    <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
-                        <span>{t('lists.progress')}</span>
-                        <span>{Math.round((list.items.filter(i => i.completed).length / list.items.length) * 100)}%</span>
-                    </div>
-                    <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
-                        <div
-                            className="bg-blue-500 h-full rounded-full transition-all duration-500"
-                            style={{ width: `${(list.items.filter(i => i.completed).length / list.items.length) * 100}%` }}
-                        />
-                    </div>
-                </div>
-            )}
 
             {isMoving && (
                 <div className="p-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-xl">

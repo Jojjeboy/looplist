@@ -248,6 +248,7 @@ export const CategoryDetail: React.FC = () => {
                                 categories={categories}
                                 currentCategoryId={categoryId!}
                                 onMoveToCategory={handleMoveToCategory}
+                                showHandle={categoryLists.length > 1}
                             />
                         ))}
                         {categoryLists.length === 0 && (

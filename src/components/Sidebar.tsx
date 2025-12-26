@@ -124,19 +124,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ onOpenSettings }) => {
                                 </Link>
                             </div>
 
-                            {/* SonarCloud Badge */}
-                            <a
-                                href="https://sonarcloud.io/summary/new_code?id=jojjeboy_anti"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="block opacity-60 hover:opacity-100 transition-opacity"
-                            >
-                                <img
-                                    src="https://sonarcloud.io/api/project_badges/measure?project=jojjeboy_anti&metric=alert_status"
-                                    alt="Quality Gate Status"
-                                    className="h-3 w-auto"
-                                />
-                            </a>
                         </div>
                     </div>
                 )}

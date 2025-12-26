@@ -111,20 +111,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                         </div>
                     )}
 
-                    <div className="mt-1 transition-opacity duration-300 hover:opacity-100 opacity-70 dark:opacity-60">
-                        <a
-                            href="https://sonarcloud.io/summary/new_code?id=jojjeboy_anti"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="block"
-                        >
-                            <img
-                                src="https://sonarcloud.io/api/project_badges/measure?project=jojjeboy_anti&metric=alert_status"
-                                alt="Quality Gate Status"
-                                className="h-[18px] w-auto"
-                            />
-                        </a>
-                    </div>
+
                 </footer>
             </div>
 

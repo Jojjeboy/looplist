@@ -167,7 +167,7 @@ describe('ListDetail', () => {
             completeSession: vi.fn(),
             deleteSession: vi.fn(),
             // Add other required mock properties if missing from previous context
-        } as any);
+        } as Partial<ReturnType<typeof AppContext.useApp>> as ReturnType<typeof AppContext.useApp>);
 
         renderComponent();
         const toggleButtons = screen.getAllByText('Toggle');

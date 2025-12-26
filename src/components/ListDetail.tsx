@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import type { Item, ListSettings } from '../types';
+import type { Item, ListSettings, List } from '../types';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from './SortableItem';
@@ -21,7 +21,7 @@ export const ListDetail: React.FC = () => {
     const [editedTitle, setEditedTitle] = useState('');
     const [settingsOpen, setSettingsOpen] = useState(false);
 
-    const list = lists.find((l) => l.id === listId);
+    const list: List | undefined = lists.find((l) => l.id === listId);
 
     React.useEffect(() => {
         if (list) {
@@ -162,12 +162,14 @@ export const ListDetail: React.FC = () => {
         await updateListSettings(list.id, updated);
     };
 
+    const parentCategoryId = list.categoryId;
+
     return (
         <div className="space-y-6">
             {/* ... (header code) ... */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <Link to={`/category/${list.categoryId}`} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors flex-shrink-0">
+                    <Link to={`/category/${parentCategoryId}`} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors flex-shrink-0">
                         <ChevronLeft />
                     </Link>
                     {isEditingTitle ? (

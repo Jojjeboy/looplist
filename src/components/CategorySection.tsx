@@ -172,6 +172,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                                 categories={categories}
                                 currentCategoryId={category.id}
                                 onMoveToCategory={handleMoveToCategory}
+                                showHandle={categoryLists.length > 1}
                             />
                         ))}
                         {categoryLists.length === 0 && (
