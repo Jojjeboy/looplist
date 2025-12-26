@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Folder } from 'lucide-react';
+import { Folder } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
 import { SessionPicker } from './SessionPicker';
@@ -10,13 +10,14 @@ import { CombinationCard } from './CombinationCard';
 import { CombinationEditor } from './CombinationEditor';
 import { ListCombination } from '../types';
 import { CategorySection } from './CategorySection';
+import { ManageCategoriesModal } from './ManageCategoriesModal';
 
 export const CategoryView: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { categories, lists, addCategory, deleteCategory, updateCategoryName, addList, deleteList, copyList, moveList, updateListItems, reorderLists, addSession, combinations, addCombination, updateCombination, deleteCombination } = useApp();
-    const [newCategoryName, setNewCategoryName] = useState('');
+    const { categories, lists, addCategory, deleteCategory, updateCategoryName, addList, deleteList, copyList, moveList, updateListItems, reorderLists, addSession, combinations, addCombination, updateCombination, deleteCombination, reorderCategories } = useApp();
     const [sessionPickerOpen, setSessionPickerOpen] = useState(false);
+    const [manageCategoriesOpen, setManageCategoriesOpen] = useState(false);
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; categoryId: string | null }>({
         isOpen: false,
         categoryId: null,
@@ -31,20 +32,9 @@ export const CategoryView: React.FC = () => {
 
     const sortedCategories = [...categories].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
-    const [showAddCategory, setShowAddCategory] = useState(false);
-
     useEffect(() => {
         document.title = 'Anti';
     }, []);
-
-    const handleAdd = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (newCategoryName.trim()) {
-            addCategory(newCategoryName.trim());
-            setNewCategoryName('');
-            setShowAddCategory(false);
-        }
-    };
 
     const confirmDelete = () => {
         if (deleteModal.categoryId) {
@@ -86,34 +76,6 @@ export const CategoryView: React.FC = () => {
         <div className="space-y-6">
             <div className="flex items-center justify-between gap-4">
                 <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{t('categories.title')}</h2>
-                <button
-                    onClick={() => setShowAddCategory(!showAddCategory)}
-                    className={`p-2 rounded-lg transition-colors ${showAddCategory ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'text-gray-500 hover:text-blue-600 dark:hover:text-blue-400'}`}
-                    title={t('categories.newPlaceholder')}
-                >
-                    <Plus size={24} className={`transition-transform duration-300 ${showAddCategory ? 'rotate-45' : ''}`} />
-                </button>
-            </div>
-
-            <div className={`grid transition-all duration-300 ease-in-out ${showAddCategory ? 'grid-rows-[1fr] opacity-100 mb-6' : 'grid-rows-[0fr] opacity-0 mb-0'}`}>
-                <div className="overflow-hidden">
-                    <form onSubmit={handleAdd} className="flex gap-2 p-1">
-                        <input
-                            type="text"
-                            value={newCategoryName}
-                            onChange={(e) => setNewCategoryName(e.target.value)}
-                            placeholder={t('categories.newPlaceholder')}
-                            autoFocus
-                            className="flex-1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                        />
-                        <button
-                            type="submit"
-                            className="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md transition-colors"
-                        >
-                            <Plus />
-                        </button>
-                    </form>
-                </div>
             </div>
 
             {/* Categories Section */}
@@ -149,6 +111,15 @@ export const CategoryView: React.FC = () => {
                         <p className="text-sm text-gray-400">{t('categories.emptyHint')}</p>
                     </div>
                 )}
+            </div>
+
+            <div className="flex justify-center mt-8">
+                <button
+                    onClick={() => setManageCategoriesOpen(true)}
+                    className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:underline transition-colors"
+                >
+                    {t('categories.manage', 'Hantera kategorier')}
+                </button>
             </div>
 
             {/* Saved Combinations Section */}
@@ -205,6 +176,15 @@ export const CategoryView: React.FC = () => {
                 message={t('combinations.deleteMessage', 'Är du säker på att du vill radera denna mall? Listorna kommer inte att raderas.')}
                 confirmText={t('common.delete', 'Radera')}
                 isDestructive
+            />
+
+            <ManageCategoriesModal
+                isOpen={manageCategoriesOpen}
+                onClose={() => setManageCategoriesOpen(false)}
+                categories={sortedCategories}
+                onReorder={reorderCategories}
+                onAdd={addCategory}
+                onDelete={deleteCategory}
             />
 
             <SessionPicker

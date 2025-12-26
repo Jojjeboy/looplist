@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-// import { useSortable } from '@dnd-kit/sortable';
-// import { CSS } from '@dnd-kit/utilities';
 import { Trash2, Plus } from 'lucide-react';
 import { Category, List } from '../types';
 import { useTranslation } from 'react-i18next';
@@ -42,32 +40,12 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     const [isAddingList, setIsAddingList] = useState(false);
     const [movingListId, setMovingListId] = useState<string | null>(null);
 
-
-    // Removed useSortable as category sorting is disabled for this view
-    /*
-    const {
-        attributes,
-        listeners,
-        setNodeRef,
-        transform,
-        transition,
-        isDragging,
-    } = useSortable({ id: category.id });
-    */
-    // We can just use a div ref if needed or nothing if we don't need dnd for the section itself.
-    // For now, I'll remove the hook usage.
-
     const sensors = useSensors(
         useSensor(PointerSensor),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         })
     );
-
-    // const style = {
-    //     transform: CSS.Transform.toString(transform),
-    //     transition,
-    // };
 
     const categoryLists = lists
         .filter((l) => l.categoryId === category.id)
@@ -129,8 +107,15 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                 ) : (
                     <>
                         <h3
-                            className="text-xl font-bold text-gray-900 dark:text-gray-100 cursor-pointer flex-1"
+                            className="text-xl font-bold text-gray-900 dark:text-gray-100 cursor-pointer flex-1 outline-none focus:text-blue-600 dark:focus:text-blue-400"
                             onClick={() => setIsEditingTitle(true)}
+                            tabIndex={0}
+                            role="button"
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    setIsEditingTitle(true);
+                                }
+                            }}
                         >
                             {category.name}
                         </h3>
@@ -143,10 +128,9 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                         </button>
                         <button
                             onClick={() => setIsAddingList(!isAddingList)}
-                            className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                            aria-label={t('lists.newPlaceholder')}
+                            className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-all"
                         >
-                            <Plus size={20} />
+                            {t('lists.addLink', '+ Lägg till lista')}
                         </button>
                     </>
                 )}

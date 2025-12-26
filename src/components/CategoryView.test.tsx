@@ -31,6 +31,10 @@ vi.mock('./CategorySection', () => ({
     CategorySection: ({ category }: { category: { name: string } }) => <div data-testid="category-section">{category.name}</div>
 }));
 
+vi.mock('./ManageCategoriesModal', () => ({
+    ManageCategoriesModal: ({ isOpen }: { isOpen: boolean }) => isOpen ? <div data-testid="manage-categories-modal">Manage Categories Modal</div> : null
+}));
+
 vi.mock('./CombinationCard', () => ({
     CombinationCard: ({ combination }: { combination: { name: string } }) => <div data-testid="combination-card">{combination.name}</div>
 }));
@@ -92,43 +96,20 @@ describe('CategoryView', () => {
 
     it('renders categories and combinations', () => {
         renderComponent();
-        expect(screen.getByDisplayValue('')).toBeDefined(); // Input for new category
-        expect(screen.getAllByTestId('category-section')).toHaveLength(2);
+
         expect(screen.getByText('Work')).toBeDefined();
         expect(screen.getByText('Personal')).toBeDefined();
         expect(screen.getByText('Morning Routine')).toBeDefined();
     });
 
-    it('adds a new category', () => {
-        renderComponent();
-        const input = screen.getByPlaceholderText('categories.newPlaceholder');
-        fireEvent.change(input, { target: { value: 'New Category' } });
-
-        const form = input.closest('form');
-        fireEvent.submit(form!);
-
-        expect(mockAddCategory).toHaveBeenCalledWith('New Category');
-    });
-
-    it('toggles add category form', () => {
+    it('opens manage categories modal', () => {
         renderComponent();
 
-        // Form should be hidden initially (or rather, the container has 0 height/opacity, but in JSDOM it might be hard to test styles perfectly without custom matchers. 
-        // Checks if button toggles state or creates visual change. 
-        // For simplicity, let's just check if the button exists and is clickable.
-        const toggleButton = screen.getByTitle('categories.newPlaceholder');
-        expect(toggleButton).toBeDefined();
+        const manageButton = screen.getByText('categories.manage');
+        expect(manageButton).toBeDefined();
 
-        fireEvent.click(toggleButton);
-        // In a real browser this toggles class/style. Test logic might depend on implementation.
-        // Since we are using CSS classes for visibility, standard queries might still find it unless we use hidden={true}. 
-        // The implementation uses grid-rows transition.
+        fireEvent.click(manageButton);
 
-        // Let's verify the input is there (it's always rendered in the DOM in current impl, just hidden visually)
-        // But we can check if the button class changes or some indicator.
-        // Actually, let's just ensure we can basically interact.
-
-        const input = screen.getByPlaceholderText('categories.newPlaceholder');
-        expect(input).toBeDefined();
+        expect(screen.getByTestId('manage-categories-modal')).toBeDefined();
     });
 });

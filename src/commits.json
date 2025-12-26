@@ -1,5 +1,33 @@
 [
   {
+    "hash": "2c77c745d031c9abe6d13e4361b723c263e6c86d",
+    "author": "Jojjeboy",
+    "date": "2025-12-26 20:39:59 +0100",
+    "message": "Category List combination",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "A",
+        "path": "src/components/CategorySection.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
+  },
+  {
     "hash": "77850bc33e3e16605f36decf78e774a90971b7fa",
     "author": "Jojjeboy",
     "date": "2025-12-23 09:10:26 +0100",
