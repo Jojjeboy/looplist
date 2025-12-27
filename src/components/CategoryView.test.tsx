@@ -53,8 +53,12 @@ vi.mock('lucide-react', () => ({
     Folder: () => <div data-testid="folder" />,
     PlayCircle: () => <div data-testid="play-circle" />,
     ChevronDown: () => <div data-testid="chevron-down" />,
-    ChevronRight: () => <div data-testid="chevron-right" />
+    ChevronRight: () => <div data-testid="chevron-right" />,
+    Layers: () => <div data-testid="layers" />,
+    Home: () => <div data-testid="home" />
 }));
+
+
 
 const mockAddCategory = vi.fn();
 const mockAddCombination = vi.fn();
@@ -100,17 +104,27 @@ describe('CategoryView', () => {
         );
     };
 
-    it('renders categories and combinations', () => {
+    it('renders categories and home tab by default', () => {
         renderComponent();
 
         expect(screen.getByText('Work')).toBeDefined();
         expect(screen.getByText('Personal')).toBeDefined();
+        expect(screen.getByText('categories.title')).toBeDefined();
 
-        // Open combinations accordion
-        const accordion = screen.getByText('combinations.title');
-        fireEvent.click(accordion);
+        // Combinations should NOT be visible initially
+        expect(screen.queryByText('Morning Routine')).toBeNull();
+    });
 
-        expect(screen.getByText('Morning Routine')).toBeDefined();
+    it('switches to templates tab', () => {
+        renderComponent();
+
+        // Click templates tab using translation key or button text
+        fireEvent.click(screen.getByText('combinations.title'));
+
+        // Check for templates content
+        // The title "combinations.title" is in the button, so we check for content specific to the tab
+        // like the "Create new template" button or the empty state message
+        expect(screen.getByText('combinations.createRaw')).toBeDefined();
     });
 
     it('opens manage categories modal', () => {

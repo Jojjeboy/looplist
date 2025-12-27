@@ -25,6 +25,7 @@ export interface List {
   categoryId: string;
   order?: number;
   settings?: ListSettings;
+  lastAccessedAt?: string;
 }
 
 export interface Category {

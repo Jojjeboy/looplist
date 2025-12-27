@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 export const ListDetail: React.FC = () => {
     const { t } = useTranslation();
     const { listId } = useParams<{ listId: string }>();
-    const { lists, updateListItems, deleteItem, updateListName, updateListSettings } = useApp();
+    const { lists, updateListItems, deleteItem, updateListName, updateListSettings, updateListAccess } = useApp();
     const [newItemText, setNewItemText] = useState('');
     const [uncheckModalOpen, setUncheckModalOpen] = useState(false);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -32,8 +32,18 @@ export const ListDetail: React.FC = () => {
         if (list) {
             document.title = `Anti - ${list.name}`;
             setEditedTitle(list.name);
+            updateListAccess(list.id);
         }
-    }, [list]);
+    }, [list?.id, list?.name]); // careful with dependencies to avoid loops, list object changes on updateListAccess if we aren't careful?
+    // Actually, updateListAccess updates the list in context, so 'list' will change.
+    // We only want to trigger this on MOUNT or when we switch to a different listId.
+    // So we should depend on listId.
+
+    useEffect(() => {
+        if (listId) {
+            updateListAccess(listId);
+        }
+    }, [listId]);
 
     const sensors = useSensors(
         useSensor(PointerSensor),

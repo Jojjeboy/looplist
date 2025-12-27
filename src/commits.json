@@ -1,5 +1,89 @@
 [
   {
+    "hash": "e7b7b28115a8aecafa57313f5b24b39229a8a6f8",
+    "author": "Jojjeboy",
+    "date": "2025-12-27 08:53:45 +0100",
+    "message": "Removed category Detail page",
+    "files": [
+      {
+        "status": "M",
+        "path": "README.md"
+      },
+      {
+        "status": "M",
+        "path": "eslint.strict.config.ts"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "D",
+        "path": "src/components/CategoryDetail.test.tsx"
+      },
+      {
+        "status": "D",
+        "path": "src/components/CategoryDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "D",
+        "path": "src/components/HelloWorld.vue"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ImportListModal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "D",
+        "path": "src/components/SortableCategoryCard.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/en.json"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/sv.json"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      },
+      {
+        "status": "A",
+        "path": "vitest.config.ts.timestamp-1766820162337-d468130265368.mjs"
+      },
+      {
+        "status": "A",
+        "path": "vitest.config.ts.timestamp-1766820716865-cee7680674532.mjs"
+      }
+    ]
+  },
+  {
     "hash": "f27f050578ffad6089179be2b37f0aed23b133a7",
     "author": "Jojjeboy",
     "date": "2025-12-26 21:17:07 +0100",

@@ -43,6 +43,7 @@ interface AppContextType {
     addCombination: (name: string, listIds: string[]) => Promise<string>;
     updateCombination: (id: string, updates: Partial<ListCombination>) => Promise<void>;
     deleteCombination: (id: string) => Promise<void>;
+    updateListAccess: (id: string) => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -128,6 +129,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const updateListSettings = async (id: string, settings: ListSettings) => {
         await listsSync.updateItem(id, { settings });
+    };
+
+    const updateListAccess = async (id: string) => {
+        await listsSync.updateItem(id, { lastAccessedAt: new Date().toISOString() });
     };
 
     const addCombination = async (name: string, listIds: string[]) => {
@@ -398,6 +403,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 addCombination,
                 updateCombination,
                 deleteCombination,
+                updateListAccess,
             }}
         >
             {children}
