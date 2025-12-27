@@ -66,6 +66,7 @@ describe('ListDetail', () => {
             deleteItem: vi.fn(),
             updateListName: vi.fn(),
             updateListSettings: vi.fn(),
+            updateListAccess: vi.fn(),
             // defaults
             categories: [],
             addCategory: vi.fn(),
@@ -148,6 +149,7 @@ describe('ListDetail', () => {
             deleteItem: vi.fn(),
             updateListName: vi.fn(),
             updateListSettings: vi.fn(),
+            updateListAccess: vi.fn(),
             categories: [],
             addCategory: vi.fn(),
             deleteCategory: vi.fn(),

@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Link } from 'react-router-dom';
-import { Moon, Sun, Search, Settings } from 'lucide-react';
+import { Link, NavLink } from 'react-router-dom';
+import { Moon, Sun, Search, Settings, LayoutGrid, StickyNote, Activity } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SearchResults } from './SearchResults';
 import { SettingsModal } from './SettingsModal';
 import { Sidebar } from './Sidebar';
-import commitsData from '../commits.json';
-import { Commit } from '../types';
-
 import { OfflineIndicator } from './OfflineIndicator';
-
-const commits = commitsData as Commit[];
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { t } = useTranslation();
     const { theme, toggleTheme, searchQuery, setSearchQuery } = useApp();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const latestCommit = commits[0];
 
     return (
         <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
@@ -71,48 +65,53 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 </header>
 
                 {/* Main Scrollable Content */}
-                <main className="flex-1 p-4 w-full mx-auto md:p-8 md:max-w-7xl">
+                <main className="flex-1 p-4 w-full mx-auto md:p-8 md:max-w-7xl pb-24 md:pb-8">
                     {searchQuery ? <SearchResults /> : children}
                 </main>
 
-                {/* Mobile Footer */}
-                <footer className="md:hidden mt-auto flex flex-col items-center gap-3 border-t border-gray-100 p-8 text-center dark:border-gray-800">
-                    <Link
-                        to="/notes"
-                        className="text-sm font-medium tracking-wide text-gray-600 transition-colors hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
-                    >
-                        {t('app.notes').toUpperCase()}
-                    </Link>
+                {/* Mobile Bottom Navigation */}
+                <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 pb-safe z-30">
+                    <div className="flex justify-around items-center h-16">
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) => `
+                                flex flex-col items-center justify-center w-full h-full space-y-1
+                                ${isActive
+                                    ? 'text-blue-600 dark:text-blue-400'
+                                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}
+                            `}
+                        >
+                            <LayoutGrid size={24} />
+                            <span className="text-[10px] font-medium">{t('categories.title', 'Hem')}</span>
+                        </NavLink>
 
-                    {latestCommit && (
-                        <div className="flex flex-col items-center gap-1">
-                            <div className="flex items-center gap-2 font-mono text-[10px] text-gray-400 dark:text-gray-500">
-                                <span className="uppercase">
-                                    {(() => {
-                                        const commitDate = new Date(latestCommit.date);
-                                        const now = new Date();
-                                        const isCurrentYear = commitDate.getFullYear() === now.getFullYear();
-                                        const day = commitDate.getDate().toString().padStart(2, '0');
-                                        const month = commitDate.toLocaleString('sv-SE', { month: 'short' });
-                                        const year = isCurrentYear ? '' : ` ${commitDate.getFullYear()}`;
-                                        return `${day} ${month}${year}`;
-                                    })()}
-                                </span>
-                                <span className="h-1 w-1 rounded-full bg-gray-200 dark:bg-gray-700" />
-                                <Link
-                                    to="/activity"
-                                    className="transition-colors hover:text-blue-500 dark:hover:text-blue-400"
-                                >
-                                    {latestCommit.message.length > 35
-                                        ? `${latestCommit.message.substring(0, 35)}...`
-                                        : latestCommit.message}
-                                </Link>
-                            </div>
-                        </div>
-                    )}
+                        <NavLink
+                            to="/notes"
+                            className={({ isActive }) => `
+                                flex flex-col items-center justify-center w-full h-full space-y-1
+                                ${isActive
+                                    ? 'text-blue-600 dark:text-blue-400'
+                                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}
+                            `}
+                        >
+                            <StickyNote size={24} />
+                            <span className="text-[10px] font-medium">{t('app.notes', 'Anteckningar')}</span>
+                        </NavLink>
 
-
-                </footer>
+                        <NavLink
+                            to="/activity"
+                            className={({ isActive }) => `
+                                flex flex-col items-center justify-center w-full h-full space-y-1
+                                ${isActive
+                                    ? 'text-blue-600 dark:text-blue-400'
+                                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}
+                            `}
+                        >
+                            <Activity size={24} />
+                            <span className="text-[10px] font-medium">{t('history.title', 'Aktivitet')}</span>
+                        </NavLink>
+                    </div>
+                </nav>
             </div>
 
             <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />

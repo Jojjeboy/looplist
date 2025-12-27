@@ -1,5 +1,37 @@
 [
   {
+    "hash": "42b813f79ad8a4eab4417ed52a5cc8e1ece9f3b7",
+    "author": "Jojjeboy",
+    "date": "2025-12-27 09:42:05 +0100",
+    "message": "Tabs on startpage",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
+  },
+  {
     "hash": "e7b7b28115a8aecafa57313f5b24b39229a8a6f8",
     "author": "Jojjeboy",
     "date": "2025-12-27 08:53:45 +0100",
