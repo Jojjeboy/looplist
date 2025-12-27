@@ -1,88 +1,62 @@
 # Anti List - PWA
 
-A mobile-first Progressive Web App for managing reusable lists, built with React, Tailwind CSS, and Vite.
+A mobile-first Progressive Web App for managing reusable lists, built with React, TypeScript, Tailwind CSS, and Vite.
 
-- **Categories**: Group lists into categories (e.g., Jobb, Privat, Resor).
-- **Lists**: Create, copy, move, and delete lists.
-- **Items**: Add, edit, delete, check/uncheck items.
-- **Templates (Saved Combinations)**: Create permanent reusable templates from list combinations (e.g., Morning Routine, Travel).
-- **Quick Sessions**: Group multiple lists into temporary executable sessions.
-- **Sorting**: Sort items manually, alphabetically, or by completion status.
-- **Voice Input**: Add items using voice dictation.
-- **Undo**: Undo accidental deletions of lists and items.
-- **Drag and Drop**: Reorder items within a list.
-- **Dark Mode**: Toggle between light and dark themes (auto-detected or manual).
-- **Cloud Storage**: Data is securely stored in Google Cloud Firestore with real-time synchronization across devices.
-- **Offline Support**: Full offline functionality with automatic synchronization when connection is restored.
-- **Smart Data Migration**: Automatically migrates existing local data to the cloud upon first login.
-- **PWA**: Installable on mobile devices.
-- **Internationalization**: Support for English and Swedish.
-- **Activity Log**: View recent commits and updates.
+## 🚀 Features
 
-## Data Storage Strategy
+- **Start Page Overview**: A unified view of all categories and their associated lists.
+- **Flattened Navigation**: Direct access to lists from the start page without intermediary category detail views.
+- **Lists Management**: Create, copy, move (between categories), and delete lists with ease.
+- **Dynamic Items**: Add, edit, and delete list items.
+- **Three-Stage Mode**: Support for an advanced workflow (Unchecked -> Prepared -> Completed).
+- **Templates (Saved Combinations)**: Create permanent reusable templates from multiple list combinations (e.g., "Morning Routine", "Travel Pack").
+- **Quick Sessions**: Group multiple lists into a temporary executable session for rapid progress.
+- **Smart Sorting**: Sort items manually (drag & drop), alphabetically, or by completion status.
+- **Voice Input**: Dictate items directly into lists using speech-to-text.
+- **Undo Functionality**: Instant recovery for accidental deletions of lists and items.
+- **Cloud Synchronization**: Secure data storage in Google Cloud Firestore with real-time sync across all your devices.
+- **Offline First**: Full functionality without internet. Changes are queued and synced automatically when back online.
+- **Dark Mode**: Automated theme switching based on local sunrise/sunset or manual toggle.
+- **Internationalization**: localized in English and Swedish.
 
-The application uses **Google Cloud Firestore** as its primary data store.
+## 🛠 Tech Stack
 
-- **Structure**: Data is stored in a `users/{uid}` collection, ensuring complete data isolation between users.
-- **Offline Persistence**: Firestore's `enableIndexedDbPersistence` is enabled, allowing the app to work seamlessly without an internet connection. Changes made offline are queued and synced automatically when the connection is restored.
-- **Real-time Sync**: The app uses real-time listeners (`onSnapshot`) to instantly reflect changes made on other devices.
-- **Migration**: A custom hook `useMigrateLocalStorage` detects if a user has existing local data but no cloud data, and automatically migrates it to Firestore on their first login.
+- **Framework**: React 19 (TypeScript)
+- **State**: React Context + Firestore real-time listeners
+- **Styling**: Tailwind CSS + Lucide Icons
+- **Drag & Drop**: `@dnd-kit`
+- **PWA**: `vite-plugin-pwa`
+- **Testing**: Vitest + React Testing Library
 
-## Tech Stack
+## 📦 Scripts
 
-- **Frontend Framework**: React (TypeScript)
-- **Styling**: Tailwind CSS
-- **Build Tool**: Vite
-- **State Management**: React Context API
-- **Routing**: React Router DOM
-- **Internationalization**: i18next, react-i18next
-- **Drag and Drop**: @dnd-kit
-- **Icons**: Lucide React
-- **PWA**: vite-plugin-pwa
-- **Utils**: suncalc (for auto theme), uuid
+| Command             | Description                                                   |
+| ------------------- | ------------------------------------------------------------- |
+| `npm run dev`       | Start development server with auto-commit generation          |
+| `npm run build`     | Build for production (includes type checking and commit sync) |
+| `npm run test`      | Run all unit tests with coverage report                       |
+| `npm run lint`      | Lint codebase for style and errors                            |
+| `npm run check-any` | Strict linting to ensure no `any` types are used              |
+| `npm run validate`  | Full CI pipeline: Build -> Lint -> Check Any -> Test          |
 
-## Documentation & Prompts
+## 🧪 Testing
 
-For a detailed log of the prompts used to build this application, please refer to:
-[PromptsMade.md](./PromptsMade.md)
-
-## Setup & Run
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Run development server:
-   ```bash
-   npm run dev
-   ```
-3. Build for production:
-   ```bash
-   npm run build
-   ```
-
-## Testing
-
-Run the test suite using Vitest:
+The project uses Vitest for testing. All major components and context logic are covered.
 
 ```bash
 # Run all tests
 npm run test
 
-# Run with UI
-npm run test:ui
-
-# Check coverage
-npm run coverage
+# Run tests in UI mode
+npx vitest --ui
 ```
 
-## License
+## 🔐 Security & Data
+
+- **Authentication**: Google Search-In via Firebase Auth.
+- **Privacy**: Data is isolated per user using Firestore security rules (`users/{uid}`).
+- **Offline**: Uses Firestore's IndexedDB persistence.
+
+## 📝 License
 
 MIT
-
-## PWA Icons
-
-To fully enable PWA installation, please add the following icons to the `public` directory:
-
-- `pwa-192x192.png`
-- `pwa-512x512.png`

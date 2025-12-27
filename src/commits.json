@@ -1,5 +1,33 @@
 [
   {
+    "hash": "f27f050578ffad6089179be2b37f0aed23b133a7",
+    "author": "Jojjeboy",
+    "date": "2025-12-26 21:17:07 +0100",
+    "message": "Minor UI fixes",
+    "files": [
+      {
+        "status": "M",
+        "path": ".github/workflows/ci.yml"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableListCard.tsx"
+      }
+    ]
+  },
+  {
     "hash": "d7a5d365f11d74342b6b619211057110e6775db7",
     "author": "Jojjeboy",
     "date": "2025-12-26 21:05:58 +0100",

@@ -1,7 +1,7 @@
 {
   "name": "anti",
   "private": true,
-  "version": "4.0.0",
+  "version": "5.0.0",
   "type": "module",
   "scripts": {
     "dev": "node scripts/generate-commits.js && vite",

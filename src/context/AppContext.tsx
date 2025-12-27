@@ -47,6 +47,11 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+/**
+ * Global application state provider.
+ * Manages data synchronization with Firestore, theme settings, 
+ * and core business logic for categories, lists, notes, and sessions.
+ */
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user } = useAuth();
     const { migrating } = useMigrateLocalStorage(user?.uid);
@@ -160,14 +165,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 if (combo.listIds.length <= 2) {
                     combinationsToDelete.push(combo);
                 } else {
+                    // Otherwise, just remove the list from the combination's listIds
                     combinationsToUpdate.push(combo);
                 }
             }
 
-            // Delete list
+            // Delete list from Firestore
             await listsSync.deleteItem(id);
 
-            // Cascade operations
+            // Cascade operations: Cleanup combinations that depend on this list
             for (const combo of combinationsToDelete) {
                 await combinationsSync.deleteItem(combo.id);
             }

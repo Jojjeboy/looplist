@@ -11,6 +11,11 @@ import { Modal } from './Modal';
 
 import { useTranslation } from 'react-i18next';
 
+/**
+ * Detailed view for a single list.
+ * Supports adding items, toggling states (normal/three-stage), 
+ * sorting, and reordering items via drag and drop.
+ */
 export const ListDetail: React.FC = () => {
     const { t } = useTranslation();
     const { listId } = useParams<{ listId: string }>();
@@ -47,6 +52,7 @@ export const ListDetail: React.FC = () => {
         }
     }, [list?.settings?.defaultSort]);
 
+    // Memoized sort of items based on current settings
     const sortedItems = React.useMemo(() => {
         if (!list) return [];
         const items = [...list.items];
@@ -73,6 +79,9 @@ export const ListDetail: React.FC = () => {
 
     if (!list) return <div className="text-center py-10">{t('lists.notFound')}</div>;
 
+    /**
+     * Adds a new item to the current list.
+     */
     const handleAddItem = async (e: React.FormEvent) => {
         e.preventDefault();
         if (newItemText.trim()) {
@@ -82,6 +91,9 @@ export const ListDetail: React.FC = () => {
         }
     };
 
+    /**
+     * Handles item reordering via drag and drop.
+     */
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
         if (active.id !== over?.id) {
@@ -91,6 +103,11 @@ export const ListDetail: React.FC = () => {
         }
     };
 
+    /**
+     * Cycles an item through its possible states.
+     * In normal mode: unresolved <-> completed
+     * In three-stage mode: unresolved -> prepared -> completed -> unresolved
+     */
     const handleToggle = async (itemId: string) => {
         const newItems = list.items.map(item => {
             if (item.id !== itemId) return item;
@@ -162,14 +179,14 @@ export const ListDetail: React.FC = () => {
         await updateListSettings(list.id, updated);
     };
 
-    const parentCategoryId = list.categoryId;
+
 
     return (
         <div className="space-y-6">
             {/* ... (header code) ... */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <Link to={`/category/${parentCategoryId}`} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors flex-shrink-0">
+                    <Link to="/" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors flex-shrink-0" title={t('common.back', 'Back')}>
                         <ChevronLeft />
                     </Link>
                     {isEditingTitle ? (

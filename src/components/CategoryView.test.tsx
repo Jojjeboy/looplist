@@ -43,6 +43,10 @@ vi.mock('./SessionPicker', () => ({
     SessionPicker: ({ isOpen }: { isOpen: boolean }) => isOpen ? <div data-testid="session-picker" /> : null
 }));
 
+vi.mock('./ImportListModal', () => ({
+    ImportListModal: ({ isOpen }: { isOpen: boolean }) => isOpen ? <div data-testid="import-list-modal">Import List Modal</div> : null
+}));
+
 // Mock Lucide icons
 vi.mock('lucide-react', () => ({
     Plus: () => <div data-testid="plus" />,
@@ -118,5 +122,16 @@ describe('CategoryView', () => {
         fireEvent.click(manageButton);
 
         expect(screen.getByTestId('manage-categories-modal')).toBeDefined();
+    });
+
+    it('opens import list modal', () => {
+        renderComponent();
+
+        const importButton = screen.getByText('Import JSON');
+        expect(importButton).toBeDefined();
+
+        fireEvent.click(importButton);
+
+        expect(screen.getByTestId('import-list-modal')).toBeDefined();
     });
 });

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, X } from 'lucide-react';
-import { Item } from '../types';
+import React, { useState, useEffect } from 'react';
+import { ChevronDown, ChevronUp, X, Folder } from 'lucide-react';
+import { Item, Category } from '../types';
 
 interface ImportListModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onImport: (name: string, items: Item[]) => Promise<void>;
+    onImport: (name: string, items: Item[], categoryId: string) => Promise<void>;
+    categories: Category[];
 }
 
 interface ValidationResult {
@@ -132,11 +133,18 @@ const validateAndParseJSON = (jsonString: string): ValidationResult => {
     };
 };
 
-export const ImportListModal: React.FC<ImportListModalProps> = ({ isOpen, onClose, onImport }) => {
+export const ImportListModal: React.FC<ImportListModalProps> = ({ isOpen, onClose, onImport, categories }) => {
     const [jsonInput, setJsonInput] = useState('');
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string>('');
     const [error, setError] = useState('');
     const [isImporting, setIsImporting] = useState(false);
     const [showExample, setShowExample] = useState(false);
+
+    useEffect(() => {
+        if (isOpen && categories.length > 0 && !selectedCategoryId) {
+            setSelectedCategoryId(categories[0].id);
+        }
+    }, [isOpen, categories]);
 
     const handleImport = async () => {
         setError('');
@@ -148,9 +156,14 @@ export const ImportListModal: React.FC<ImportListModalProps> = ({ isOpen, onClos
             return;
         }
 
+        if (!selectedCategoryId) {
+            setError('Please select a category.');
+            return;
+        }
+
         try {
             setIsImporting(true);
-            await onImport(result.listData!.name, result.listData!.items);
+            await onImport(result.listData!.name, result.listData!.items, selectedCategoryId);
 
             // Reset and close on success
             setJsonInput('');
@@ -208,6 +221,33 @@ export const ImportListModal: React.FC<ImportListModalProps> = ({ isOpen, onClos
                         <p className="text-sm text-gray-600 dark:text-gray-400">
                             Paste JSON data below to import a list. The JSON should contain a &quot;name&quot; and &quot;items&quot; field.
                         </p>
+
+                        {/* Category Selector */}
+                        <div className="space-y-1">
+                            <label className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                                Import to Category
+                            </label>
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                    <Folder size={16} />
+                                </div>
+                                <select
+                                    value={selectedCategoryId}
+                                    onChange={(e) => setSelectedCategoryId(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none appearance-none"
+                                >
+                                    {categories.length === 0 && <option value="">No categories available</option>}
+                                    {categories.map((cat) => (
+                                        <option key={cat.id} value={cat.id}>
+                                            {cat.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-500">
+                                    <ChevronDown size={14} />
+                                </div>
+                            </div>
+                        </div>
 
                         {/* Example toggle */}
                         <button

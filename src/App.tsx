@@ -2,7 +2,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom'
 import { AppProvider } from './context/AppContext'
 import { Layout } from './components/Layout'
 import { CategoryView } from './components/CategoryView'
-import { CategoryDetail } from './components/CategoryDetail'
+
 import { ListDetail } from './components/ListDetail'
 import { SessionDetail } from './components/SessionDetail'
 import { NotesView } from './components/NotesView'
@@ -23,7 +23,7 @@ function App() {
                             <Layout>
                                 <Routes>
                                     <Route path="/" element={<CategoryView />} />
-                                    <Route path="/category/:categoryId" element={<CategoryDetail />} />
+
                                     <Route path="/list/:listId" element={<ListDetail />} />
                                     <Route path="/session/:sessionId" element={<SessionDetail />} />
                                     <Route path="/notes" element={<NotesView />} />

@@ -8,10 +8,16 @@ import { SessionPicker } from './SessionPicker';
 
 import { CombinationCard } from './CombinationCard';
 import { CombinationEditor } from './CombinationEditor';
-import { ListCombination } from '../types';
+import { ListCombination, Item } from '../types';
 import { CategorySection } from './CategorySection';
 import { ManageCategoriesModal } from './ManageCategoriesModal';
+import { ImportListModal } from './ImportListModal';
 
+/**
+ * Main overview page that displays categories and their associated lists.
+ * Provides entry points for managing categories, importing lists, 
+ * and using list combinations (templates).
+ */
 export const CategoryView: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -30,13 +36,18 @@ export const CategoryView: React.FC = () => {
         isOpen: false,
         combinationId: null,
     });
+    const [importModalOpen, setImportModalOpen] = useState(false);
 
+    // Categories sorted by their order property for consistent display
     const sortedCategories = [...categories].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
     useEffect(() => {
         document.title = 'Anti';
     }, []);
 
+    /**
+     * Confirms and executes category deletion
+     */
     const confirmDelete = () => {
         if (deleteModal.categoryId) {
             deleteCategory(deleteModal.categoryId);
@@ -71,6 +82,15 @@ export const CategoryView: React.FC = () => {
             await deleteCombination(deleteCombinationModal.combinationId);
             setDeleteCombinationModal({ isOpen: false, combinationId: null });
         }
+    };
+
+    /**
+     * Handles the import of a list from JSON data.
+     * Creates a new list and populates it with items.
+     */
+    const handleImportList = async (name: string, items: Item[], categoryId: string) => {
+        const newListId = await addList(name, categoryId);
+        await updateListItems(newListId, items);
     };
 
     return (
@@ -114,12 +134,19 @@ export const CategoryView: React.FC = () => {
                 )}
             </div>
 
-            <div className="flex justify-center mt-8">
+            <div className="flex justify-between items-center mt-8">
                 <button
                     onClick={() => setManageCategoriesOpen(true)}
                     className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-colors"
                 >
                     {t('categories.manage', 'Hantera kategorier')}
+                </button>
+                <div className="hidden sm:block"> {/* Spacer or leave empty if completely separated */} </div>
+                <button
+                    onClick={() => setImportModalOpen(true)}
+                    className="text-sm font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 hover:underline transition-colors flex items-center gap-1"
+                >
+                    <span>Import JSON</span>
                 </button>
             </div>
 
@@ -222,6 +249,15 @@ export const CategoryView: React.FC = () => {
                 categories={categories}
                 combination={editorState.combination}
             />
+
+            <ImportListModal
+                isOpen={importModalOpen}
+                onClose={() => setImportModalOpen(false)}
+                onImport={handleImportList}
+                categories={sortedCategories}
+            />
         </div>
     );
 };
+
+
