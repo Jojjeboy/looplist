@@ -53,13 +53,13 @@
             "title": "Listinställningar",
             "threeStage": {
                 "title": "Trestegsobjekt",
-                "description": "Olöst → Förberedd → Klar"
+                "description": "Olöst → Pågående → Klar"
             },
             "sort": "Sortering"
         },
         "states": {
             "unresolved": "Olöst",
-            "prepared": "Förberedd",
+            "ongoing": "Pågående",
             "completed": "Avklarad"
         }
     },

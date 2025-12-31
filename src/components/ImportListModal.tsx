@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, ChevronUp, X, Folder } from 'lucide-react';
+import { ChevronDown, ChevronUp, X, Folder, Copy, Check } from 'lucide-react';
 import { Item, Category } from '../types';
 
 interface ImportListModalProps {
@@ -139,6 +139,18 @@ export const ImportListModal: React.FC<ImportListModalProps> = ({ isOpen, onClos
     const [error, setError] = useState('');
     const [isImporting, setIsImporting] = useState(false);
     const [showExample, setShowExample] = useState(false);
+    const [copiedSimple, setCopiedSimple] = useState(false);
+    const [copiedDetailed, setCopiedDetailed] = useState(false);
+
+    const copyToClipboard = async (text: string, setCopied: (v: boolean) => void) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
 
     useEffect(() => {
         if (isOpen && categories.length > 0 && !selectedCategoryId) {
@@ -224,7 +236,7 @@ export const ImportListModal: React.FC<ImportListModalProps> = ({ isOpen, onClos
 
                         {/* Category Selector */}
                         <div className="space-y-1">
-                            <label className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                            <label htmlFor="category-select" className="text-xs font-medium text-gray-700 dark:text-gray-300">
                                 Import to Category
                             </label>
                             <div className="relative">
@@ -232,6 +244,7 @@ export const ImportListModal: React.FC<ImportListModalProps> = ({ isOpen, onClos
                                     <Folder size={16} />
                                 </div>
                                 <select
+                                    id="category-select"
                                     value={selectedCategoryId}
                                     onChange={(e) => setSelectedCategoryId(e.target.value)}
                                     className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none appearance-none"
@@ -262,17 +275,35 @@ export const ImportListModal: React.FC<ImportListModalProps> = ({ isOpen, onClos
                         {showExample && (
                             <div className="space-y-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg">
                                 <div>
-                                    <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
-                                        Simple format (recommended):
-                                    </p>
+                                    <div className="flex items-center justify-between mb-1">
+                                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                                            Simple format (recommended):
+                                        </p>
+                                        <button
+                                            onClick={() => copyToClipboard(exampleSimple, setCopiedSimple)}
+                                            className="flex items-center gap-1 text-[10px] font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded px-1.5 py-0.5 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                                        >
+                                            {copiedSimple ? <Check size={10} /> : <Copy size={10} />}
+                                            {copiedSimple ? 'Copied!' : 'Copy'}
+                                        </button>
+                                    </div>
                                     <pre className="text-xs bg-white dark:bg-gray-900 p-2 rounded border border-gray-200 dark:border-gray-700 overflow-x-auto">
                                         {exampleSimple}
                                     </pre>
                                 </div>
                                 <div>
-                                    <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
-                                        Detailed format (with completion status):
-                                    </p>
+                                    <div className="flex items-center justify-between mb-1">
+                                        <p className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                                            Detailed format (with completion status):
+                                        </p>
+                                        <button
+                                            onClick={() => copyToClipboard(exampleDetailed, setCopiedDetailed)}
+                                            className="flex items-center gap-1 text-[10px] font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded px-1.5 py-0.5 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                                        >
+                                            {copiedDetailed ? <Check size={10} /> : <Copy size={10} />}
+                                            {copiedDetailed ? 'Copied!' : 'Copy'}
+                                        </button>
+                                    </div>
                                     <pre className="text-xs bg-white dark:bg-gray-900 p-2 rounded border border-gray-200 dark:border-gray-700 overflow-x-auto">
                                         {exampleDetailed}
                                     </pre>

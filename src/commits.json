@@ -1,5 +1,25 @@
 [
   {
+    "hash": "14eae9f8252618a903a17395df8d33e78f9dcb17",
+    "author": "Jojjeboy",
+    "date": "2025-12-27 09:54:10 +0100",
+    "message": "Mobile footer tabs and usage tracking",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.test.tsx"
+      }
+    ]
+  },
+  {
     "hash": "42b813f79ad8a4eab4417ed52a5cc8e1ece9f3b7",
     "author": "Jojjeboy",
     "date": "2025-12-27 09:42:05 +0100",

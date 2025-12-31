@@ -173,10 +173,10 @@ describe('ListDetail', () => {
 
         renderComponent();
         const toggleButtons = screen.getAllByText('Toggle');
-        fireEvent.click(toggleButtons[0]); // Apple: unresolved -> prepared
+        fireEvent.click(toggleButtons[0]); // Apple: unresolved -> ongoing
 
         expect(mockUpdateListItems).toHaveBeenCalledWith('list1', expect.arrayContaining([
-            expect.objectContaining({ id: 'i1', completed: false, state: 'prepared' })
+            expect.objectContaining({ id: 'i1', completed: false, state: 'ongoing' })
         ]));
     });
 

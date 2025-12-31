@@ -2,7 +2,7 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import type { Item } from '../types';
-import { Trash2, GripVertical, Circle, CheckCircle2, MinusCircle } from 'lucide-react';
+import { Trash2, GripVertical, Circle, CheckCircle2, PlayCircle } from 'lucide-react';
 import {
     SwipeableList,
     SwipeableListItem,
@@ -22,6 +22,24 @@ interface SortableItemProps {
 }
 
 export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDelete, onEdit, disabled, threeStageMode }) => {
+    const [localText, setLocalText] = React.useState(item.text);
+
+    React.useEffect(() => {
+        setLocalText(item.text);
+    }, [item.text]);
+
+    const handleBlur = () => {
+        if (localText !== item.text) {
+            onEdit(item.id, localText);
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            (e.target as HTMLInputElement).blur();
+        }
+    };
+
     const {
         attributes,
         listeners,
@@ -71,31 +89,40 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                             onTouchStart={(e) => e.stopPropagation()}
                         >
                             {/* Render different icons based on state */}
-                            {(threeStageMode && item.state === 'prepared') ? (
-                                <div className="text-yellow-500 hover:text-yellow-600">
-                                    <MinusCircle size={24} />
-                                </div>
-                            ) : item.completed ? (
-                                <div className="text-blue-500 hover:text-blue-600">
-                                    <CheckCircle2 size={24} />
-                                </div>
-                            ) : (
-                                <div className="text-gray-300 hover:text-gray-400">
-                                    <Circle size={24} />
-                                </div>
-                            )}
+                            {(() => {
+                                if (threeStageMode && item.state === 'ongoing') {
+                                    return (
+                                        <div className="text-yellow-500 hover:text-yellow-600">
+                                            <PlayCircle size={24} />
+                                        </div>
+                                    );
+                                }
+                                if (item.completed) {
+                                    return (
+                                        <div className="text-blue-500 hover:text-blue-600">
+                                            <CheckCircle2 size={24} />
+                                        </div>
+                                    );
+                                }
+                                return (
+                                    <div className="text-gray-300 hover:text-gray-400">
+                                        <Circle size={24} />
+                                    </div>
+                                );
+                            })()}
                         </button>
 
                         <input
                             type="text"
-                            value={item.text}
-                            onChange={(e) => onEdit(item.id, e.target.value)}
-                            className={`flex-1 bg-transparent outline-none p-1 ${item.completed
-                                ? 'line-through text-gray-400'
-                                : (threeStageMode && item.state === 'prepared')
-                                    ? 'text-gray-800 dark:text-gray-100' // Prepared items are not crossed out
-                                    : 'text-gray-700 dark:text-gray-200'
-                                } ${isDragging ? 'pointer-events-none' : ''}`}
+                            value={localText}
+                            onChange={(e) => setLocalText(e.target.value)}
+                            onBlur={handleBlur}
+                            onKeyDown={handleKeyDown}
+                            className={`flex-1 bg-transparent outline-none p-1 ${(() => {
+                                if (item.completed) return 'line-through text-gray-400';
+                                if (threeStageMode && item.state === 'ongoing') return 'text-gray-800 dark:text-gray-100';
+                                return 'text-gray-700 dark:text-gray-200';
+                            })()} ${isDragging ? 'pointer-events-none' : ''}`}
                             // Stop propagation to prevent swipe start when interacting with input
                             onMouseDown={(e) => e.stopPropagation()}
                             onTouchStart={(e) => e.stopPropagation()}

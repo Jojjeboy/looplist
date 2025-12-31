@@ -2,7 +2,7 @@ export interface Item {
   id: string;
   text: string;
   completed: boolean;
-  state?: "unresolved" | "prepared" | "completed";
+  state?: "unresolved" | "ongoing" | "completed";
 }
 
 export interface Note {

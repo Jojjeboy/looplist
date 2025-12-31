@@ -74,7 +74,7 @@ export const ListDetail: React.FC = () => {
                 // Assign weights: Prepared = 0, Unchecked = 1, Completed = 2
                 const getWeight = (item: Item) => {
                     if (item.completed) return 2;
-                    if (threeStageMode && item.state === 'prepared') return 0;
+                    if (threeStageMode && item.state === 'ongoing') return 0;
                     return 1;
                 };
                 const weightA = getWeight(a);
@@ -123,22 +123,22 @@ export const ListDetail: React.FC = () => {
             if (item.id !== itemId) return item;
 
             // Logic for state cycling
-            let newState: 'unresolved' | 'prepared' | 'completed';
+            let newState: 'unresolved' | 'ongoing' | 'completed';
             let newCompleted: boolean;
 
             if (threeStageMode) {
-                // Cycle: unresolved -> prepared -> completed -> unresolved
+                // Cycle: unresolved -> ongoing -> completed -> unresolved
                 if (item.completed) {
                     // Was completed, go to unresolved
                     newState = 'unresolved';
                     newCompleted = false;
-                } else if (item.state === 'prepared') {
-                    // Was prepared, go to completed
+                } else if (item.state === 'ongoing') {
+                    // Was ongoing, go to completed
                     newState = 'completed';
                     newCompleted = true;
                 } else {
-                    // Was unresolved, go to prepared
-                    newState = 'prepared';
+                    // Was unresolved, go to ongoing
+                    newState = 'ongoing';
                     newCompleted = false;
                 }
             } else {

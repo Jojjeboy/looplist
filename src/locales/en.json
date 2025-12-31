@@ -54,13 +54,13 @@
             "title": "List Settings",
             "threeStage": {
                 "title": "Three-stage items",
-                "description": "Unresolved → Prepared → Done"
+                "description": "Unresolved → Ongoing → Done"
             },
             "sort": "Sort Order"
         },
         "states": {
             "unresolved": "Unresolved",
-            "prepared": "Prepared",
+            "ongoing": "Ongoing",
             "completed": "Completed"
         }
     },
