@@ -1,5 +1,49 @@
 [
   {
+    "hash": "67415e9be4093f8101404b94a2d3206a9d99981b",
+    "author": "Jojjeboy",
+    "date": "2025-12-31 10:08:44 +0100",
+    "message": "feat: fix cursor jump, add copy buttons to JSON import, and update stage terminology to ongoing",
+    "files": [
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ImportListModal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/en.json"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/sv.json"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
+  },
+  {
     "hash": "14eae9f8252618a903a17395df8d33e78f9dcb17",
     "author": "Jojjeboy",
     "date": "2025-12-27 09:54:10 +0100",

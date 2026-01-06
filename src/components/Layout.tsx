@@ -14,7 +14,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     return (
-        <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+        <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 overflow-x-hidden">
             {/* Desktop Sidebar */}
             <aside className="hidden md:flex w-72 flex-shrink-0 sticky top-0 h-screen z-20">
                 <Sidebar onOpenSettings={() => setIsSettingsOpen(true)} />

@@ -60,8 +60,8 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
                         to={`/list/${list.id}`}
                         className="flex-1 min-w-0 text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                     >
-                        <div className="flex items-center gap-2">
-                            <div className="max-w-[250px] truncate" title={list.name}>
+                        <div className="flex items-center gap-2 min-w-0">
+                            <div className="truncate" title={list.name}>
                                 {list.name}
                             </div>
                         </div>

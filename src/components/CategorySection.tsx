@@ -107,7 +107,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                 ) : (
                     <>
                         <h3
-                            className="text-xl font-bold text-gray-900 dark:text-gray-100 cursor-pointer flex-1 outline-none focus:text-blue-600 dark:focus:text-blue-400"
+                            className="text-xl font-bold text-gray-900 dark:text-gray-100 cursor-pointer flex-1 outline-none focus:text-blue-600 dark:focus:text-blue-400 truncate min-w-0"
                             onClick={() => setIsEditingTitle(true)}
                             tabIndex={0}
                             role="button"
