@@ -219,7 +219,10 @@ export const ListDetail: React.FC = () => {
                         </div>
                     ) : (
                         <div className="flex items-center gap-2 group min-w-0 flex-1">
-                            <h2 className="text-xl font-semibold truncate" title={list.name}>{list.name}</h2>
+                            {(() => {
+                                const truncatedName = list.name.length > 30 ? list.name.substring(0, 30) + "... " : list.name;
+                                return <h2 className="text-xl font-semibold truncate" title={list.name}>{truncatedName}</h2>;
+                            })()}
                             <button
                                 onClick={() => setIsEditingTitle(true)}
                                 className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-blue-500 transition-all flex-shrink-0"

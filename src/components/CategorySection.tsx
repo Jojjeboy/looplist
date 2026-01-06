@@ -84,7 +84,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
 
     return (
         <div
-            className={`space-y-3`}
+            className={`space-y-3 w-full min-w-0`}
         >
             {/* Category Header */}
             <div className="flex items-center gap-2 group mb-3">
@@ -159,7 +159,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             {/* Lists */}
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                 <SortableContext items={categoryLists.map(l => l.id)} strategy={verticalListSortingStrategy}>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-full min-w-0">
                         {categoryLists.map((list) => (
                             <SortableListCard
                                 key={list.id}

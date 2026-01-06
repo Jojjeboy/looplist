@@ -110,7 +110,7 @@ export const CategoryView: React.FC = () => {
             </div>
 
             {/* Categories Section - Always Visible */}
-            <div className="grid gap-6">
+            <div className="grid grid-cols-1 gap-6 w-full min-w-0">
                 {sortedCategories.map((category) => (
                     <CategorySection
                         key={category.id}
@@ -191,14 +191,15 @@ export const CategoryView: React.FC = () => {
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 {recentLists.map(list => {
                                     const activeCount = list.items.filter(i => !i.completed).length;
+                                    const truncatedName = list.name.length > 30 ? list.name.substring(0, 30) + '...' : list.name;
                                     return (
                                         <div
                                             key={list.id}
                                             onClick={() => navigate(`/list/${list.id}`)}
-                                            className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all cursor-pointer group"
+                                            className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all cursor-pointer group w-full min-w-0 overflow-hidden"
                                         >
-                                            <div className="flex items-center justify-between mb-2 gap-2">
-                                                <span className="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate min-w-0 flex-1" title={list.name}>{list.name}</span>
+                                            <div className="flex items-center justify-between mb-2 gap-2 min-w-0">
+                                                <span className="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate min-w-0 flex-1" title={list.name}>{truncatedName}</span>
                                                 <div className="p-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex-shrink-0">
                                                     <ChevronRight size={14} />
                                                 </div>
