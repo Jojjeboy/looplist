@@ -44,7 +44,7 @@ const SortableCategoryItem = ({
             style={style}
             className={`flex items-center justify-between p-3 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 last:border-0 ${isDragging ? 'z-50 opacity-50' : ''}`}
         >
-            <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="flex items-center gap-3 flex-1 min-w-0 mr-2">
                 <div
                     {...attributes}
                     {...listeners}
@@ -52,7 +52,7 @@ const SortableCategoryItem = ({
                 >
                     <GripVertical size={20} />
                 </div>
-                <span className="font-medium text-gray-900 dark:text-gray-100 truncate">
+                <span className="font-medium text-gray-900 dark:text-gray-100 truncate flex-1 min-w-0" title={category.name}>
                     {category.name}
                 </span>
             </div>

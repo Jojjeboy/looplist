@@ -118,7 +118,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                             onChange={(e) => setLocalText(e.target.value)}
                             onBlur={handleBlur}
                             onKeyDown={handleKeyDown}
-                            className={`flex-1 bg-transparent outline-none p-1 ${(() => {
+                            className={`flex-1 min-w-0 bg-transparent outline-none p-1 ${(() => {
                                 if (item.completed) return 'line-through text-gray-400';
                                 if (threeStageMode && item.state === 'ongoing') return 'text-gray-800 dark:text-gray-100';
                                 return 'text-gray-700 dark:text-gray-200';

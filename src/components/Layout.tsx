@@ -65,7 +65,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 </header>
 
                 {/* Main Scrollable Content */}
-                <main className="flex-1 p-4 w-full mx-auto md:p-8 md:max-w-7xl pb-24 md:pb-8">
+                <main className="flex-1 p-4 w-full mx-auto md:p-8 md:max-w-7xl pb-24 md:pb-8 min-w-0">
                     {searchQuery ? <SearchResults /> : children}
                 </main>
 

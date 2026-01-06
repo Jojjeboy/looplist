@@ -197,9 +197,9 @@ export const CategoryView: React.FC = () => {
                                             onClick={() => navigate(`/list/${list.id}`)}
                                             className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all cursor-pointer group"
                                         >
-                                            <div className="flex items-center justify-between mb-2">
-                                                <span className="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">{list.name}</span>
-                                                <div className="p-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+                                            <div className="flex items-center justify-between mb-2 gap-2">
+                                                <span className="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate min-w-0 flex-1" title={list.name}>{list.name}</span>
+                                                <div className="p-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex-shrink-0">
                                                     <ChevronRight size={14} />
                                                 </div>
                                             </div>
