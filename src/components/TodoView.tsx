@@ -120,7 +120,7 @@ export const TodoView: React.FC = () => {
                         rows={2}
                         className="w-full p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"
                     />
-                    <div className="flex items-center justify-between pt-2">
+                    <div className="flex flex-col gap-4 pt-2">
                         <div className="flex gap-2">
                             {(['low', 'medium', 'high'] as const).map((p) => (
                                 <button
@@ -141,7 +141,7 @@ export const TodoView: React.FC = () => {
                         <button
                             type="submit"
                             disabled={!newTitle.trim()}
-                            className="px-8 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
+                            className="w-full py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
                         >
                             {t('todos.save')}
                         </button>
