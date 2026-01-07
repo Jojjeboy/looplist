@@ -63,20 +63,25 @@
             "completed": "Avklarad"
         }
     },
-    "notes": {
-        "title": "Anteckningar",
-        "add": "Ny anteckning",
+    "todos": {
+        "title": "Att göra",
+        "add": "Ny uppgift",
         "cancel": "Avbryt",
-        "save": "Spara anteckning",
-        "titlePlaceholder": "Titel",
-        "contentPlaceholder": "Innehåll...",
-        "empty": "Inga anteckningar än. Lägg till en för att komma igång!",
+        "save": "Spara uppgift",
+        "titlePlaceholder": "Titel...",
+        "contentPlaceholder": "Detaljer (valfritt)...",
+        "empty": "Inga uppgifter än. Lägg till en för att komma igång!",
         "edit": "Redigera",
         "delete": "Ta bort",
-        "deleteTitle": "Ta bort anteckning",
-        "deleteMessage": "Är du säker på att du vill ta bort denna anteckning? Denna åtgärd kan inte ångras.",
+        "deleteTitle": "Ta bort uppgift",
+        "deleteMessage": "Är du säker på att du vill ta bort denna uppgift?",
         "deleteConfirm": "Ta bort",
-        "saveChanges": "Spara"
+        "saveChanges": "Spara",
+        "priority": {
+            "low": "Låg",
+            "medium": "Medium",
+            "high": "Hög"
+        }
     },
     "common": {
         "cancel": "Avbryt",

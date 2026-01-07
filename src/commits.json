@@ -1,5 +1,81 @@
 [
   {
+    "hash": "48728656ed4e946b54c055189e9154acdc4c8368",
+    "author": "Jojjeboy",
+    "date": "2026-01-06 21:06:51 +0100",
+    "message": "Truncate list title again",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategorySection.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableListCard.tsx"
+      }
+    ]
+  },
+  {
+    "hash": "ece9dd3f950343ae15bdbd3aceb947a1a8fdd22c",
+    "author": "Jojjeboy",
+    "date": "2026-01-06 20:54:55 +0100",
+    "message": "Truncate list title",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ManageCategoriesModal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      }
+    ]
+  },
+  {
+    "hash": "714335e76d76dc373aac8dc1d39b08bcfe4555d1",
+    "author": "Jojjeboy",
+    "date": "2026-01-06 20:43:27 +0100",
+    "message": "MC",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategorySection.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableListCard.tsx"
+      }
+    ]
+  },
+  {
     "hash": "67415e9be4093f8101404b94a2d3206a9d99981b",
     "author": "Jojjeboy",
     "date": "2025-12-31 10:08:44 +0100",

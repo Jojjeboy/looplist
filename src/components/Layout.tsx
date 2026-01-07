@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Link, NavLink } from 'react-router-dom';
-import { Moon, Sun, Search, Settings, LayoutGrid, StickyNote, Activity } from 'lucide-react';
+import { Moon, Sun, Search, Settings, LayoutGrid, SquareCheck, Activity } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SearchResults } from './SearchResults';
 import { SettingsModal } from './SettingsModal';
@@ -86,7 +86,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                         </NavLink>
 
                         <NavLink
-                            to="/notes"
+                            to="/todos"
                             className={({ isActive }) => `
                                 flex flex-col items-center justify-center w-full h-full space-y-1
                                 ${isActive
@@ -94,8 +94,8 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                                     : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}
                             `}
                         >
-                            <StickyNote size={24} />
-                            <span className="text-[10px] font-medium">{t('app.notes', 'Anteckningar')}</span>
+                            <SquareCheck size={24} />
+                            <span className="text-[10px] font-medium">{t('todos.title', 'Att göra')}</span>
                         </NavLink>
 
                         <NavLink

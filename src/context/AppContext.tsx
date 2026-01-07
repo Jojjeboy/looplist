@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import SunCalc from 'suncalc';
-import { Category, List, Item, Note, ExecutionSession, ListCombination, ListSettings } from '../types';
+import { Category, List, Item, Todo, ExecutionSession, ListCombination, ListSettings } from '../types';
 
 type Priority = 'low' | 'medium' | 'high';
 import { useToast } from './ToastContext';
@@ -28,10 +28,11 @@ interface AppContextType {
     updateListItems: (listId: string, items: Item[]) => Promise<void>;
     deleteItem: (listId: string, itemId: string) => Promise<void>;
     toggleTheme: () => void;
-    notes: Note[];
-    addNote: (title: string, content: string, priority: Priority) => Promise<void>;
-    updateNote: (id: string, title: string, content: string, priority: Priority) => Promise<void>;
-    deleteNote: (id: string) => Promise<void>;
+    todos: Todo[];
+    addTodo: (title: string, content: string, priority: Priority) => Promise<void>;
+    updateTodo: (id: string, title: string, content: string, priority: Priority) => Promise<void>;
+    toggleTodo: (id: string) => Promise<void>;
+    deleteTodo: (id: string) => Promise<void>;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     loading: boolean;
@@ -59,7 +60,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const categoriesSync = useFirestoreSync<Category>('users/{uid}/categories', user?.uid);
     const listsSync = useFirestoreSync<List>('users/{uid}/lists', user?.uid);
-    const notesSync = useFirestoreSync<Note>('users/{uid}/notes', user?.uid);
+    const todosSync = useFirestoreSync<Todo>('users/{uid}/notes', user?.uid);
     const sessionsSync = useFirestoreSync<ExecutionSession>('users/{uid}/sessions', user?.uid);
     const combinationsSync = useFirestoreSync<ListCombination>('users/{uid}/combinations', user?.uid);
 
@@ -311,23 +312,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         localStorage.setItem('manual_theme', 'true');
     };
 
-    const addNote = async (title: string, content: string, priority: Priority) => {
-        const newNote: Note = {
+    const addTodo = async (title: string, content: string, priority: Priority) => {
+        const newTodo: Todo = {
             id: uuidv4(),
             title,
             content,
             createdAt: new Date().toISOString(),
             priority,
+            completed: false, // Default to false
         };
-        await notesSync.addItem(newNote);
+        await todosSync.addItem(newTodo);
     };
 
-    const updateNote = async (id: string, title: string, content: string, priority: Priority) => {
-        await notesSync.updateItem(id, { title, content, priority });
+    const updateTodo = async (id: string, title: string, content: string, priority: Priority) => {
+        await todosSync.updateItem(id, { title, content, priority });
     };
 
-    const deleteNote = async (id: string) => {
-        await notesSync.deleteItem(id);
+    const toggleTodo = async (id: string) => {
+        const todo = todosSync.data.find(t => t.id === id);
+        if (todo) {
+            await todosSync.updateItem(id, { completed: !todo.completed });
+        }
+    };
+
+    const deleteTodo = async (id: string) => {
+        await todosSync.deleteItem(id);
     };
 
     const addSession = async (name: string, listIds: string[], categoryId?: string) => {
@@ -388,13 +397,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 updateListItems,
                 deleteItem,
                 toggleTheme,
-                notes: notesSync.data,
-                addNote,
-                updateNote,
-                deleteNote,
+                todos: todosSync.data,
+                addTodo,
+                updateTodo,
+                toggleTodo,
+                deleteTodo,
                 searchQuery,
                 setSearchQuery,
-                loading: categoriesSync.loading || listsSync.loading || notesSync.loading || migrating,
+                loading: categoriesSync.loading || listsSync.loading || todosSync.loading || migrating,
                 sessions: sessionsSync.data,
                 addSession,
                 completeSession,

@@ -3,7 +3,7 @@ import { collection, getDocs, writeBatch, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useToast } from '../context/ToastContext';
 import { useTranslation } from 'react-i18next';
-import { Category, List, Note } from '../types';
+import { Category, List, Todo } from '../types';
 
 export function useMigrateLocalStorage(userId: string | null | undefined) {
     const [migrating, setMigrating] = useState(false);
@@ -52,10 +52,25 @@ export function useMigrateLocalStorage(userId: string | null | undefined) {
                 }
 
                 if (localNotes) {
+                    interface LegacyNote {
+                        id: string;
+                        title: string;
+                        content: string;
+                        createdAt: string;
+                        priority: 'low' | 'medium' | 'high';
+                    }
                     const notes = JSON.parse(localNotes);
-                    notes.forEach((note: Note) => {
-                        const ref = doc(db, `users/${userId}/notes`, note.id);
-                        batch.set(ref, note);
+                    notes.forEach((note: LegacyNote) => {
+                         const todo: Todo = {
+                            id: note.id,
+                            title: note.title,
+                            content: note.content,
+                            createdAt: note.createdAt,
+                            priority: note.priority,
+                            completed: false, // Default to false for migrated notes
+                        };
+                        const ref = doc(db, `users/${userId}/notes`, todo.id);
+                        batch.set(ref, todo);
                     });
                 }
 

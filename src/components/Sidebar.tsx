@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     LayoutGrid,
-    StickyNote,
+    SquareCheck,
     Activity,
     Settings,
     Moon,
@@ -27,7 +27,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onOpenSettings }) => {
 
     const navItems = [
         { path: '/', icon: LayoutGrid, label: t('categories.title', 'Kategorier') },
-        { path: '/notes', icon: StickyNote, label: t('app.notes', 'Anteckningar') },
+        { path: '/todos', icon: SquareCheck, label: t('todos.title', 'Att göra') },
         { path: '/activity', icon: Activity, label: t('history.title', 'Aktivitet') },
     ];
 

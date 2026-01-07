@@ -5,7 +5,8 @@ import { CategoryView } from './components/CategoryView'
 
 import { ListDetail } from './components/ListDetail'
 import { SessionDetail } from './components/SessionDetail'
-import { NotesView } from './components/NotesView'
+
+import { TodoView } from './components/TodoView'
 import { ActivityLog } from './components/ActivityLog'
 import { ToastProvider } from './context/ToastContext'
 import { ToastContainer } from './components/ToastContainer'
@@ -26,7 +27,7 @@ function App() {
 
                                     <Route path="/list/:listId" element={<ListDetail />} />
                                     <Route path="/session/:sessionId" element={<SessionDetail />} />
-                                    <Route path="/notes" element={<NotesView />} />
+                                    <Route path="/todos" element={<TodoView />} />
                                     <Route path="/activity" element={<ActivityLog />} />
                                 </Routes>
                                 <ToastContainer />

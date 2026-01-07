@@ -5,12 +5,13 @@ export interface Item {
   state?: "unresolved" | "ongoing" | "completed";
 }
 
-export interface Note {
+export interface Todo {
   id: string;
   title: string;
   content: string;
   createdAt: string;
   priority: "low" | "medium" | "high";
+  completed: boolean;
 }
 
 export interface ListSettings {

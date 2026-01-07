@@ -64,20 +64,25 @@
             "completed": "Completed"
         }
     },
-    "notes": {
-        "title": "Notes",
-        "add": "Add Note",
+    "todos": {
+        "title": "To-Do List",
+        "add": "Add Task",
         "cancel": "Cancel",
-        "save": "Save Note",
-        "titlePlaceholder": "Title",
-        "contentPlaceholder": "Content...",
-        "empty": "No notes yet. Add one to get started!",
+        "save": "Save Task",
+        "titlePlaceholder": "Task title...",
+        "contentPlaceholder": "Details (optional)...",
+        "empty": "No tasks yet. Add one to get started!",
         "edit": "Edit",
         "delete": "Delete",
-        "deleteTitle": "Delete Note",
-        "deleteMessage": "Are you sure you want to delete this note? This action cannot be undone.",
+        "deleteTitle": "Delete Task",
+        "deleteMessage": "Are you sure you want to delete this task?",
         "deleteConfirm": "Delete",
-        "saveChanges": "Save"
+        "saveChanges": "Save Changes",
+        "priority": {
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High"
+        }
     },
     "common": {
         "cancel": "Cancel",
