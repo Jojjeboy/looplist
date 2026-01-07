@@ -1,6 +1,15 @@
 import React from 'react';
 import { useToast } from '../context/ToastContext';
 import { X } from 'lucide-react';
+import { clsx } from 'clsx';
+
+const getToastBackground = (type: 'success' | 'error' | 'info') => {
+    switch (type) {
+        case 'success': return 'bg-green-600';
+        case 'error': return 'bg-red-600';
+        default: return 'bg-gray-800';
+    }
+};
 
 export const ToastContainer: React.FC = () => {
     const { toasts, removeToast } = useToast();
@@ -10,10 +19,10 @@ export const ToastContainer: React.FC = () => {
             {toasts.map((toast) => (
                 <div
                     key={toast.id}
-                    className={`
-                        pointer-events-auto flex items-center justify-between p-4 rounded-xl shadow-lg text-white transform transition-all duration-300 animate-in slide-in-from-bottom-5 fade-in
-                        ${toast.type === 'success' ? 'bg-green-600' : toast.type === 'error' ? 'bg-red-600' : 'bg-gray-800'}
-                    `}
+                    className={clsx(
+                        "pointer-events-auto flex items-center justify-between p-4 rounded-xl shadow-lg text-white transform transition-all duration-300 animate-in slide-in-from-bottom-5 fade-in",
+                        getToastBackground(toast.type)
+                    )}
                 >
                     <div className="flex items-center gap-3">
                         <p className="text-sm font-medium">{toast.message}</p>

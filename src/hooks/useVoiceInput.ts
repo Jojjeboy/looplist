@@ -41,41 +41,39 @@ interface SpeechRecognition extends EventTarget {
     stop(): void;
     abort(): void;
     onresult: (event: SpeechRecognitionEvent) => void;
-    onerror: (event: { error: unknown }) => void; // Error event usually has error string or object
+    onerror: (event: { error: unknown }) => void;
     onend: () => void;
+}
+
+interface WindowWithSpeech extends Window {
+    webkitSpeechRecognition?: new () => SpeechRecognition;
+    SpeechRecognition?: new () => SpeechRecognition;
 }
 
 export const useVoiceInput = (): UseVoiceInputReturn => {
     const [isListening, setIsListening] = useState(false);
     const [transcript, setTranscript] = useState('');
     const [hasSupport, setHasSupport] = useState(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [recognition, setRecognition] = useState<any>(null);
+    const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
 
     useEffect(() => {
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
-            const recognitionInstance: SpeechRecognition = new SpeechRecognition();
+        const SpeechRecognition = (globalThis as unknown as WindowWithSpeech).webkitSpeechRecognition || (globalThis as unknown as WindowWithSpeech).SpeechRecognition;
+        
+        if (SpeechRecognition) {
+            const recognitionInstance = new SpeechRecognition();
             recognitionInstance.continuous = true;
             recognitionInstance.interimResults = true;
-            recognitionInstance.lang = 'sv-SE'; // Default to Swedish as per user context, or make configurable
+            recognitionInstance.lang = 'sv-SE';
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            recognitionInstance.onresult = (event: any) => {
+            recognitionInstance.onresult = (event: SpeechRecognitionEvent) => {
                 let currentTranscript = '';
                 for (let i = event.resultIndex; i < event.results.length; ++i) {
-                    if (event.results[i].isFinal) {
-                        currentTranscript += event.results[i][0].transcript;
-                    } else {
-                        currentTranscript += event.results[i][0].transcript;
-                    }
+                    currentTranscript += event.results[i][0].transcript;
                 }
                 setTranscript(currentTranscript);
             };
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            recognitionInstance.onerror = (event: any) => {
+            recognitionInstance.onerror = (event: { error: unknown }) => {
                 console.error('Speech recognition error', event.error);
                 setIsListening(false);
             };

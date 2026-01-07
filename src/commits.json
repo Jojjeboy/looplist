@@ -1,5 +1,69 @@
 [
   {
+    "hash": "0e97a980e5a71f8800f43a4621d47e48efcf503f",
+    "author": "Jojjeboy",
+    "date": "2026-01-07 11:24:03 +0100",
+    "message": "Package.json updated libraries and todo instead of notes",
+    "files": [
+      {
+        "status": "M",
+        "path": "package-lock.json"
+      },
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "D",
+        "path": "src/components/NotesView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Sidebar.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/TodoView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/hooks/useMigrateLocalStorage.ts"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/en.json"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/sv.json"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
+  },
+  {
     "hash": "48728656ed4e946b54c055189e9154acdc4c8368",
     "author": "Jojjeboy",
     "date": "2026-01-06 21:06:51 +0100",
