@@ -14,9 +14,9 @@ import 'react-swipeable-list/dist/styles.css';
 
 interface SortableItemProps {
     item: Item;
-    onToggle: (id: string) => void;
-    onDelete: (id: string) => void;
-    onEdit: (id: string, text: string) => void;
+    onToggle?: (id: string) => void;
+    onDelete?: (id: string) => void;
+    onEdit?: (id: string, text: string) => void;
     disabled?: boolean;
     threeStageMode?: boolean;
 }
@@ -29,7 +29,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
     }, [item.text]);
 
     const handleBlur = () => {
-        if (localText !== item.text) {
+        if (onEdit && localText !== item.text) {
             onEdit(item.id, localText);
         }
     };
@@ -58,7 +58,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
         <TrailingActions>
             <SwipeAction
                 destructive={true}
-                onClick={() => onDelete(item.id)}
+                onClick={() => onDelete && onDelete(item.id)}
             >
                 <div className="flex items-center justify-end px-4 bg-red-500 text-white h-full rounded-r-lg">
                     <Trash2 size={24} />
@@ -66,6 +66,8 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
             </SwipeAction>
         </TrailingActions>
     );
+
+    const isInteractionDisabled = disabled || isDragging;
 
     return (
         <div
@@ -81,9 +83,9 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                onToggle(item.id);
+                                if (onToggle) onToggle(item.id);
                             }}
-                            className={`flex-shrink-0 transition-colors ${isDragging ? 'pointer-events-none' : ''}`}
+                            className={`flex-shrink-0 transition-colors ${isInteractionDisabled ? 'pointer-events-none' : ''}`}
                             aria-label={item.completed ? "Mark as incomplete" : "Mark as complete"}
                             onMouseDown={(e) => e.stopPropagation()}
                             onTouchStart={(e) => e.stopPropagation()}
@@ -118,11 +120,12 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                             onChange={(e) => setLocalText(e.target.value)}
                             onBlur={handleBlur}
                             onKeyDown={handleKeyDown}
+                            disabled={disabled}
                             className={`flex-1 min-w-0 bg-transparent outline-none p-1 ${(() => {
                                 if (item.completed) return 'line-through text-gray-400';
                                 if (threeStageMode && item.state === 'ongoing') return 'text-gray-800 dark:text-gray-100';
                                 return 'text-gray-700 dark:text-gray-200';
-                            })()} ${isDragging ? 'pointer-events-none' : ''}`}
+                            })()} ${isInteractionDisabled ? 'pointer-events-none' : ''}`}
                             // Stop propagation to prevent swipe start when interacting with input
                             onMouseDown={(e) => e.stopPropagation()}
                             onTouchStart={(e) => e.stopPropagation()}
@@ -134,16 +137,18 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                             </div>
                         )}
 
-                        <button
-                            onClick={() => onDelete(item.id)}
-                            className="p-2 text-gray-400 hover:text-red-500 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100"
-                            aria-label="Delete item"
-                            // Stop propagation to prevent swipe start when clicking button
-                            onMouseDown={(e) => e.stopPropagation()}
-                            onTouchStart={(e) => e.stopPropagation()}
-                        >
-                            <Trash2 size={18} />
-                        </button>
+                        {!disabled && (
+                            <button
+                                onClick={() => onDelete && onDelete(item.id)}
+                                className="p-2 text-gray-400 hover:text-red-500 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100"
+                                aria-label="Delete item"
+                                // Stop propagation to prevent swipe start when clicking button
+                                onMouseDown={(e) => e.stopPropagation()}
+                                onTouchStart={(e) => e.stopPropagation()}
+                            >
+                                <Trash2 size={18} />
+                            </button>
+                        )}
                     </div>
                 </SwipeableListItem>
             </SwipeableList>

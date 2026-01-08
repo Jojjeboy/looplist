@@ -138,9 +138,9 @@ export const ActivityLog: React.FC = () => {
                                             className="mt-3 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                                         >
                                             <FileText size={14} />
-                                            <span>{fileCount} {fileCount === 1 ? 'file' : 'files'} changed</span>
-                                            <ChevronDown 
-                                                size={14} 
+                                            <span>{t('activity.filesChanged', { count: fileCount })}</span>
+                                            <ChevronDown
+                                                size={14}
                                                 className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                                             />
                                         </button>
@@ -152,8 +152,8 @@ export const ActivityLog: React.FC = () => {
                                         <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                                             <div className="space-y-1">
                                                 {commit.files!.map((file, fileIndex) => (
-                                                    <div 
-                                                        key={fileIndex} 
+                                                    <div
+                                                        key={fileIndex}
                                                         className="flex items-center gap-2 text-sm font-mono"
                                                     >
                                                         <span className={`

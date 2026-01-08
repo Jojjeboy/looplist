@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 export const ListDetail: React.FC = () => {
     const { t } = useTranslation();
     const { listId } = useParams<{ listId: string }>();
-    const { lists, updateListItems, deleteItem, updateListName, updateListSettings, updateListAccess } = useApp();
+    const { lists, updateListItems, deleteItem, updateListName, updateListSettings, updateListAccess, archiveList } = useApp();
     const [newItemText, setNewItemText] = useState('');
     const [uncheckModalOpen, setUncheckModalOpen] = useState(false);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -382,29 +382,55 @@ export const ListDetail: React.FC = () => {
                 </div>
             </div>
 
-            <form onSubmit={handleAddItem} className="flex gap-2">
-                <div className="relative flex-1">
-                    <input
-                        type="text"
-                        value={newItemText}
-                        onChange={(e) => setNewItemText(e.target.value)}
-                        placeholder={t('lists.addItemPlaceholder')}
-                        className="w-full p-3 pr-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                    />
+            {list?.archived && (
+                <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-4 mb-4 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="p-2 bg-orange-100 dark:bg-orange-800 rounded-full text-orange-600 dark:text-orange-400">
+                        <Settings size={18} />
+                    </div>
+                    <div>
+                        <p className="text-sm font-medium text-orange-800 dark:text-orange-200">{t('lists.archivedBadge')}</p>
+                        <p className="text-xs text-orange-600 dark:text-orange-400">{t('lists.archivedWarning')}</p>
+                    </div>
                 </div>
-                <button
-                    type="submit"
-                    className="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md transition-colors"
-                >
-                    <Plus />
-                </button>
-                <button
-                    onClick={() => setSettingsOpen(true)}
-                    className="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
-                >
-                    <Settings size={20} />
-                </button>
-            </form>
+            )}
+
+            {!list?.archived && (
+                <form onSubmit={handleAddItem} className="flex gap-2">
+                    <div className="relative flex-1">
+                        <input
+                            type="text"
+                            value={newItemText}
+                            onChange={(e) => setNewItemText(e.target.value)}
+                            placeholder={t('lists.addItemPlaceholder')}
+                            className="w-full p-3 pr-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md transition-colors"
+                    >
+                        <Plus />
+                    </button>
+                    <button
+                        onClick={() => setSettingsOpen(true)}
+                        className="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
+                    >
+                        <Settings size={20} />
+                    </button>
+                </form>
+            )}
+
+            {list?.archived && (
+                <div className="flex justify-end">
+                    <button
+                        onClick={() => setSettingsOpen(true)}
+                        className="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300 flex items-center gap-2 text-sm font-medium"
+                    >
+                        <Settings size={20} />
+                        {t('lists.settings.title')}
+                    </button>
+                </div>
+            )}
 
             {
                 sortBy === 'manual' ? (
@@ -415,9 +441,9 @@ export const ListDetail: React.FC = () => {
                                     <SortableItem
                                         key={item.id}
                                         item={item}
-                                        onToggle={handleToggle}
-                                        onDelete={handleDelete}
-                                        onEdit={handleEdit}
+                                        onToggle={list?.archived ? undefined : handleToggle}
+                                        onDelete={list?.archived ? undefined : handleDelete}
+                                        onEdit={list?.archived ? undefined : handleEdit}
                                         threeStageMode={threeStageMode}
                                     />
                                 ))}
@@ -433,9 +459,9 @@ export const ListDetail: React.FC = () => {
                             <SortableItem
                                 key={item.id}
                                 item={item}
-                                onToggle={handleToggle}
-                                onDelete={handleDelete}
-                                onEdit={handleEdit}
+                                onToggle={list?.archived ? undefined : handleToggle}
+                                onDelete={list?.archived ? undefined : handleDelete}
+                                onEdit={list?.archived ? undefined : handleEdit}
                                 disabled={true} // We need to update SortableItem to accept a disabled prop or just hide the drag handle
                                 threeStageMode={threeStageMode}
                             />
@@ -503,84 +529,100 @@ export const ListDetail: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Calendar Accordion */}
-                    <div className="space-y-2">
+                    {/* Archive Toggle */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
+                        <div className="flex flex-col">
+                            <span className="font-medium text-gray-900 dark:text-gray-100">{t('lists.settings.archive.title')}</span>
+                            <span className="text-sm text-gray-500">{t('lists.settings.archive.description')}</span>
+                        </div>
                         <button
-                            onClick={() => setCalendarAccordionOpen(!calendarAccordionOpen)}
-                            className="w-full flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            onClick={() => archiveList(list!.id, !list?.archived)}
+                            className={`w-12 h-6 rounded-full transition-colors relative ${list?.archived ? 'bg-orange-500' : 'bg-gray-200 dark:bg-gray-700'}`}
                         >
-                            <div className="flex flex-col items-start">
-                                <span className="font-medium text-gray-900 dark:text-gray-100">{t('lists.settings.calendar.title')}</span>
-                                <span className="text-sm text-gray-500">{t('lists.settings.calendar.description')}</span>
-                            </div>
-                            <ChevronDown
-                                size={20}
-                                className={`transition-transform ${calendarAccordionOpen ? 'rotate-180' : ''}`}
-                            />
+                            <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${list?.archived ? 'translate-x-6' : ''}`} />
                         </button>
-
-                        {calendarAccordionOpen && (
-                            <div className="space-y-3 p-4 bg-gray-50 dark:bg-gray-700/30 rounded-lg">
-                                <div className="space-y-2">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        {t('lists.settings.calendar.eventTitle')}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={calendarEventTitle}
-                                        onChange={(e) => setCalendarEventTitle(e.target.value)}
-                                        placeholder={list.name}
-                                        className="w-full p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <div className="flex justify-between">
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            {t('lists.settings.calendar.startTime')}
-                                        </label>
-                                        {isPast && (
-                                            <span className="text-xs text-red-500 font-medium self-center">
-                                                {/* You might want to translate this string */}
-                                                Time has passed
-                                            </span>
-                                        )}
-                                    </div>
-                                    <input
-                                        type="datetime-local"
-                                        value={calendarStartTime}
-                                        onChange={(e) => setCalendarStartTime(e.target.value)}
-                                        min={toLocalISOString(new Date())}
-                                        className={`w-full p-2 rounded-lg border ${isPast ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 dark:border-gray-600 focus:ring-blue-500'} bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 outline-none`}
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        {t('lists.settings.calendar.endTime')}
-                                    </label>
-                                    <input
-                                        type="datetime-local"
-                                        value={calendarEndTime}
-                                        onChange={(e) => setCalendarEndTime(e.target.value)}
-                                        min={calendarStartTime}
-                                        className="w-full p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none"
-                                    />
-                                </div>
-
-                                <button
-                                    onClick={generateGoogleCalendarLink}
-                                    disabled={isCalendarButtonDisabled}
-                                    className={`w-full flex items-center justify-center gap-2 p-3 rounded-lg font-medium transition-colors ${isCalendarButtonDisabled
-                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400'
-                                        : 'bg-blue-600 text-white hover:bg-blue-700'
-                                        }`}
-                                >
-                                    {t('lists.settings.calendar.generateLink')}
-                                </button>
-                            </div>
-                        )}
                     </div>
+
+                    {/* Calendar Accordion - Hidden if archived */}
+                    {!list?.archived && (
+                        <div className="space-y-2">
+                            <button
+                                onClick={() => setCalendarAccordionOpen(!calendarAccordionOpen)}
+                                className="w-full flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            >
+                                <div className="flex flex-col items-start">
+                                    <span className="font-medium text-gray-900 dark:text-gray-100">{t('lists.settings.calendar.title')}</span>
+                                    <span className="text-sm text-gray-500">{t('lists.settings.calendar.description')}</span>
+                                </div>
+                                <ChevronDown
+                                    size={20}
+                                    className={`transition-transform ${calendarAccordionOpen ? 'rotate-180' : ''}`}
+                                />
+                            </button>
+
+                            {calendarAccordionOpen && (
+                                <div className="space-y-3 p-4 bg-gray-50 dark:bg-gray-700/30 rounded-lg">
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            {t('lists.settings.calendar.eventTitle')}
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={calendarEventTitle}
+                                            onChange={(e) => setCalendarEventTitle(e.target.value)}
+                                            placeholder={list.name}
+                                            className="w-full p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none"
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                {t('lists.settings.calendar.startTime')}
+                                            </label>
+                                            {isPast && (
+                                                <span className="text-xs text-red-500 font-medium self-center">
+                                                    {/* You might want to translate this string */}
+                                                    Time has passed
+                                                </span>
+                                            )}
+                                        </div>
+                                        <input
+                                            type="datetime-local"
+                                            value={calendarStartTime}
+                                            onChange={(e) => setCalendarStartTime(e.target.value)}
+                                            min={toLocalISOString(new Date())}
+                                            className={`w-full p-2 rounded-lg border ${isPast ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 dark:border-gray-600 focus:ring-blue-500'} bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 outline-none`}
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            {t('lists.settings.calendar.endTime')}
+                                        </label>
+                                        <input
+                                            type="datetime-local"
+                                            value={calendarEndTime}
+                                            onChange={(e) => setCalendarEndTime(e.target.value)}
+                                            min={calendarStartTime}
+                                            className="w-full p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none"
+                                        />
+                                    </div>
+
+                                    <button
+                                        onClick={generateGoogleCalendarLink}
+                                        disabled={isCalendarButtonDisabled}
+                                        className={`w-full flex items-center justify-center gap-2 p-3 rounded-lg font-medium transition-colors ${isCalendarButtonDisabled
+                                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400'
+                                            : 'bg-blue-600 text-white hover:bg-blue-700'
+                                            }`}
+                                    >
+                                        {t('lists.settings.calendar.generateLink')}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
 
                     {/* Reset List Action */}
                     <div className="pt-4 border-t border-gray-100 dark:border-gray-800">

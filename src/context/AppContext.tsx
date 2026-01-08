@@ -45,6 +45,7 @@ interface AppContextType {
     updateCombination: (id: string, updates: Partial<ListCombination>) => Promise<void>;
     deleteCombination: (id: string) => Promise<void>;
     updateListAccess: (id: string) => Promise<void>;
+    archiveList: (id: string, archived: boolean) => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -134,6 +135,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const updateListAccess = async (id: string) => {
         await listsSync.updateItem(id, { lastAccessedAt: new Date().toISOString() });
+    };
+
+    const archiveList = async (id: string, archived: boolean) => {
+        const list = listsSync.data.find(l => l.id === id);
+        if (list) {
+            const updates: Partial<List> = { archived };
+            if (archived) {
+                // Reset all items when archiving
+                updates.items = list.items.map(item => ({ ...item, completed: false, state: 'unresolved' }));
+            }
+            await listsSync.updateItem(id, updates);
+        }
     };
 
     const addCombination = async (name: string, listIds: string[]) => {
@@ -414,6 +427,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 updateCombination,
                 deleteCombination,
                 updateListAccess,
+                archiveList,
             }}
         >
             {children}

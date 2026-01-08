@@ -22,7 +22,7 @@ export const CategoryView: React.FC = () => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const { categories, lists, addCategory, deleteCategory, updateCategoryName, addList, deleteList, copyList, moveList, updateListItems, reorderLists, addSession, combinations, addCombination, updateCombination, deleteCombination, reorderCategories } = useApp();
-    const [activeTab, setActiveTab] = useState<'home' | 'templates'>('home');
+    const [activeTab, setActiveTab] = useState<'home' | 'templates' | 'archived'>('home');
     const [sessionPickerOpen, setSessionPickerOpen] = useState(false);
     const [manageCategoriesOpen, setManageCategoriesOpen] = useState(false);
 
@@ -44,12 +44,19 @@ export const CategoryView: React.FC = () => {
     // Categories sorted by their order property for consistent display
     const sortedCategories = [...categories].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
-    // Get recently accessed lists
+    // Get recently accessed lists - excluding archived ones
     const recentLists = React.useMemo(() => {
         return [...lists]
-            .filter(l => l.lastAccessedAt)
+            .filter(l => l.lastAccessedAt && !l.archived)
             .sort((a, b) => new Date(b.lastAccessedAt!).getTime() - new Date(a.lastAccessedAt!).getTime())
             .slice(0, 3);
+    }, [lists]);
+
+    // Get all archived lists
+    const archivedLists = React.useMemo(() => {
+        return [...lists]
+            .filter(l => l.archived)
+            .sort((a, b) => (b.lastAccessedAt ? new Date(b.lastAccessedAt).getTime() : 0) - (a.lastAccessedAt ? new Date(a.lastAccessedAt).getTime() : 0));
     }, [lists]);
 
     useEffect(() => {
@@ -101,6 +108,7 @@ export const CategoryView: React.FC = () => {
     const handleImportList = async (name: string, items: Item[], categoryId: string) => {
         const newListId = await addList(name, categoryId);
         await updateListItems(newListId, items);
+        navigate(`/list/${newListId}`);
     };
 
     return (
@@ -119,7 +127,10 @@ export const CategoryView: React.FC = () => {
                         categories={categories}
                         onDelete={(categoryId: string) => setDeleteModal({ isOpen: true, categoryId })}
                         onUpdateName={updateCategoryName}
-                        onAddList={async (name, categoryId) => { await addList(name, categoryId); }}
+                        onAddList={async (name, categoryId) => {
+                            const id = await addList(name, categoryId);
+                            navigate(`/list/${id}`);
+                        }}
                         onCopyList={copyList}
                         onMoveList={moveList}
                         onDeleteList={deleteList}
@@ -154,9 +165,9 @@ export const CategoryView: React.FC = () => {
                 <div className="hidden sm:block"> {/* Spacer */} </div>
                 <button
                     onClick={() => setImportModalOpen(true)}
-                    className="text-sm font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 hover:underline transition-colors flex items-center gap-1"
+                    className="text-sm font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-blue-300 hover:underline transition-colors flex items-center gap-1"
                 >
-                    <span>Import JSON</span>
+                    <span>{t('categories.importJSON', 'Import JSON')}</span>
                 </button>
             </div>
 
@@ -180,7 +191,16 @@ export const CategoryView: React.FC = () => {
                             : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
                             }`}
                     >
-                        {t('combinations.title', 'Mallar')}
+                        {t('combinations.title')}
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('archived')}
+                        className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-lg transition-all ${activeTab === 'archived'
+                            ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm'
+                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                            }`}
+                    >
+                        {t('categories.archived')}
                     </button>
                 </div>
 
@@ -193,10 +213,10 @@ export const CategoryView: React.FC = () => {
                                     const activeCount = list.items.filter(i => !i.completed).length;
                                     const truncatedName = list.name.length > 30 ? list.name.substring(0, 30) + '...' : list.name;
                                     return (
-                                        <div
+                                        <button
                                             key={list.id}
                                             onClick={() => navigate(`/list/${list.id}`)}
-                                            className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all cursor-pointer group w-full min-w-0 overflow-hidden"
+                                            className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all cursor-pointer group w-full min-w-0 overflow-hidden text-left block"
                                         >
                                             <div className="flex items-center justify-between mb-2 gap-2 min-w-0">
                                                 <span className="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate min-w-0 flex-1" title={list.name}>{truncatedName}</span>
@@ -231,7 +251,7 @@ export const CategoryView: React.FC = () => {
                                                     </>
                                                 )}
                                             </div>
-                                        </div>
+                                        </button>
                                     );
                                 })}
                             </div>
@@ -274,6 +294,38 @@ export const CategoryView: React.FC = () => {
                                         onDelete={(id) => setDeleteCombinationModal({ isOpen: true, combinationId: id })}
                                     />
                                 ))}
+                            </div>
+                        )}
+                    </div>
+                )}
+                {activeTab === 'archived' && (
+                    <div className="animate-in slide-in-from-right-2 fade-in duration-300">
+                        {archivedLists.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                {archivedLists.map(list => {
+                                    const truncatedName = list.name.length > 30 ? list.name.substring(0, 30) + '...' : list.name;
+                                    return (
+                                        <button
+                                            key={list.id}
+                                            onClick={() => navigate(`/list/${list.id}`)}
+                                            className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all cursor-pointer group w-full min-w-0 overflow-hidden opacity-75 grayscale-[0.5] text-left block"
+                                        >
+                                            <div className="flex items-center justify-between mb-2 gap-2 min-w-0">
+                                                <span className="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate min-w-0 flex-1" title={list.name}>{truncatedName}</span>
+                                                <div className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 flex-shrink-0">
+                                                    {t('lists.archivedBadge')}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-xs text-gray-500">
+                                                {list.items.length} {t('lists.itemsCount')}
+                                            </div>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            <div className="text-center py-8 text-gray-400 dark:text-gray-500 text-sm italic">
+                                {t('lists.empty', 'Inga arkiverade listor')}
                             </div>
                         )}
                     </div>

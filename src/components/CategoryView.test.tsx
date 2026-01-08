@@ -141,7 +141,7 @@ describe('CategoryView', () => {
     it('opens import list modal', () => {
         renderComponent();
 
-        const importButton = screen.getByText('Import JSON');
+        const importButton = screen.getByText('categories.importJSON');
         expect(importButton).toBeDefined();
 
         fireEvent.click(importButton);

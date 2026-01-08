@@ -48,7 +48,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     );
 
     const categoryLists = lists
-        .filter((l) => l.categoryId === category.id)
+        .filter((l) => l.categoryId === category.id && !l.archived)
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
     const handleSaveTitle = async () => {

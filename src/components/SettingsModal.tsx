@@ -1,6 +1,7 @@
 import React from 'react';
-import { X, RefreshCw, LogOut } from 'lucide-react';
+import { X, RefreshCw, LogOut, Activity, ChevronRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
 
@@ -51,6 +52,26 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                                 Svenska
                             </button>
                         </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('history.title', 'Aktivitet')}</h3>
+                        <Link
+                            to="/activity"
+                            onClick={onClose}
+                            className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group"
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg group-hover:scale-110 transition-transform">
+                                    <Activity size={20} />
+                                </div>
+                                <div>
+                                    <div className="font-medium">{t('history.title', 'Aktivitet')}</div>
+                                    <div className="text-xs text-gray-500 dark:text-gray-400">{t('history.activityLog', 'Visa ändringshistorik')}</div>
+                                </div>
+                            </div>
+                            <ChevronRight size={18} className="text-gray-400" />
+                        </Link>
                     </div>
 
                     <div className="space-y-4">

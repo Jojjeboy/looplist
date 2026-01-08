@@ -1,4 +1,9 @@
 {
+    "nav": {
+        "home": "Hem",
+        "todos": "Att göra",
+        "settings": "Inställningar"
+    },
     "app": {
         "title": "Anti",
         "searchPlaceholder": "Sök listor, objekt, kategorier...",
@@ -6,6 +11,13 @@
         "toggleTheme": "Växla tema",
         "notes": "Anteckningar",
         "lastUpdated": "Senast uppdaterad: 2025-11-21 12:45"
+    },
+    "update": {
+        "title": "Uppdatering tillgänglig",
+        "message": "En ny version av appen är tillgänglig. Klicka på uppdatera för att ladda om och få de senaste funktionerna.",
+        "later": "Senare",
+        "reload": "Uppdatera & Ladda om",
+        "whatsNew": "Vad är nytt?"
     },
     "categories": {
         "title": "Kategorier och listor",
@@ -17,7 +29,10 @@
         "deleteMessage": "Är du säker? Alla listor i denna kategori kommer att tas bort. Denna åtgärd kan inte ångras.",
         "deleteConfirm": "Ta bort",
         "notFound": "Kategorin hittades inte.",
-        "goBack": "Gå tillbaka"
+        "goBack": "Gå tillbaka.",
+        "archived": "Arkiverade",
+        "recent": "Senaste",
+        "importJSON": "Importera JSON"
     },
     "lists": {
         "newPlaceholder": "Ny lista...",
@@ -64,8 +79,14 @@
                 "generateLink": "Skapa kalenderlänk",
                 "description": "Skapa en Google Kalender-händelse med listans innehåll",
                 "linkText": "Se hela listan här"
+            },
+            "archive": {
+                "title": "Arkiverad",
+                "description": "Lås listan och göm den från huvudvyn."
             }
         },
+        "archivedBadge": "Arkiverad",
+        "archivedWarning": "Denna lista är arkiverad och kan inte ändras.",
         "states": {
             "unresolved": "Olöst",
             "ongoing": "Pågående",
@@ -98,7 +119,11 @@
         "save": "Spara",
         "undo": "Ångra",
         "confirm": "Bekräfta",
-        "done": "Klar"
+        "done": "Klar",
+        "name": "Namn",
+        "edit": "Redigera",
+        "prev": "Föregående",
+        "next": "Nästa"
     },
     "settings": {
         "title": "Inställningar",
@@ -139,6 +164,8 @@
         "notFound": "Session hittades inte",
         "start": "Starta Session",
         "newSession": "Ny Session",
+        "create": "Skapa Session",
+        "save": "Spara Session",
         "minTwoLists": "(minst 2 listor krävs)",
         "searchPlaceholder": "Sök listor...",
         "noResults": "Inga listor hittades"
@@ -197,5 +224,50 @@
                 "camera": "Kamera"
             }
         }
+    },
+    "history": {
+        "title": "Aktivitet",
+        "activityLog": "Visa ändringshistorik"
+    },
+    "activity": {
+        "title": "Aktivitetslogg",
+        "subtitle": "Senaste uppdateringar och ändringar",
+        "show": "Visa",
+        "filesChanged": "{{count}} fil ändrad",
+        "filesChanged_plural": "{{count}} filer ändrade"
+    },
+    "time": {
+        "justNow": "Just nu"
+    },
+    "landing": {
+        "welcome": "Välkommen till Anti",
+        "subtitle": "App för återanvändbara listor",
+        "signIn": "Logga in med Google"
+    },
+    "import": {
+        "title": "Importera lista från JSON",
+        "description": "Klistra in JSON-data nedan för att importera en lista. JSON-filen bör innehålla fälten \"name\" och \"items\".",
+        "toCategory": "Importera till kategori",
+        "noCategories": "Inga kategorier tillgängliga",
+        "showExample": "Visa exempelformat",
+        "hideExample": "Dölj exempelformat",
+        "simpleFormat": "Enkelt format (rekommenderas):",
+        "detailedFormat": "Detaljerat format (med status):",
+        "copy": "Kopiera",
+        "copied": "Kopierat!",
+        "placeholder": "Klistra in JSON här...",
+        "errorPaste": "Vänligen klistra in JSON-data för att importera.",
+        "errorInvalid": "Ogiltigt JSON-format. Kontrollera syntaxfel.",
+        "errorObject": "JSON måste vara ett objekt med fälten \"name\" och \"items\".",
+        "errorName": "Saknar fältet \"name\". Din lista måste ha ett namn.",
+        "errorNameString": "Fältet \"name\" måste vara en textsträng.",
+        "errorItems": "Saknar fältet \"items\". Din lista måste ha minst ett objekt.",
+        "errorItemsArray": "Fältet \"items\" måste vara en lista (array).",
+        "errorItemsEmpty": "Listan är tom. Lägg till minst ett objekt.",
+        "errorItemFormat": "Ogiltigt format för objekt på position {{index}}.",
+        "errorSelectCategory": "Vänligen välj en kategori.",
+        "errorFailed": "Misslyckades med att importera listan. Försök igen.",
+        "importing": "Importerar...",
+        "import": "Importera"
     }
 }

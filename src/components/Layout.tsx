@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Link, NavLink } from 'react-router-dom';
-import { Moon, Sun, Search, Settings, LayoutGrid, SquareCheck, Activity } from 'lucide-react';
+import { Moon, Sun, Search, Settings, LayoutGrid, SquareCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SearchResults } from './SearchResults';
 import { SettingsModal } from './SettingsModal';
@@ -17,7 +17,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 overflow-x-hidden">
             {/* Desktop Sidebar */}
             <aside className="hidden md:flex w-72 flex-shrink-0 sticky top-0 h-screen z-20">
-                <Sidebar onOpenSettings={() => setIsSettingsOpen(true)} />
+                <Sidebar />
             </aside>
 
             {/* Main Content Area */}
@@ -36,13 +36,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                             </Link>
                         </div>
                         <div className="flex items-center gap-2">
-                            <button
-                                onClick={() => setIsSettingsOpen(true)}
-                                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
-                                aria-label={t('app.settings')}
-                            >
-                                <Settings size={20} />
-                            </button>
                             <button
                                 onClick={toggleTheme}
                                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
@@ -82,7 +75,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                             `}
                         >
                             <LayoutGrid size={24} />
-                            <span className="text-[10px] font-medium">{t('categories.title', 'Hem')}</span>
+                            <span className="text-[10px] font-medium">{t('nav.home', 'Hem')}</span>
                         </NavLink>
 
                         <NavLink
@@ -95,21 +88,21 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                             `}
                         >
                             <SquareCheck size={24} />
-                            <span className="text-[10px] font-medium">{t('todos.title', 'Att göra')}</span>
+                            <span className="text-[10px] font-medium">{t('nav.todos', 'Att göra')}</span>
                         </NavLink>
 
-                        <NavLink
-                            to="/activity"
-                            className={({ isActive }) => `
+                        <button
+                            onClick={() => setIsSettingsOpen(true)}
+                            className={`
                                 flex flex-col items-center justify-center w-full h-full space-y-1
-                                ${isActive
+                                ${isSettingsOpen
                                     ? 'text-blue-600 dark:text-blue-400'
                                     : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}
                             `}
                         >
-                            <Activity size={24} />
-                            <span className="text-[10px] font-medium">{t('history.title', 'Aktivitet')}</span>
-                        </NavLink>
+                            <Settings size={24} />
+                            <span className="text-[10px] font-medium">{t('nav.settings', 'Inställningar')}</span>
+                        </button>
                     </div>
                 </nav>
             </div>

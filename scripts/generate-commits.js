@@ -35,10 +35,19 @@ try {
         }
     }).filter(commit => commit !== null);
 
-    fs.writeFileSync(outputPath, JSON.stringify(commits, null, 2));
-    console.log(`Generated src/commits.json with ${commits.length} commits.`);
+    const jsonContent = JSON.stringify(commits, null, 2);
+    fs.writeFileSync(outputPath, jsonContent);
+    
+    // Also write to public folder so it can be fetched at runtime
+    const publicPath = path.join(__dirname, '../public/commits.json');
+    fs.writeFileSync(publicPath, jsonContent);
+
+    console.log(`Generated commits.json with ${commits.length} commits in src/ and public/.`);
 } catch (error) {
     console.error('Error generating commits.json:', error);
     // Create an empty file or a placeholder if git fails (e.g., no repo)
-    fs.writeFileSync(outputPath, JSON.stringify([], null, 2));
+    const emptyContent = JSON.stringify([], null, 2);
+    fs.writeFileSync(outputPath, emptyContent);
+    const publicPath = path.join(__dirname, '../public/commits.json');
+    fs.writeFileSync(publicPath, emptyContent);
 }

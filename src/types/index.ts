@@ -29,6 +29,7 @@ export interface List {
   order?: number;
   settings?: ListSettings;
   lastAccessedAt?: string;
+  archived?: boolean;
 }
 
 export interface Category {

@@ -2,33 +2,29 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
+    Sun,
+    Search,
     LayoutGrid,
     SquareCheck,
-    Activity,
     Settings,
-    Moon,
-    Sun,
-    Search
+    Moon
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { SettingsModal } from './SettingsModal';
 import { Commit } from '../types';
 import commitsData from '../commits.json';
 
 const commits = commitsData as Commit[];
 
-interface SidebarProps {
-    onOpenSettings: () => void;
-}
-
-export const Sidebar: React.FC<SidebarProps> = ({ onOpenSettings }) => {
+export const Sidebar: React.FC = () => {
     const { t } = useTranslation();
     const { theme, toggleTheme, searchQuery, setSearchQuery } = useApp();
+    const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
     const latestCommit = commits[0];
 
     const navItems = [
-        { path: '/', icon: LayoutGrid, label: t('categories.title', 'Kategorier') },
-        { path: '/todos', icon: SquareCheck, label: t('todos.title', 'Att göra') },
-        { path: '/activity', icon: Activity, label: t('history.title', 'Aktivitet') },
+        { path: '/', icon: LayoutGrid, label: t('nav.home', 'Hem') },
+        { path: '/todos', icon: SquareCheck, label: t('nav.todos', 'Att göra') },
     ];
 
     return (
@@ -75,6 +71,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ onOpenSettings }) => {
                         <span>{item.label}</span>
                     </NavLink>
                 ))}
+
+                <button
+                    onClick={() => setIsSettingsOpen(true)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all w-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 group"
+                >
+                    <Settings size={20} className="group-hover:scale-110 transition-transform duration-200" />
+                    <span className="font-medium">{t('nav.settings', 'Inställningar')}</span>
+                </button>
             </nav>
 
             {/* Bottom Actions */}
@@ -86,13 +90,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ onOpenSettings }) => {
                         title={t('app.toggleTheme')}
                     >
                         {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-                    </button>
-                    <button
-                        onClick={onOpenSettings}
-                        className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-400"
-                        title={t('app.settings')}
-                    >
-                        <Settings size={20} />
                     </button>
                 </div>
 
@@ -128,6 +125,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onOpenSettings }) => {
                     </div>
                 )}
             </div>
+            <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
         </div>
     );
 };

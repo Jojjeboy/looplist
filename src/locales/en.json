@@ -1,4 +1,9 @@
 {
+    "nav": {
+        "home": "Home",
+        "todos": "To-do",
+        "settings": "Settings"
+    },
     "app": {
         "title": "Anti",
         "searchPlaceholder": "Search lists, items, categories...",
@@ -6,6 +11,13 @@
         "toggleTheme": "Toggle theme",
         "notes": "Notes",
         "lastUpdated": "Last updated: 2025-11-21 12:45"
+    },
+    "update": {
+        "title": "Update Available",
+        "message": "A new version of the app is available. Click update to reload and get the latest features.",
+        "later": "Later",
+        "reload": "Update & Reload",
+        "whatsNew": "What's new?"
     },
     "categories": {
         "title": "Categories and lists",
@@ -17,7 +29,10 @@
         "deleteMessage": "Are you sure? All lists in this category will be deleted. This action cannot be undone.",
         "deleteConfirm": "Delete",
         "notFound": "Category not found.",
-        "goBack": "Go back"
+        "goBack": "Go back",
+        "archived": "Archived",
+        "recent": "Recent",
+        "importJSON": "Import JSON"
     },
     "lists": {
         "newPlaceholder": "New List...",
@@ -65,8 +80,14 @@
                 "generateLink": "Generate Calendar Link",
                 "description": "Create a Google Calendar event with the list content",
                 "linkText": "See the complete list here"
+            },
+            "archive": {
+                "title": "Archived",
+                "description": "Lock the list and hide it from the home view."
             }
         },
+        "archivedBadge": "Archived",
+        "archivedWarning": "This list is archived and cannot be modified.",
         "states": {
             "unresolved": "Unresolved",
             "ongoing": "Ongoing",
@@ -99,7 +120,11 @@
         "save": "Save",
         "undo": "Undo",
         "confirm": "Confirm",
-        "done": "Done"
+        "done": "Done",
+        "name": "Name",
+        "edit": "Edit",
+        "prev": "Prev",
+        "next": "Next"
     },
     "settings": {
         "title": "Settings",
@@ -165,5 +190,85 @@
                 "camera": "Camera"
             }
         }
+    },
+    "sessions": {
+        "multiSession": "Multi-Session",
+        "createTitle": "Create Multi-Session",
+        "sessionName": "Session Name",
+        "namePlaceholder": "E.g. Tuesday morning",
+        "selectLists": "Select Lists",
+        "noLists": "No lists available",
+        "noListsInSession": "No lists in this session",
+        "progress": "Progress",
+        "viewFullList": "View list",
+        "completeSession": "Complete Session & Reset Lists",
+        "completeTitle": "Complete Session",
+        "completeMessage": "This will reset all lists in the session (uncheck all items) and remove the session. Do you want to continue?",
+        "complete": "Complete",
+        "notFound": "Session not found",
+        "start": "Start Session",
+        "newSession": "New Session",
+        "create": "Create Session",
+        "save": "Save Session",
+        "minTwoLists": "(at least 2 lists required)",
+        "searchPlaceholder": "Search lists...",
+        "noResults": "No lists found"
+    },
+    "combinations": {
+        "title": "Saved Templates",
+        "create": "Create Template",
+        "createRaw": "+ Create new template",
+        "edit": "Edit template",
+        "empty": "You have no saved templates yet.",
+        "listCount": "{{count}} lists",
+        "saveAsTemplate": "Save as template for reuse",
+        "namePlaceholder": "E.g. Weekend routine",
+        "deleteTitle": "Delete template",
+        "deleteMessage": "Are you sure you want to delete this template? The lists will not be deleted."
+    },
+    "history": {
+        "title": "Activity",
+        "activityLog": "View change history"
+    },
+    "activity": {
+        "title": "Activity Log",
+        "subtitle": "Recent updates and changes",
+        "show": "Show",
+        "filesChanged": "{{count}} file changed",
+        "filesChanged_plural": "{{count}} files changed"
+    },
+    "time": {
+        "justNow": "Just now"
+    },
+    "landing": {
+        "welcome": "Welcome to Anti",
+        "subtitle": "Reusable lists app",
+        "signIn": "Sign in with Google"
+    },
+    "import": {
+        "title": "Import List from JSON",
+        "description": "Paste JSON data below to import a list. The JSON should contain a \"name\" and \"items\" field.",
+        "toCategory": "Import to Category",
+        "noCategories": "No categories available",
+        "showExample": "Show example formats",
+        "hideExample": "Hide examples",
+        "simpleFormat": "Simple format (recommended):",
+        "detailedFormat": "Detailed format (with completion status):",
+        "copy": "Copy",
+        "copied": "Copied!",
+        "placeholder": "Paste JSON here...",
+        "errorPaste": "Please paste JSON data to import.",
+        "errorInvalid": "Invalid JSON format. Please check for syntax errors.",
+        "errorObject": "JSON must be an object with \"name\" and \"items\" fields.",
+        "errorName": "Missing required field \"name\". Your list must have a name.",
+        "errorNameString": "The \"name\" field must be a non-empty string.",
+        "errorItems": "Missing required field \"items\". Your list must have at least one item.",
+        "errorItemsArray": "The \"items\" field must be an array.",
+        "errorItemsEmpty": "Items array is empty. Please add at least one item.",
+        "errorItemFormat": "Invalid item format at position {{index}}.",
+        "errorSelectCategory": "Please select a category.",
+        "errorFailed": "Failed to import list. Please try again.",
+        "importing": "Importing...",
+        "import": "Import"
     }
 }

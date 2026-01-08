@@ -53,7 +53,7 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
         <div
             ref={setNodeRef}
             style={style}
-            className={`group flex flex-col w-full min-w-0 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all animate-in fade-in slide-in-from-bottom-4 duration-300 overflow-hidden ${isDragging ? 'z-50 opacity-50' : ''}`}
+            className={`group flex flex-col w-full min-w-0 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all animate-in fade-in slide-in-from-bottom-4 duration-300 ${isDragging ? 'z-50 opacity-50 outline-2 outline-blue-500' : 'z-auto'}`}
         >
             <div className="flex items-center justify-between p-4 gap-2 min-w-0">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
