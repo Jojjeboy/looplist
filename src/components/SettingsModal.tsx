@@ -75,26 +75,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                     </div>
 
                     <div className="space-y-4">
-                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settings.account', 'Account')}</h3>
-                        <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-                            <div>
-                                <div className="font-medium">{user?.displayName || user?.email}</div>
-                                <div className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</div>
-                            </div>
-                            <button
-                                onClick={() => {
-                                    logout();
-                                    onClose();
-                                }}
-                                className="p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30 rounded-lg transition-colors"
-                                title={t('settings.logout', 'Logout')}
-                            >
-                                <LogOut size={20} />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="space-y-4">
                         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settings.system', 'System')}</h3>
                         <button
                             onClick={() => {
@@ -119,6 +99,26 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                                 <div className="text-xs text-gray-500 dark:text-gray-400">{t('settings.reloadUpdateDesc', 'Clear cache and reload to get the latest version')}</div>
                             </div>
                         </button>
+                    </div>
+
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('settings.account', 'Account')}</h3>
+                        <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+                            <div>
+                                <div className="font-medium">{user?.displayName || user?.email}</div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</div>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    logout();
+                                    onClose();
+                                }}
+                                className="p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                                title={t('settings.logout', 'Logout')}
+                            >
+                                <LogOut size={20} />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

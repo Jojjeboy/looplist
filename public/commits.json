@@ -1,5 +1,97 @@
 [
   {
+    "hash": "ddb4f27eb75f2f2d9f945fe72ecd3bfa96cac6ea",
+    "author": "Jojjeboy",
+    "date": "2026-01-08 11:28:50 +0100",
+    "message": "feat: restructure navigation, improve i18n and show latest commit in update prompt",
+    "files": [
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "A",
+        "path": "public/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "scripts/generate-commits.js"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ActivityLog.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategorySection.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.test.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ImportListModal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/LandingPage.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Layout.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SettingsModal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Sidebar.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableListCard.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/UpdatePrompt.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/en.json"
+      },
+      {
+        "status": "M",
+        "path": "src/locales/sv.json"
+      },
+      {
+        "status": "M",
+        "path": "src/types/index.ts"
+      }
+    ]
+  },
+  {
     "hash": "ad3fe780fd255adc2c72b5056d0ba235b5ab8bea",
     "author": "Jojjeboy",
     "date": "2026-01-08 10:11:02 +0100",
