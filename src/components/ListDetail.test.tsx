@@ -42,7 +42,8 @@ vi.mock('lucide-react', () => ({
     Plus: () => <div />,
     ChevronLeft: () => <div />,
     RotateCcw: () => <div />,
-    Settings: () => <div data-testid="settings-icon" />
+    Settings: () => <div data-testid="settings-icon" />,
+    ChevronDown: () => <div />
 }));
 
 const mockUpdateListItems = vi.fn();

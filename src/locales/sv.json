@@ -55,7 +55,16 @@
                 "title": "Trestegsobjekt",
                 "description": "Olöst → Pågående → Klar"
             },
-            "sort": "Sortering"
+            "sort": "Sortering",
+            "calendar": {
+                "title": "Lägg till i kalender",
+                "eventTitle": "Händelsetitel",
+                "startTime": "Starttid",
+                "endTime": "Sluttid",
+                "generateLink": "Skapa kalenderlänk",
+                "description": "Skapa en Google Kalender-händelse med listans innehåll",
+                "linkText": "Se hela listan här"
+            }
         },
         "states": {
             "unresolved": "Olöst",

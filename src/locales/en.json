@@ -56,7 +56,16 @@
                 "title": "Three-stage items",
                 "description": "Unresolved → Ongoing → Done"
             },
-            "sort": "Sort Order"
+            "sort": "Sort Order",
+            "calendar": {
+                "title": "Add to Calendar",
+                "eventTitle": "Event Title",
+                "startTime": "Start Time",
+                "endTime": "End Time",
+                "generateLink": "Generate Calendar Link",
+                "description": "Create a Google Calendar event with the list content",
+                "linkText": "See the complete list here"
+            }
         },
         "states": {
             "unresolved": "Unresolved",

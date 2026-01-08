@@ -5,7 +5,7 @@ import type { Item, ListSettings, List } from '../types';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from './SortableItem';
-import { Plus, ChevronLeft, Settings, RotateCcw } from 'lucide-react';
+import { Plus, ChevronLeft, Settings, RotateCcw, ChevronDown } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import { Modal } from './Modal';
 
@@ -25,6 +25,8 @@ export const ListDetail: React.FC = () => {
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [editedTitle, setEditedTitle] = useState('');
     const [settingsOpen, setSettingsOpen] = useState(false);
+    const [calendarAccordionOpen, setCalendarAccordionOpen] = useState(false);
+    const [calendarEventTitle, setCalendarEventTitle] = useState('');
 
     const list: List | undefined = lists.find((l) => l.id === listId);
 
@@ -34,10 +36,7 @@ export const ListDetail: React.FC = () => {
             setEditedTitle(list.name);
             updateListAccess(list.id);
         }
-    }, [list?.id, list?.name]); // careful with dependencies to avoid loops, list object changes on updateListAccess if we aren't careful?
-    // Actually, updateListAccess updates the list in context, so 'list' will change.
-    // We only want to trigger this on MOUNT or when we switch to a different listId.
-    // So we should depend on listId.
+    }, [list?.id, list?.name]);
 
     useEffect(() => {
         if (listId) {
@@ -54,6 +53,66 @@ export const ListDetail: React.FC = () => {
 
     const [sortBy, setSortBy] = useState<'manual' | 'alphabetical' | 'completed'>('manual');
     const threeStageMode = list?.settings?.threeStageMode ?? false;
+
+    // Helper to format date for datetime-local input (YYYY-MM-DDTHH:mm) in LOCAL time
+    const toLocalISOString = (date: Date) => {
+        const offset = date.getTimezoneOffset() * 60000;
+        const localDate = new Date(date.getTime() - offset);
+        return localDate.toISOString().slice(0, 16);
+    };
+
+    // Helper function to get next full hour
+    const getNextFullHour = () => {
+        const now = new Date();
+        now.setHours(now.getHours() + 1);
+        now.setMinutes(0);
+        now.setSeconds(0);
+        now.setMilliseconds(0);
+        return toLocalISOString(now);
+    };
+
+    // Calendar time state with defaults
+    const [calendarStartTime, setCalendarStartTime] = useState(() =>
+        list?.settings?.calendarStartTime || getNextFullHour()
+    );
+    const [calendarEndTime, setCalendarEndTime] = useState(() => {
+        if (list?.settings?.calendarEndTime) return list.settings.calendarEndTime;
+
+        // Default to start time + 1 hour
+        const startStr = list?.settings?.calendarStartTime || getNextFullHour();
+        const endDate = new Date(startStr);
+        endDate.setHours(endDate.getHours() + 1);
+        return toLocalISOString(endDate);
+    });
+
+    // EFFECT: Refresh start time to next full hour if it's in the past when accordion opens
+    useEffect(() => {
+        if (calendarAccordionOpen) {
+            const now = new Date();
+            const currentStart = new Date(calendarStartTime);
+            if (currentStart < now) {
+                const nextHourStr = getNextFullHour();
+                setCalendarStartTime(nextHourStr);
+
+                // Also adjust end time to be 1 hour after the NEW start time
+                const nextHourDate = new Date(nextHourStr);
+                const endDate = new Date(nextHourDate);
+                endDate.setHours(endDate.getHours() + 1);
+                setCalendarEndTime(toLocalISOString(endDate));
+            }
+        }
+    }, [calendarAccordionOpen]);
+
+    // EFFECT: Ensure end time is not before start time when start time changes
+    useEffect(() => {
+        const start = new Date(calendarStartTime);
+        const end = new Date(calendarEndTime);
+        if (end <= start) {
+            const newEnd = new Date(start);
+            newEnd.setHours(newEnd.getHours() + 1);
+            setCalendarEndTime(toLocalISOString(newEnd));
+        }
+    }, [calendarStartTime]);
 
     // Load sort setting from list or default to manual
     useEffect(() => {
@@ -86,6 +145,13 @@ export const ListDetail: React.FC = () => {
         }
         return items;
     }, [list, sortBy, threeStageMode]);
+
+    // Update calendar event title when list name changes
+    React.useEffect(() => {
+        if (list) {
+            setCalendarEventTitle(list.name);
+        }
+    }, [list?.name]);
 
     if (!list) return <div className="text-center py-10">{t('lists.notFound')}</div>;
 
@@ -189,7 +255,85 @@ export const ListDetail: React.FC = () => {
         await updateListSettings(list.id, updated);
     };
 
+    /**
+     * Ensures start time is in the future and returns valid times
+     */
+    const validateAndGetTimes = () => {
+        if (!list) return;
 
+        // Ensure start time is in the future
+        const now = new Date();
+        const start = new Date(calendarStartTime);
+        if (start < now) {
+            // If in the past, adjust to next full hour before proceeding
+            const nextHourStr = getNextFullHour();
+            setCalendarStartTime(nextHourStr);
+
+            const nextHourDate = new Date(nextHourStr);
+            const endDate = new Date(nextHourDate);
+            endDate.setHours(endDate.getHours() + 1);
+            const actualEnd = toLocalISOString(endDate);
+            setCalendarEndTime(actualEnd);
+
+            return { actualStart: nextHourStr, actualEnd: actualEnd };
+        }
+        return { actualStart: calendarStartTime, actualEnd: calendarEndTime };
+    };
+
+    /**
+     * Generates a Google Calendar event URL with list details
+     */
+    const generateGoogleCalendarLink = () => {
+        if (!list) return;
+
+        const times = validateAndGetTimes();
+        if (!times) return;
+        const { actualStart, actualEnd } = times;
+
+        // Save the selected times to list settings
+        updateSettings({ calendarStartTime: actualStart, calendarEndTime: actualEnd });
+
+        // Format event title (use edited title or list name)
+        const title = encodeURIComponent(calendarEventTitle || list.name);
+
+        // Format event description: bullet points for items + HTML link
+        const itemsText = list.items.map(item => `• ${item.text}`).join('\n');
+        const linkText = t('lists.settings.calendar.linkText');
+        const deepLink = `https://jojjeboy.github.io/anti/#/list/${list.id}`;
+        const htmlLink = `<a href="${deepLink}">${linkText}</a>`;
+        const description = encodeURIComponent(`${itemsText}\n\n${htmlLink}`);
+
+        // Format times for Google Calendar (YYYYMMDDTHHMMSS format in UTC)
+        const formatGoogleTime = (isoString: string) => {
+            const date = new Date(isoString);
+            return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+        };
+
+        const startTime = formatGoogleTime(actualStart);
+        const endTime = formatGoogleTime(actualEnd);
+
+        // Construct Google Calendar URL
+        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${description}&dates=${startTime}/${endTime}`;
+
+        // Open in new tab
+        window.open(calendarUrl, '_blank');
+    };
+
+    // --- Validation Logic for UI ---
+    const now = new Date();
+    // We ignore seconds for the comparison to prevent minor mismatches (e.g. current seconds vs 00 seconds)
+    const currentNowTime = now.getTime();
+    const startDate = new Date(calendarStartTime);
+    const endDate = new Date(calendarEndTime);
+
+    // Is the start time in the past? (Allowing a buffer of 1 minute roughly)
+    const isPast = startDate.getTime() < (currentNowTime - 60000);
+
+    // Is the range invalid? (Start time is after or same as end time)
+    const isRangeInvalid = startDate >= endDate;
+
+    // Should the button be disabled?
+    const isCalendarButtonDisabled = isPast || isRangeInvalid;
 
     return (
         <div className="space-y-6">
@@ -357,6 +501,85 @@ export const ListDetail: React.FC = () => {
                                 </button>
                             ))}
                         </div>
+                    </div>
+
+                    {/* Calendar Accordion */}
+                    <div className="space-y-2">
+                        <button
+                            onClick={() => setCalendarAccordionOpen(!calendarAccordionOpen)}
+                            className="w-full flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        >
+                            <div className="flex flex-col items-start">
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{t('lists.settings.calendar.title')}</span>
+                                <span className="text-sm text-gray-500">{t('lists.settings.calendar.description')}</span>
+                            </div>
+                            <ChevronDown
+                                size={20}
+                                className={`transition-transform ${calendarAccordionOpen ? 'rotate-180' : ''}`}
+                            />
+                        </button>
+
+                        {calendarAccordionOpen && (
+                            <div className="space-y-3 p-4 bg-gray-50 dark:bg-gray-700/30 rounded-lg">
+                                <div className="space-y-2">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {t('lists.settings.calendar.eventTitle')}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={calendarEventTitle}
+                                        onChange={(e) => setCalendarEventTitle(e.target.value)}
+                                        placeholder={list.name}
+                                        className="w-full p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <div className="flex justify-between">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            {t('lists.settings.calendar.startTime')}
+                                        </label>
+                                        {isPast && (
+                                            <span className="text-xs text-red-500 font-medium self-center">
+                                                {/* You might want to translate this string */}
+                                                Time has passed
+                                            </span>
+                                        )}
+                                    </div>
+                                    <input
+                                        type="datetime-local"
+                                        value={calendarStartTime}
+                                        onChange={(e) => setCalendarStartTime(e.target.value)}
+                                        min={toLocalISOString(new Date())}
+                                        className={`w-full p-2 rounded-lg border ${isPast ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 dark:border-gray-600 focus:ring-blue-500'} bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 outline-none`}
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {t('lists.settings.calendar.endTime')}
+                                    </label>
+                                    <input
+                                        type="datetime-local"
+                                        value={calendarEndTime}
+                                        onChange={(e) => setCalendarEndTime(e.target.value)}
+                                        min={calendarStartTime}
+                                        className="w-full p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    />
+                                </div>
+
+                                <button
+                                    onClick={generateGoogleCalendarLink}
+                                    disabled={isCalendarButtonDisabled}
+                                    className={`w-full flex items-center justify-center gap-2 p-3 rounded-lg font-medium transition-colors ${isCalendarButtonDisabled
+                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400'
+                                        : 'bg-blue-600 text-white hover:bg-blue-700'
+                                        }`}
+                                >
+                                    {t('lists.settings.calendar.generateLink')}
+                                </button>
+                            </div>
+                        )}
                     </div>
 
                     {/* Reset List Action */}

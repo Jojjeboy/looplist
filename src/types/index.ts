@@ -17,6 +17,8 @@ export interface Todo {
 export interface ListSettings {
   threeStageMode: boolean;
   defaultSort: "manual" | "alphabetical" | "completed";
+  calendarStartTime?: string;
+  calendarEndTime?: string;
 }
 
 export interface List {
