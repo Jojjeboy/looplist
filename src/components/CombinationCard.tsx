@@ -75,7 +75,7 @@ export const CombinationCard: React.FC<CombinationCardProps> = ({
             {/* Start Button */}
             <button
                 onClick={() => onStart(combination.listIds)}
-                className="w-full py-2 px-4 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                className="w-full py-2 px-4 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-lg font-medium transition-all hover:shadow-sm hover:scale-[1.01] flex items-center justify-center gap-2"
             >
                 <PlayCircle size={18} />
                 <span>{t('sessions.start', 'Starta Session')}</span>
