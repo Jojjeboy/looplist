@@ -102,15 +102,6 @@ export const CategoryView: React.FC = React.memo(() => {
         }
     };
 
-    const handleBulkDeleteLists = (listIds: string[]) => {
-        listIds.forEach(id => deleteList(id));
-    };
-
-    const handleBulkMoveLists = async (listIds: string[], newCategoryId: string) => {
-        for (const id of listIds) {
-            await moveList(id, newCategoryId);
-        }
-    };
 
     /**
      * Handles the import of a list from JSON data.
@@ -152,8 +143,6 @@ export const CategoryView: React.FC = React.memo(() => {
                             }
                         }}
                         onReorderLists={reorderLists}
-                        onBulkDeleteLists={handleBulkDeleteLists}
-                        onBulkMoveLists={handleBulkMoveLists}
                     />
                 ))}
                 {sortedCategories.length === 0 && (

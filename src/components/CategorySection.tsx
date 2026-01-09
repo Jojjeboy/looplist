@@ -18,8 +18,6 @@ interface CategorySectionProps {
     onDeleteList: (listId: string) => void;
     onClearCompleted: (listId: string) => void;
     onReorderLists: (lists: List[]) => Promise<void>;
-    onBulkDeleteLists?: (listIds: string[]) => void;
-    onBulkMoveLists?: (listIds: string[], newCategoryId: string) => void;
 }
 
 export const CategorySection: React.FC<CategorySectionProps> = ({
@@ -34,8 +32,6 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     onDeleteList,
     onClearCompleted,
     onReorderLists,
-    onBulkDeleteLists,
-    onBulkMoveLists,
 }) => {
     const { t } = useTranslation();
     const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -43,8 +39,6 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     const [newListName, setNewListName] = useState('');
     const [isAddingList, setIsAddingList] = useState(false);
     const [movingListId, setMovingListId] = useState<string | null>(null);
-    const [isSelectionMode, setIsSelectionMode] = useState(false);
-    const [selectedLists, setSelectedLists] = useState<Set<string>>(new Set());
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -88,36 +82,6 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
         setMovingListId(null);
     };
 
-    const handleBulkDelete = () => {
-        if (onBulkDeleteLists && selectedLists.size > 0) {
-            onBulkDeleteLists(Array.from(selectedLists));
-            setSelectedLists(new Set());
-            setIsSelectionMode(false);
-        }
-    };
-
-    const handleBulkMove = async (newCategoryId: string) => {
-        if (onBulkMoveLists && selectedLists.size > 0) {
-            await onBulkMoveLists(Array.from(selectedLists), newCategoryId);
-            setSelectedLists(new Set());
-            setIsSelectionMode(false);
-        }
-    };
-
-    const toggleListSelection = (listId: string) => {
-        const newSelected = new Set(selectedLists);
-        if (newSelected.has(listId)) {
-            newSelected.delete(listId);
-        } else {
-            newSelected.add(listId);
-        }
-        setSelectedLists(newSelected);
-    };
-
-    const toggleSelectionMode = () => {
-        setIsSelectionMode(!isSelectionMode);
-        setSelectedLists(new Set());
-    };
 
     return (
         <div
@@ -169,14 +133,6 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                         >
                             {t('lists.addLink', '+ Lägg till lista')}
                         </button>
-                        {categoryLists.length > 0 && (
-                            <button
-                                onClick={toggleSelectionMode}
-                                className="text-sm font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 hover:underline transition-all"
-                            >
-                                {isSelectionMode ? t('common.cancel', 'Avbryt') : t('common.select', 'Välj')}
-                            </button>
-                        )}
                     </>
                 )}
             </div>
@@ -201,34 +157,6 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                 </form>
             )}
 
-            {/* Bulk Actions */}
-            {isSelectionMode && (
-                <div className="flex items-center gap-2 mb-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                    <span className="text-sm text-gray-700 dark:text-gray-300">
-                        {selectedLists.size} {t('lists.selected', 'valda')}
-                    </span>
-                    {selectedLists.size > 0 && (
-                        <>
-                            <button
-                                onClick={handleBulkDelete}
-                                className="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
-                            >
-                                {t('common.delete', 'Radera')}
-                            </button>
-                            <select
-                                onChange={(e) => handleBulkMove(e.target.value)}
-                                className="px-3 py-1 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded"
-                                defaultValue=""
-                            >
-                                <option value="" disabled>{t('lists.moveTo', 'Flytta till...')}</option>
-                                {categories.filter(c => c.id !== category.id).map(cat => (
-                                    <option key={cat.id} value={cat.id}>{cat.name}</option>
-                                ))}
-                            </select>
-                        </>
-                    )}
-                </div>
-            )}
 
             {/* Lists */}
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -246,10 +174,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                                 categories={categories}
                                 currentCategoryId={category.id}
                                 onMoveToCategory={handleMoveToCategory}
-                                showHandle={categoryLists.length > 1 && !isSelectionMode}
-                                isSelectionMode={isSelectionMode}
-                                isSelected={selectedLists.has(list.id)}
-                                onToggleSelect={toggleListSelection}
+                                showHandle={categoryLists.length > 1}
                             />
                         ))}
                         {categoryLists.length === 0 && (
