@@ -22,8 +22,8 @@ vi.mock('firebase/firestore', () => ({
     initializeFirestore: vi.fn(() => ({})),
     persistentLocalCache: vi.fn(() => ({})),
     persistentMultipleTabManager: vi.fn(() => ({})),
-    collection: vi.fn(),
-    doc: vi.fn(),
+    collection: vi.fn(() => ({})), // Return mock collection reference
+    doc: vi.fn(() => ({})), // Return mock doc reference
     getDoc: vi.fn(),
     setDoc: vi.fn(),
     updateDoc: vi.fn(),

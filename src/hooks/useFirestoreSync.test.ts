@@ -18,7 +18,7 @@ describe('useFirestoreSync', () => {
 
     it('should initialize with empty data and loading true', () => {
         const { result } = renderHook(() =>
-            useFirestoreSync(mockCollectionPath, null)
+            useFirestoreSync(mockCollectionPath, mockUserId)
         );
 
         expect(result.current.data).toEqual([]);
