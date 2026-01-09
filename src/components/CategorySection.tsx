@@ -43,6 +43,8 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     const [newListName, setNewListName] = useState('');
     const [isAddingList, setIsAddingList] = useState(false);
     const [movingListId, setMovingListId] = useState<string | null>(null);
+    const [isSelectionMode, setIsSelectionMode] = useState(false);
+    const [selectedLists, setSelectedLists] = useState<Set<string>>(new Set());
 
     const sensors = useSensors(
         useSensor(PointerSensor),

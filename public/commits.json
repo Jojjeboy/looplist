@@ -1,5 +1,33 @@
 [
   {
+    "hash": "1d065c29515f37ac5758f8fbafa20d641d79c30d",
+    "author": "Jojjeboy",
+    "date": "2026-01-09 09:02:54 +0100",
+    "message": "Fix build errors: Add missing state variables in CategorySection and type annotations in AppContext",
+    "files": [
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "public/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategorySection.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      }
+    ]
+  },
+  {
     "hash": "c2b56d12ec33d1873bacc2c3b36217292c015bd4",
     "author": "Jojjeboy",
     "date": "2026-01-09 08:48:52 +0100",
