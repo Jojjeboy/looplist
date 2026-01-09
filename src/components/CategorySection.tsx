@@ -38,8 +38,11 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     onBulkMoveLists,
 }) => {
     const { t } = useTranslation();
-    const [isSelectionMode, setIsSelectionMode] = useState(false);
-    const [selectedLists, setSelectedLists] = useState<Set<string>>(new Set());
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+    const [editedTitle, setEditedTitle] = useState(category.name);
+    const [newListName, setNewListName] = useState('');
+    const [isAddingList, setIsAddingList] = useState(false);
+    const [movingListId, setMovingListId] = useState<string | null>(null);
 
     const sensors = useSensors(
         useSensor(PointerSensor),

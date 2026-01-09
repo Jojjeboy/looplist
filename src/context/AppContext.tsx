@@ -7,6 +7,8 @@ type Priority = 'low' | 'medium' | 'high';
 import { useToast } from './ToastContext';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from './AuthContext';
+import { useFirestoreSync } from '../hooks/useFirestoreSync';
+import { useMigrateLocalStorage } from '../hooks/useMigrateLocalStorage';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 
 interface AppContextType {
@@ -114,8 +116,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const deleteCategory = async (id: string) => {
         await categoriesSync.deleteItem(id);
         // Also delete associated lists
-        const listsToDelete = listsSync.data.filter((l) => l.categoryId === id);
-        await Promise.all(listsToDelete.map(l => listsSync.deleteItem(l.id)));
+        const listsToDelete = listsSync.data.filter((l: List) => l.categoryId === id);
+        await Promise.all(listsToDelete.map((l: List) => listsSync.deleteItem(l.id)));
     };
 
     const addList = async (name: string, categoryId: string) => {
@@ -137,12 +139,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     const archiveList = async (id: string, archived: boolean) => {
-        const list = listsSync.data.find(l => l.id === id);
+        const list = listsSync.data.find((l: List) => l.id === id);
         if (list) {
             const updates: Partial<List> = { archived };
             if (archived) {
                 // Reset all items when archiving
-                updates.items = list.items.map(item => ({ ...item, completed: false, state: 'unresolved' }));
+                updates.items = list.items.map((item: Item) => ({ ...item, completed: false, state: 'unresolved' }));
             }
             await listsSync.updateItem(id, updates);
         }
@@ -172,10 +174,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     const deleteList = async (id: string) => {
-        const listToDelete = listsSync.data.find(l => l.id === id);
+        const listToDelete = listsSync.data.find((l: List) => l.id === id);
         if (listToDelete) {
             // Handle combinations
-            const affectedCombinations = combinationsSync.data.filter(c => c.listIds.includes(id));
+            const affectedCombinations = combinationsSync.data.filter((c: ListCombination) => c.listIds.includes(id));
             const combinationsToDelete: ListCombination[] = [];
             const combinationsToUpdate: ListCombination[] = [];
 
@@ -225,7 +227,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     const copyList = async (listId: string) => {
-        const listToCopy = listsSync.data.find((l) => l.id === listId);
+        const listToCopy = listsSync.data.find((l: List) => l.id === listId);
         if (listToCopy) {
             // Determine base name
             let baseName = listToCopy.name;
@@ -236,7 +238,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
             // Find all existing copies to determine the next number
             let maxCopyNumber = 0;
-            listsSync.data.forEach((l) => {
+            listsSync.data.forEach((l: List) => {
                 if (l.name === baseName) {
                     // The original list counts as "copy 0" effectively for logic, but we start numbering at 1
                 }
@@ -255,7 +257,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 ...listToCopy,
                 id: uuidv4(),
                 name: newName,
-                items: listToCopy.items.map(item => ({ ...item, id: uuidv4() })) // Deep copy items with new IDs
+                items: listToCopy.items.map((item: Item) => ({ ...item, id: uuidv4() })) // Deep copy items with new IDs
             };
             await listsSync.addItem(newList);
         }
@@ -286,11 +288,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     const deleteItem = async (listId: string, itemId: string) => {
-        const list = listsSync.data.find(l => l.id === listId);
+        const list = listsSync.data.find((l: List) => l.id === listId);
         if (list) {
-            const itemToDelete = list.items.find(i => i.id === itemId);
+            const itemToDelete = list.items.find((i: Item) => i.id === itemId);
             if (itemToDelete) {
-                const newItems = list.items.filter(i => i.id !== itemId);
+                const newItems = list.items.filter((i: Item) => i.id !== itemId);
                 await updateListItems(listId, newItems);
 
                 showToast(t('toasts.itemDeleted'), 'info', {
@@ -303,7 +305,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                         // However, for undo, we can just push the item back to the list we have reference to, 
                         // or better, get the current list from the data array if possible, but that's hard in a callback.
                         // A simple approach:
-                        const currentList = listsSync.data.find(l => l.id === listId);
+                        const currentList = listsSync.data.find((l: List) => l.id === listId);
                         if (currentList) {
                             await updateListItems(listId, [...currentList.items, itemToDelete]);
                         }
@@ -341,7 +343,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     const toggleTodo = async (id: string) => {
-        const todo = todosSync.data.find(t => t.id === id);
+        const todo = todosSync.data.find((t: Todo) => t.id === id);
         if (todo) {
             await todosSync.updateItem(id, { completed: !todo.completed });
         }
@@ -365,13 +367,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     const completeSession = async (sessionId: string) => {
-        const session = sessionsSync.data.find(s => s.id === sessionId);
+        const session = sessionsSync.data.find((s: ExecutionSession) => s.id === sessionId);
         if (session) {
             // Reset all lists in the session
-            const resetPromises = session.listIds.map(listId => {
-                const list = listsSync.data.find(l => l.id === listId);
+            const resetPromises = session.listIds.map((listId: string) => {
+                const list = listsSync.data.find((l: List) => l.id === listId);
                 if (list) {
-                    const resetItems = list.items.map(item => ({ ...item, completed: false }));
+                    const resetItems = list.items.map((item: Item) => ({ ...item, completed: false }));
                     return updateListItems(listId, resetItems);
                 }
                 return Promise.resolve();

@@ -1,5 +1,57 @@
 [
   {
+    "hash": "c2b56d12ec33d1873bacc2c3b36217292c015bd4",
+    "author": "Jojjeboy",
+    "date": "2026-01-09 08:48:52 +0100",
+    "message": "Expand testing coverage: Add integration tests for useFirestoreSync hook using Vitest",
+    "files": [
+      {
+        "status": "M",
+        "path": "src/components/CombinationCard.tsx"
+      }
+    ]
+  },
+  {
+    "hash": "01164eee663fe9fd9d60890a04d64fb5866befba",
+    "author": "Jojjeboy",
+    "date": "2026-01-09 08:48:30 +0100",
+    "message": "Improve error handling: Add ErrorBoundary components in App.tsx and AppContext.tsx",
+    "files": [
+      {
+        "status": "M",
+        "path": "public/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CombinationCard.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/components/ErrorBoundary.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/context/AppContext.tsx"
+      },
+      {
+        "status": "A",
+        "path": "src/hooks/useFirestoreSync.test.ts"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
+  },
+  {
     "hash": "e2c50a65cd02e9fcdb54fcf6245c3945e79b3960",
     "author": "Jojjeboy",
     "date": "2026-01-09 08:44:22 +0100",

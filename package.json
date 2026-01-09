@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "node scripts/generate-commits.js && vite",
     "build": "node scripts/generate-commits.js && tsc -b && vite build",
+    "build:only": "tsc -b && vite build",
     "postbuild": "vitest run --coverage",
     "preview": "vite preview",
     "test": "vitest run --coverage",
     "lint": "eslint .",
     "check-any": "eslint . --config eslint.strict.config.ts",
-    "validate": "npm run build && npm run lint && npm run check-any && npm run test"
+    "validate": "npm run build:only && npm run lint && npm run check-any && npm run test"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
