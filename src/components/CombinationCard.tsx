@@ -26,7 +26,7 @@ export const CombinationCard: React.FC<CombinationCardProps> = ({
         .filter((l): l is List => !!l);
     
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 transition-all hover:shadow-md">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 transition-all hover:shadow-md hover:scale-[1.02] animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="flex items-start justify-between mb-3">
                 <div className="flex-1 min-w-0 mr-4">
                     <h3 className="font-semibold text-gray-900 dark:text-gray-100 truncate">
@@ -40,14 +40,14 @@ export const CombinationCard: React.FC<CombinationCardProps> = ({
                 <div className="flex gap-1">
                     <button 
                         onClick={() => onEdit(combination.id)}
-                        className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
+                        className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-all hover:scale-110"
                         title={t('common.edit', 'Redigera')}
                     >
                         <Edit size={18} />
                     </button>
                     <button 
                         onClick={() => onDelete(combination.id)}
-                        className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                        className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-all hover:scale-110"
                         title={t('common.delete', 'Radera')}
                     >
                         <Trash size={18} />

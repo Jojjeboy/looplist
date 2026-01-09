@@ -1,5 +1,45 @@
 [
   {
+    "hash": "e2c50a65cd02e9fcdb54fcf6245c3945e79b3960",
+    "author": "Jojjeboy",
+    "date": "2026-01-09 08:44:22 +0100",
+    "message": "Add bulk edit feature: Multi-select lists for delete and move operations in CategorySection",
+    "files": [
+      {
+        "status": "M",
+        "path": "public/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategorySection.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/Modal.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableItem.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SortableListCard.tsx"
+      },
+      {
+        "status": "M",
+        "path": "tsconfig.app.tsbuildinfo"
+      }
+    ]
+  },
+  {
     "hash": "5401582ea652a27c37219f296ffd7e166aca987f",
     "author": "Jojjeboy",
     "date": "2026-01-09 08:40:39 +0100",

@@ -7,8 +7,7 @@ type Priority = 'low' | 'medium' | 'high';
 import { useToast } from './ToastContext';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from './AuthContext';
-import { useFirestoreSync } from '../hooks/useFirestoreSync';
-import { useMigrateLocalStorage } from '../hooks/useMigrateLocalStorage';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 interface AppContextType {
     categories: Category[];
@@ -430,7 +429,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 archiveList,
             }}
         >
-            {children}
+            <ErrorBoundary>
+                {children}
+            </ErrorBoundary>
         </AppContext.Provider>
     );
 };
