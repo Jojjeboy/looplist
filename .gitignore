@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+build.txt
 coverage
 
 # Editor directories and files
