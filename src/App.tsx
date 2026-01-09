@@ -8,6 +8,7 @@ import { SessionDetail } from './components/SessionDetail'
 
 import { TodoView } from './components/TodoView'
 import { ActivityLog } from './components/ActivityLog'
+import { StatisticsView } from './components/StatisticsView'
 import { ToastProvider } from './context/ToastContext'
 import { ToastContainer } from './components/ToastContainer'
 import { UpdatePrompt } from './components/UpdatePrompt'
@@ -31,6 +32,7 @@ function App() {
                                         <Route path="/session/:sessionId" element={<SessionDetail />} />
                                         <Route path="/todos" element={<TodoView />} />
                                         <Route path="/activity" element={<ActivityLog />} />
+                                        <Route path="/statistics" element={<StatisticsView />} />
                                     </Routes>
                                     <ToastContainer />
                                     <UpdatePrompt />

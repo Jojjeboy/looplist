@@ -228,7 +228,10 @@
     },
     "history": {
         "title": "Activity",
-        "activityLog": "View change history"
+        "activityLog": "Activity Log",
+        "activityLogDesc": "View change history",
+        "statistics": "Statistics",
+        "statisticsDesc": "Usage insights and trends"
     },
     "activity": {
         "title": "Activity Log",
@@ -270,5 +273,26 @@
         "errorFailed": "Failed to import list. Please try again.",
         "importing": "Importing...",
         "import": "Import"
+    },
+    "stats": {
+        "title": "Statistics",
+        "subtitle": "Insights into your productivity and habits",
+        "overview": "Overview",
+        "topLists": "Most Used Lists",
+        "categoryDist": "Category Distribution",
+        "activityTrend": "Activity Trend (30d)",
+        "notesPriority": "Note Priorities",
+        "completionRate": "Completion Rate",
+        "metrics": {
+            "totalLists": "Lists",
+            "completedItems": "Done Items",
+            "activeNotes": "Notes",
+            "totalSessions": "Sessions"
+        },
+        "charts": {
+            "usageCount": "Uses",
+            "listCount": "Lists",
+            "sessionCount": "Sessions"
+        }
     }
 }

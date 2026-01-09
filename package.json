@@ -1,7 +1,7 @@
 {
   "name": "anti",
   "private": true,
-  "version": "7.6.3",
+  "version": "7.6.4",
   "type": "module",
   "scripts": {
     "dev": "node scripts/generate-commits.js && vite",
@@ -29,6 +29,7 @@
     "react-i18next": "^16.5.1",
     "react-router-dom": "^7.11.0",
     "react-swipeable-list": "^1.10.0",
+    "recharts": "^3.6.0",
     "suncalc": "^1.9.0",
     "tailwind-merge": "^3.4.0",
     "uuid": "^13.0.0",
