@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
  * Supports adding items, toggling states (normal/three-stage), 
  * sorting, and reordering items via drag and drop.
  */
-export const ListDetail: React.FC = () => {
+export const ListDetail: React.FC = React.memo(() => {
     const { t } = useTranslation();
     const { listId } = useParams<{ listId: string }>();
     const { lists, updateListItems, deleteItem, updateListName, updateListSettings, updateListAccess, archiveList } = useApp();
@@ -641,4 +641,4 @@ export const ListDetail: React.FC = () => {
             </Modal>
         </div >
     );
-};
+});

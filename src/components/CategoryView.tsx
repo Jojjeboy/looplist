@@ -18,7 +18,7 @@ import { ImportListModal } from './ImportListModal';
  * Provides entry points for managing categories, importing lists, 
  * and using list combinations (templates).
  */
-export const CategoryView: React.FC = () => {
+export const CategoryView: React.FC = React.memo(() => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const { categories, lists, addCategory, deleteCategory, updateCategoryName, addList, deleteList, copyList, moveList, updateListItems, reorderLists, addSession, combinations, addCombination, updateCombination, deleteCombination, reorderCategories } = useApp();
@@ -387,6 +387,6 @@ export const CategoryView: React.FC = () => {
             />
         </div>
     );
-};
+});
 
 

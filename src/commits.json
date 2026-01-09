@@ -1,5 +1,29 @@
 [
   {
+    "hash": "87085f0f5c1c1d5ac2c42526e8dcdfc38b99c74c",
+    "author": "Jojjeboy",
+    "date": "2026-01-08 11:37:37 +0100",
+    "message": "feat: reorder settings modal sections, bump version to 7.6.0",
+    "files": [
+      {
+        "status": "M",
+        "path": "package.json"
+      },
+      {
+        "status": "M",
+        "path": "public/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/SettingsModal.tsx"
+      }
+    ]
+  },
+  {
     "hash": "ddb4f27eb75f2f2d9f945fe72ecd3bfa96cac6ea",
     "author": "Jojjeboy",
     "date": "2026-01-08 11:28:50 +0100",
