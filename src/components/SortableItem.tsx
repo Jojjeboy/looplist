@@ -121,6 +121,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                             onBlur={handleBlur}
                             onKeyDown={handleKeyDown}
                             disabled={disabled}
+                            aria-label="Edit item text"
                             className={`flex-1 min-w-0 bg-transparent outline-none p-1 ${(() => {
                                 if (item.completed) return 'line-through text-gray-400';
                                 if (threeStageMode && item.state === 'ongoing') return 'text-gray-800 dark:text-gray-100';
@@ -132,7 +133,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                         />
 
                         {!disabled && (
-                            <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none">
+                            <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 touch-none" aria-label="Drag to reorder item">
                                 <GripVertical size={24} strokeWidth={2.5} />
                             </div>
                         )}

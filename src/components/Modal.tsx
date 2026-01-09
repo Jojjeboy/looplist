@@ -29,14 +29,27 @@ export const Modal: React.FC<ModalProps> = ({
     const finalConfirmText = confirmText || t('common.confirm');
     const finalCancelText = cancelText || t('common.cancel');
 
+    // Handle keyboard navigation
+    React.useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
+        if (isOpen) {
+            document.addEventListener('keydown', handleKeyDown);
+            return () => document.removeEventListener('keydown', handleKeyDown);
+        }
+    }, [isOpen, onClose]);
+
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full overflow-hidden transform transition-all">
+            <div role="dialog" aria-labelledby="modal-title" aria-describedby="modal-message" className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full overflow-hidden transform transition-all">
                 <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                        <h3 id="modal-title" className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                             {title}
                         </h3>
                         <button
@@ -47,7 +60,7 @@ export const Modal: React.FC<ModalProps> = ({
                         </button>
                     </div>
                     {message && (
-                        <p className="text-gray-600 dark:text-gray-300 mb-6">
+                        <p id="modal-message" className="text-gray-600 dark:text-gray-300 mb-6">
                             {message}
                         </p>
                     )}

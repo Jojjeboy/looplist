@@ -1,5 +1,29 @@
 [
   {
+    "hash": "5401582ea652a27c37219f296ffd7e166aca987f",
+    "author": "Jojjeboy",
+    "date": "2026-01-09 08:40:39 +0100",
+    "message": "Optimize performance: Add React.memo to CategoryView and ListDetail components",
+    "files": [
+      {
+        "status": "M",
+        "path": "public/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/commits.json"
+      },
+      {
+        "status": "M",
+        "path": "src/components/CategoryView.tsx"
+      },
+      {
+        "status": "M",
+        "path": "src/components/ListDetail.tsx"
+      }
+    ]
+  },
+  {
     "hash": "87085f0f5c1c1d5ac2c42526e8dcdfc38b99c74c",
     "author": "Jojjeboy",
     "date": "2026-01-08 11:37:37 +0100",

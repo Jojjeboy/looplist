@@ -17,6 +17,9 @@ interface SortableListCardProps {
     currentCategoryId: string;
     onMoveToCategory: (listId: string, categoryId: string) => Promise<void>;
     showHandle: boolean;
+    isSelectionMode?: boolean;
+    isSelected?: boolean;
+    onToggleSelect?: (listId: string) => void;
 }
 
 export const SortableListCard: React.FC<SortableListCardProps> = ({
@@ -30,6 +33,9 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
     currentCategoryId,
     onMoveToCategory,
     showHandle,
+    isSelectionMode = false,
+    isSelected = false,
+    onToggleSelect,
 }) => {
     const { t } = useTranslation();
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -57,6 +63,14 @@ export const SortableListCard: React.FC<SortableListCardProps> = ({
         >
             <div className="flex items-center justify-between p-4 gap-2 min-w-0">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
+                    {isSelectionMode && (
+                        <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => onToggleSelect?.(list.id)}
+                            className="flex-shrink-0"
+                        />
+                    )}
 
                     <Link
                         to={`/list/${list.id}`}
