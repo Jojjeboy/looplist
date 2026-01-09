@@ -1,7 +1,7 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { vi, describe, it, expect, beforeEach, type Mock } from 'vitest';
 import { useFirestoreSync } from './useFirestoreSync';
-import { collection, doc, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
+import { collection, doc, setDoc, deleteDoc, onSnapshot, QuerySnapshot, DocumentData } from 'firebase/firestore';
 
 // Mock the db import
 vi.mock('../firebase', () => ({
@@ -37,9 +37,9 @@ describe('useFirestoreSync', () => {
 
     it('should call onSnapshot when userId is provided', () => {
         const mockUnsubscribe = vi.fn();
-        (onSnapshot as any).mockImplementation((_, onNext) => {
+        (onSnapshot as Mock).mockImplementation((_, onNext: (snapshot: Partial<QuerySnapshot<DocumentData>>) => void) => {
             onNext({
-                forEach: (callback: (doc: any) => void) => {
+                forEach: (_callback: (doc: unknown) => void) => {
                     // Simulate empty collection
                 }
             });
@@ -62,9 +62,9 @@ describe('useFirestoreSync', () => {
             { id: '2', name: 'Test Item 2' }
         ];
 
-        (onSnapshot as any).mockImplementation((_, onNext) => {
+        (onSnapshot as Mock).mockImplementation((_, onNext: (snapshot: Partial<QuerySnapshot<DocumentData>>) => void) => {
             onNext({
-                forEach: (callback: (doc: any) => void) => {
+                forEach: (callback: (doc: { data: () => unknown }) => void) => {
                     mockData.forEach(item => {
                         callback({ data: () => item });
                     });
@@ -88,7 +88,7 @@ describe('useFirestoreSync', () => {
     it('should handle snapshot errors', async () => {
         const mockError = new Error('Firestore error');
 
-        (onSnapshot as any).mockImplementation((_, __, onError) => {
+        (onSnapshot as Mock).mockImplementation((_, __: unknown, onError: (error: Error) => void) => {
             onError(mockError);
             return vi.fn();
         });
@@ -106,7 +106,7 @@ describe('useFirestoreSync', () => {
     });
 
     it('should add item successfully', async () => {
-        (setDoc as any).mockResolvedValue(undefined);
+        (setDoc as Mock).mockResolvedValue(undefined);
 
         const { result } = renderHook(() =>
             useFirestoreSync(mockCollectionPath, mockUserId)
@@ -126,7 +126,7 @@ describe('useFirestoreSync', () => {
     });
 
     it('should update item successfully', async () => {
-        (setDoc as any).mockResolvedValue(undefined);
+        (setDoc as Mock).mockResolvedValue(undefined);
 
         const { result } = renderHook(() =>
             useFirestoreSync(mockCollectionPath, mockUserId)
@@ -146,7 +146,7 @@ describe('useFirestoreSync', () => {
     });
 
     it('should delete item successfully', async () => {
-        (deleteDoc as any).mockResolvedValue(undefined);
+        (deleteDoc as Mock).mockResolvedValue(undefined);
 
         const { result } = renderHook(() =>
             useFirestoreSync(mockCollectionPath, mockUserId)
@@ -174,7 +174,7 @@ describe('useFirestoreSync', () => {
 
     it('should unsubscribe on unmount', () => {
         const mockUnsubscribe = vi.fn();
-        (onSnapshot as any).mockReturnValue(mockUnsubscribe);
+        (onSnapshot as Mock).mockReturnValue(mockUnsubscribe);
 
         const { unmount } = renderHook(() =>
             useFirestoreSync(mockCollectionPath, mockUserId)

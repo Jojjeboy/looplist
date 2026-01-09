@@ -642,3 +642,5 @@ export const ListDetail: React.FC = React.memo(() => {
         </div >
     );
 });
+
+ListDetail.displayName = 'ListDetail';

@@ -401,4 +401,6 @@ export const CategoryView: React.FC = React.memo(() => {
     );
 });
 
+CategoryView.displayName = 'CategoryView';
+
 
