@@ -3,11 +3,11 @@ import { useApp } from '../context/AppContext';
 import { useTranslation } from 'react-i18next';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    PieChart, Pie, Cell, AreaChart, Area
+    PieChart, Pie, Cell, AreaChart, Area, Legend, LabelList
 } from 'recharts';
 import {
-    TrendingUp, List, CheckCircle2, StickyNote, PlayCircle,
-    PieChart as PieIcon, BarChart3
+    TrendingUp, List, CheckCircle2, PlayCircle,
+    PieChart as PieIcon, BarChart3, ListTodo
 } from 'lucide-react';
 
 export const StatisticsView: React.FC = () => {
@@ -30,7 +30,7 @@ export const StatisticsView: React.FC = () => {
         return [
             { id: 'lists', label: t('stats.metrics.totalLists'), value: lists.length, icon: List, color: 'text-blue-600', bg: 'bg-blue-100/50' },
             { id: 'items', label: t('stats.metrics.completedItems'), value: totalCompletedItems, icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-100/50' },
-            { id: 'notes', label: t('stats.metrics.activeNotes'), value: todos.length, icon: StickyNote, color: 'text-purple-600', bg: 'bg-purple-100/50' },
+            { id: 'todos', label: t('stats.metrics.totalTodos'), value: todos.length, icon: ListTodo, color: 'text-purple-600', bg: 'bg-purple-100/50' },
             { id: 'sessions', label: t('stats.metrics.totalSessions'), value: sessions.length, icon: PlayCircle, color: 'text-amber-600', bg: 'bg-amber-100/50' },
         ];
     }, [lists, todos, sessions, t]);
@@ -82,10 +82,7 @@ export const StatisticsView: React.FC = () => {
         return Object.entries(listUsage)
             .map(([id, count]) => {
                 const list = lists.find(l => l.id === id);
-                let name = list ? list.name : 'Deleted List';
-                if (name.length > 15) {
-                    name = name.substring(0, 15) + '...';
-                }
+                const name = list ? list.name : 'Deleted List';
                 return {
                     name,
                     count
@@ -156,17 +153,25 @@ export const StatisticsView: React.FC = () => {
                         <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-wider text-sm">{t('stats.topLists')}</h3>
                     </div>
                     {topLists.length > 0 ? (
-                        <div className="h-[250px] w-full">
+                        <div className="h-[300px] w-full mt-4">
                             <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={topLists} layout="vertical">
+                                <BarChart data={topLists} layout="vertical" margin={{ left: 0, right: 30, top: 20, bottom: 0 }}>
                                     <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#F3F4F6" />
                                     <XAxis type="number" hide />
-                                    <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#4B5563', fontWeight: 500 }} width={100} />
+                                    <YAxis dataKey="name" type="category" hide />
                                     <Tooltip
                                         cursor={{ fill: '#F9FAFB' }}
                                         contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                     />
-                                    <Bar dataKey="count" fill="#8B5CF6" radius={[0, 4, 4, 0]} />
+                                    <Bar dataKey="count" fill="#8B5CF6" radius={[0, 4, 4, 0]} barSize={24}>
+                                        <LabelList
+                                            dataKey="name"
+                                            position="top"
+                                            offset={8}
+                                            style={{ fontSize: '11px', fontWeight: 600, fill: 'currentColor' }}
+                                            className="text-gray-700 dark:text-gray-300"
+                                        />
+                                    </Bar>
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
@@ -185,7 +190,7 @@ export const StatisticsView: React.FC = () => {
                             <PieIcon className="text-green-500" size={20} />
                             <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-wider text-sm">{t('stats.categoryDist')}</h3>
                         </div>
-                        <div className="h-[200px] w-full">
+                        <div className="h-[280px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
                                     <Pie
@@ -194,6 +199,7 @@ export const StatisticsView: React.FC = () => {
                                         outerRadius={80}
                                         paddingAngle={5}
                                         dataKey="value"
+                                        label={({ name, value }) => `${name}: ${value}`}
                                     >
                                         {categoryData.map((entry) => (
                                             <Cell key={`cell-${entry.name}`} fill={COLORS[categoryData.indexOf(entry) % COLORS.length]} />
@@ -202,6 +208,7 @@ export const StatisticsView: React.FC = () => {
                                     <Tooltip
                                         contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                     />
+                                    <Legend verticalAlign="bottom" height={36} iconType="circle" />
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
@@ -210,10 +217,10 @@ export const StatisticsView: React.FC = () => {
                     {/* Priorities Distribution */}
                     <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
                         <div className="flex items-center gap-2 mb-6">
-                            <StickyNote className="text-orange-500" size={20} />
-                            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-wider text-sm">{t('stats.notesPriority')}</h3>
+                            <ListTodo className="text-orange-500" size={20} />
+                            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-wider text-sm">{t('stats.todosPriority')}</h3>
                         </div>
-                        <div className="h-[200px] w-full">
+                        <div className="h-[280px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
                                     <Pie
@@ -222,6 +229,7 @@ export const StatisticsView: React.FC = () => {
                                         outerRadius={80}
                                         paddingAngle={5}
                                         dataKey="value"
+                                        label={({ name, value }) => `${name}: ${value}`}
                                     >
                                         {priorityData.map((entry) => (
                                             <Cell key={`cell-priority-${entry.name}`} fill={entry.fill} />
@@ -230,6 +238,7 @@ export const StatisticsView: React.FC = () => {
                                     <Tooltip
                                         contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                     />
+                                    <Legend verticalAlign="bottom" height={36} iconType="circle" />
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>

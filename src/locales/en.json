@@ -281,12 +281,12 @@
         "topLists": "Most Used Lists",
         "categoryDist": "Category Distribution",
         "activityTrend": "Activity Trend (30d)",
-        "notesPriority": "Note Priorities",
+        "todosPriority": "To-do Priorities",
         "completionRate": "Completion Rate",
         "metrics": {
             "totalLists": "Lists",
             "completedItems": "Done Items",
-            "activeNotes": "Notes",
+            "totalTodos": "To-dos",
             "totalSessions": "Sessions"
         },
         "charts": {

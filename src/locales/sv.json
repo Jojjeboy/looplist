@@ -280,12 +280,12 @@
         "topLists": "Mest använda listor",
         "categoryDist": "Kategorifördelning",
         "activityTrend": "Aktivitetslogg (30d)",
-        "notesPriority": "Prioriteringar",
+        "todosPriority": "Prioriteringar",
         "completionRate": "Genomförandegrad",
         "metrics": {
             "totalLists": "Listor",
             "completedItems": "Klara objekt",
-            "activeNotes": "Anteckningar",
+            "totalTodos": "Att göra",
             "totalSessions": "Sessioner"
         },
         "charts": {
