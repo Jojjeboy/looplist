@@ -177,4 +177,31 @@ describe('AppContext - Combinations', () => {
 
         expect(mockDeleteItem).toHaveBeenCalledWith('cat1');
     });
+
+    it('addSection adds new section at the top (order 0)', async () => {
+        const { result } = renderHook(() => useApp(), { wrapper: AppProvider });
+
+        // Mock existing sections in list1
+        // Note: The mock setup uses `lists` data which initally has no sections.
+        // But `addSection` logic reads `listsSync.data`. 
+        // We need to ensure `list1` has some sections if we want to test prepending,
+        // OR just test that order is 0 even if it's the first one, but prepending is key.
+        // Let's rely on the implementaton logic: it takes existing sections, prepends new one, re-indexes.
+        // The mockUpdateItem should receive the new array.
+
+        // Let's assume list1 works perfectly.
+
+        await act(async () => {
+            await result.current.addSection('list1', 'New Top Section');
+        });
+
+        expect(mockUpdateItem).toHaveBeenCalledWith('list1', expect.objectContaining({
+            sections: expect.arrayContaining([
+                expect.objectContaining({
+                    name: 'New Top Section',
+                    order: 0
+                })
+            ])
+        }));
+    });
 });

@@ -401,9 +401,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             const newSection: Section = {
                 id: uuidv4(),
                 name,
-                order: sections.length
+                order: 0 // Temporarily 0
             };
-            await listsSync.updateItem(listId, { sections: [...sections, newSection] });
+
+            // Prepend and re-index
+            const updatedSections = [newSection, ...sections].map((section, index) => ({
+                ...section,
+                order: index
+            }));
+
+            await listsSync.updateItem(listId, { sections: updatedSections });
         }
     };
 
