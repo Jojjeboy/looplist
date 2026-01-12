@@ -42,13 +42,25 @@ export const Modal: React.FC<ModalProps> = ({
         }
     }, [isOpen, onClose]);
 
+    // Handle body scroll lock
+    React.useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+            // Also ensure we clean up if the component unmounts while open
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div role="dialog" aria-labelledby="modal-title" aria-describedby="modal-message" className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full overflow-hidden transform transition-all">
-                <div className="p-6">
-                    <div className="flex items-center justify-between mb-4">
+            <div role="dialog" aria-labelledby="modal-title" aria-describedby="modal-message" className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
+                <div className="p-6 overflow-y-auto custom-scrollbar">
+                    <div className="flex items-center justify-between mb-4 flex-shrink-0">
                         <h3 id="modal-title" className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                             {title}
                         </h3>
@@ -64,8 +76,10 @@ export const Modal: React.FC<ModalProps> = ({
                             {message}
                         </p>
                     )}
-                    {children}
-                    <div className="flex justify-end gap-3 mt-6">
+                    <div className="flex-1">
+                        {children}
+                    </div>
+                    <div className="flex justify-end gap-3 mt-6 pt-2 flex-shrink-0">
                         <button
                             onClick={onClose}
                             className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
