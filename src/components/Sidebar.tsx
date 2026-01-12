@@ -7,7 +7,9 @@ import {
     LayoutGrid,
     SquareCheck,
     Settings,
-    Moon
+    Moon,
+    Maximize,
+    Minimize
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { SettingsModal } from './SettingsModal';
@@ -20,6 +22,7 @@ export const Sidebar: React.FC = () => {
     const { t } = useTranslation();
     const { theme, toggleTheme, searchQuery, setSearchQuery } = useApp();
     const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
+    const [isFullscreen, setIsFullscreen] = React.useState(!!document.fullscreenElement);
     const latestCommit = commits[0];
 
     const navItems = [
@@ -90,6 +93,23 @@ export const Sidebar: React.FC = () => {
                         title={t('app.toggleTheme')}
                     >
                         {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+                    </button>
+                    <button
+                        onClick={() => {
+                            if (!document.fullscreenElement) {
+                                document.documentElement.requestFullscreen();
+                                setIsFullscreen(true);
+                            } else {
+                                if (document.exitFullscreen) {
+                                    document.exitFullscreen();
+                                    setIsFullscreen(false);
+                                }
+                            }
+                        }}
+                        className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-400"
+                        title={isFullscreen ? t('app.exitFullscreen', 'Lämna helskärm') : t('app.enterFullscreen', 'Helskärm')}
+                    >
+                        {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
                     </button>
                 </div>
 

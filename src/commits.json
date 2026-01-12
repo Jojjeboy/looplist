@@ -1,5 +1,40 @@
 [
   {
+    "hash": "3d1e71afd63e67497870df5441e94a82ac9f1055",
+    "date": "2026-01-12 09:35:04 +0100",
+    "message": "Statistics"
+  },
+  {
+    "hash": "368da7f9924bb0a7b2931d46c369f9722821cd30",
+    "date": "2026-01-09 11:56:32 +0100",
+    "message": "feat: add statistics page with usage metrics and charts"
+  },
+  {
+    "hash": "f2485454fbf461449b6d319ae419b95368d9141f",
+    "date": "2026-01-09 11:43:29 +0100",
+    "message": "feat: add header and github history link to activity log"
+  },
+  {
+    "hash": "febf0e4730359fa398ec89cf2154613591996b90",
+    "date": "2026-01-09 11:22:07 +0100",
+    "message": "Removed temp files"
+  },
+  {
+    "hash": "d14b07b25fea190a800ef7e61138f710c26f1517",
+    "date": "2026-01-09 11:20:07 +0100",
+    "message": "chore: remove activity log pagination and category bulk edit feature"
+  },
+  {
+    "hash": "61b09de729130218bd2fe0f76d58b39d0a719ada",
+    "date": "2026-01-09 11:07:02 +0100",
+    "message": "fix: revert sonar-scan-action to v6 and disable incompatible test report path"
+  },
+  {
+    "hash": "550454fbc5120595ef7cca17781456750123b192",
+    "date": "2026-01-09 10:53:33 +0100",
+    "message": "fix: resolve SonarQube build issues and enhance UpdatePrompt with multi-commit history and GitHub link"
+  },
+  {
     "hash": "1db02a05776f1330b062d79fce10a05e945a144a",
     "date": "2026-01-09 10:08:29 +0100",
     "message": "Fix SonarQube CI/CD issue by using JUNIT XML format"
@@ -63,40 +98,5 @@
     "hash": "87085f0f5c1c1d5ac2c42526e8dcdfc38b99c74c",
     "date": "2026-01-08 11:37:37 +0100",
     "message": "feat: reorder settings modal sections, bump version to 7.6.0"
-  },
-  {
-    "hash": "ddb4f27eb75f2f2d9f945fe72ecd3bfa96cac6ea",
-    "date": "2026-01-08 11:28:50 +0100",
-    "message": "feat: restructure navigation, improve i18n and show latest commit in update prompt"
-  },
-  {
-    "hash": "ad3fe780fd255adc2c72b5056d0ba235b5ab8bea",
-    "date": "2026-01-08 10:11:02 +0100",
-    "message": "Google Calender Event"
-  },
-  {
-    "hash": "0a3914d933b600136f2be23c7991be43be2d7213",
-    "date": "2026-01-07 11:51:06 +0100",
-    "message": "Button UI fixes"
-  },
-  {
-    "hash": "9255b082545e32e8858b7cab68f68f568e1b025c",
-    "date": "2026-01-07 11:44:04 +0100",
-    "message": "UI fixes"
-  },
-  {
-    "hash": "0e97a980e5a71f8800f43a4621d47e48efcf503f",
-    "date": "2026-01-07 11:24:03 +0100",
-    "message": "Package.json updated libraries and todo instead of notes"
-  },
-  {
-    "hash": "48728656ed4e946b54c055189e9154acdc4c8368",
-    "date": "2026-01-06 21:06:51 +0100",
-    "message": "Truncate list title again"
-  },
-  {
-    "hash": "ece9dd3f950343ae15bdbd3aceb947a1a8fdd22c",
-    "date": "2026-01-06 20:54:55 +0100",
-    "message": "Truncate list title"
   }
 ]
