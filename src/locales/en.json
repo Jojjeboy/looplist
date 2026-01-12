@@ -92,6 +92,16 @@
             "unresolved": "Unresolved",
             "ongoing": "Ongoing",
             "completed": "Completed"
+        },
+        "sections": {
+            "title": "Sections",
+            "add": "Add Section",
+            "addPlaceholder": "New section...",
+            "empty": "No sections yet",
+            "unsectioned": "Unsectioned",
+            "deleteTitle": "Delete Section",
+            "deleteMessage": "Are you sure? Items in this section will be moved to 'Unsectioned'.",
+            "deleteConfirm": "Delete"
         }
     },
     "todos": {

@@ -5,7 +5,7 @@ import type { Item, ListSettings, List } from '../types';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from './SortableItem';
-import { Plus, ChevronLeft, Settings, RotateCcw, ChevronDown } from 'lucide-react';
+import { Plus, ChevronLeft, Settings, RotateCcw, ChevronDown, Trash2, Edit2 } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import { Modal } from './Modal';
 
@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 export const ListDetail: React.FC = React.memo(() => {
     const { t } = useTranslation();
     const { listId } = useParams<{ listId: string }>();
-    const { lists, updateListItems, deleteItem, updateListName, updateListSettings, updateListAccess, archiveList } = useApp();
+    const { lists, updateListItems, deleteItem, updateListName, updateListSettings, updateListAccess, archiveList, addSection, updateSection, deleteSection } = useApp();
     const [newItemText, setNewItemText] = useState('');
     const [uncheckModalOpen, setUncheckModalOpen] = useState(false);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -27,6 +27,10 @@ export const ListDetail: React.FC = React.memo(() => {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [calendarAccordionOpen, setCalendarAccordionOpen] = useState(false);
     const [calendarEventTitle, setCalendarEventTitle] = useState('');
+    const [newSectionName, setNewSectionName] = useState('');
+    const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
+    const [editedSectionName, setEditedSectionName] = useState('');
+    const [deletingSectionId, setDeleteSectionId] = useState<string | null>(null);
 
     const list: List | undefined = lists.find((l) => l.id === listId);
 
@@ -169,12 +173,31 @@ export const ListDetail: React.FC = React.memo(() => {
 
     /**
      * Handles item reordering via drag and drop.
+     * Supports moving items within a section and between sections.
      */
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
-        if (active.id !== over?.id) {
+        if (!over || active.id === over.id) return;
+
+        const activeItem = list.items.find((item) => item.id === active.id);
+        const overItem = list.items.find((item) => item.id === over.id);
+
+        if (!activeItem) return;
+
+        // Check if we're moving to a different section
+        const activeSectionId = activeItem.sectionId;
+        const overSectionId = overItem?.sectionId;
+
+        // If moving between sections, update the sectionId
+        if (activeSectionId !== overSectionId) {
+            const updatedItems = list.items.map(item =>
+                item.id === active.id ? { ...item, sectionId: overSectionId } : item
+            );
+            await updateListItems(list.id, updatedItems);
+        } else {
+            // Reordering within the same section
             const oldIndex = list.items.findIndex((item) => item.id === active.id);
-            const newIndex = list.items.findIndex((item) => item.id === over?.id);
+            const newIndex = list.items.findIndex((item) => item.id === over.id);
             await updateListItems(list.id, arrayMove(list.items, oldIndex, newIndex));
         }
     };
@@ -253,6 +276,46 @@ export const ListDetail: React.FC = React.memo(() => {
         const currentSettings = list.settings || { threeStageMode: false, defaultSort: 'manual' };
         const updated: ListSettings = { ...currentSettings, ...newSettings } as ListSettings;
         await updateListSettings(list.id, updated);
+    };
+
+    // Section management handlers
+    const handleAddSection = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (newSectionName.trim() && list) {
+            await addSection(list.id, newSectionName.trim());
+            setNewSectionName('');
+        }
+    };
+
+    const handleUpdateSection = async (sectionId: string) => {
+        if (editedSectionName.trim() && list) {
+            await updateSection(list.id, sectionId, editedSectionName.trim());
+            setEditingSectionId(null);
+            setEditedSectionName('');
+        }
+    };
+
+    const handleDeleteSection = async (sectionId: string) => {
+        if (list) {
+            await deleteSection(list.id, sectionId);
+            setDeleteSectionId(null);
+        }
+    };
+
+    // Helper function to group items by section
+    const groupItemsBySection = (items: Item[]): Map<string | undefined, Item[]> => {
+        const grouped = new Map<string | undefined, Item[]>();
+
+        // Add unsectioned items
+        grouped.set(undefined, items.filter(item => !item.sectionId));
+
+        // Add items for each section
+        const sections = list?.sections || [];
+        sections.forEach(section => {
+            grouped.set(section.id, items.filter(item => item.sectionId === section.id));
+        });
+
+        return grouped;
     };
 
     /**
@@ -436,39 +499,152 @@ export const ListDetail: React.FC = React.memo(() => {
                 sortBy === 'manual' ? (
                     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                         <SortableContext items={sortedItems.map(i => i.id)} strategy={verticalListSortingStrategy}>
-                            <div className="space-y-2">
-                                {sortedItems.map((item) => (
-                                    <SortableItem
-                                        key={item.id}
-                                        item={item}
-                                        onToggle={list?.archived ? undefined : handleToggle}
-                                        onDelete={list?.archived ? undefined : handleDelete}
-                                        onEdit={list?.archived ? undefined : handleEdit}
-                                        threeStageMode={threeStageMode}
-                                    />
-                                ))}
-                                {sortedItems.length === 0 && (
-                                    <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
-                                )}
+                            <div className="space-y-6">
+                                {(() => {
+                                    const groupedItems = groupItemsBySection(sortedItems);
+                                    const sections = list?.sections || [];
+                                    const hasAnySections = sections.length > 0;
+
+                                    return (
+                                        <>
+                                            {/* Unsectioned items */}
+                                            {groupedItems.get(undefined) && groupedItems.get(undefined)!.length > 0 && (
+                                                <div>
+                                                    {hasAnySections && (
+                                                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                                                            {t('lists.sections.unsectioned')}
+                                                        </h3>
+                                                    )}
+                                                    <div className="space-y-2">
+                                                        {groupedItems.get(undefined)!.map((item) => (
+                                                            <SortableItem
+                                                                key={item.id}
+                                                                item={item}
+                                                                onToggle={list?.archived ? undefined : handleToggle}
+                                                                onDelete={list?.archived ? undefined : handleDelete}
+                                                                onEdit={list?.archived ? undefined : handleEdit}
+                                                                threeStageMode={threeStageMode}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Sectioned items */}
+                                            {sections.map((section) => {
+                                                const sectionItems = groupedItems.get(section.id) || [];
+                                                return (
+                                                    <div key={section.id}>
+                                                        <div className="flex items-center gap-2 mb-2">
+                                                            <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+                                                            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 px-2">
+                                                                {section.name}
+                                                            </h3>
+                                                            <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                            {sectionItems.map((item) => (
+                                                                <SortableItem
+                                                                    key={item.id}
+                                                                    item={item}
+                                                                    onToggle={list?.archived ? undefined : handleToggle}
+                                                                    onDelete={list?.archived ? undefined : handleDelete}
+                                                                    onEdit={list?.archived ? undefined : handleEdit}
+                                                                    threeStageMode={threeStageMode}
+                                                                />
+                                                            ))}
+                                                            {sectionItems.length === 0 && (
+                                                                <p className="text-center text-gray-400 dark:text-gray-600 text-sm py-4 italic">
+                                                                    {t('lists.emptyList')}
+                                                                </p>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+
+                                            {sortedItems.length === 0 && (
+                                                <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
+                                            )}
+                                        </>
+                                    );
+                                })()}
                             </div>
                         </SortableContext>
                     </DndContext>
                 ) : (
-                    <div className="space-y-2">
-                        {sortedItems.map((item) => (
-                            <SortableItem
-                                key={item.id}
-                                item={item}
-                                onToggle={list?.archived ? undefined : handleToggle}
-                                onDelete={list?.archived ? undefined : handleDelete}
-                                onEdit={list?.archived ? undefined : handleEdit}
-                                disabled={true} // We need to update SortableItem to accept a disabled prop or just hide the drag handle
-                                threeStageMode={threeStageMode}
-                            />
-                        ))}
-                        {sortedItems.length === 0 && (
-                            <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
-                        )}
+                    <div className="space-y-6">
+                        {(() => {
+                            const groupedItems = groupItemsBySection(sortedItems);
+                            const sections = list?.sections || [];
+                            const hasAnySections = sections.length > 0;
+
+                            return (
+                                <>
+                                    {/* Unsectioned items */}
+                                    {groupedItems.get(undefined) && groupedItems.get(undefined)!.length > 0 && (
+                                        <div>
+                                            {hasAnySections && (
+                                                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                                                    {t('lists.sections.unsectioned')}
+                                                </h3>
+                                            )}
+                                            <div className="space-y-2">
+                                                {groupedItems.get(undefined)!.map((item) => (
+                                                    <SortableItem
+                                                        key={item.id}
+                                                        item={item}
+                                                        onToggle={list?.archived ? undefined : handleToggle}
+                                                        onDelete={list?.archived ? undefined : handleDelete}
+                                                        onEdit={list?.archived ? undefined : handleEdit}
+                                                        disabled={true}
+                                                        threeStageMode={threeStageMode}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Sectioned items */}
+                                    {sections.map((section) => {
+                                        const sectionItems = groupedItems.get(section.id) || [];
+                                        return (
+                                            <div key={section.id}>
+                                                <div className="flex items-center gap-2 mb-2">
+                                                    <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+                                                    <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 px-2">
+                                                        {section.name}
+                                                    </h3>
+                                                    <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    {sectionItems.map((item) => (
+                                                        <SortableItem
+                                                            key={item.id}
+                                                            item={item}
+                                                            onToggle={list?.archived ? undefined : handleToggle}
+                                                            onDelete={list?.archived ? undefined : handleDelete}
+                                                            onEdit={list?.archived ? undefined : handleEdit}
+                                                            disabled={true}
+                                                            threeStageMode={threeStageMode}
+                                                        />
+                                                    ))}
+                                                    {sectionItems.length === 0 && (
+                                                        <p className="text-center text-gray-400 dark:text-gray-600 text-sm py-4 italic">
+                                                            {t('lists.emptyList')}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+
+                                    {sortedItems.length === 0 && (
+                                        <p className="text-center text-gray-500 mt-8">{t('lists.emptyList')}</p>
+                                    )}
+                                </>
+                            );
+                        })()}
                     </div>
                 )
             }
@@ -528,6 +704,107 @@ export const ListDetail: React.FC = React.memo(() => {
                             ))}
                         </div>
                     </div>
+
+                    {/* Section Management */}
+                    {!list?.archived && (
+                        <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-gray-800">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                {t('lists.sections.title')}
+                            </label>
+
+                            {/* Add Section Form */}
+                            <form onSubmit={handleAddSection} className="flex gap-2">
+                                <input
+                                    type="text"
+                                    value={newSectionName}
+                                    onChange={(e) => setNewSectionName(e.target.value)}
+                                    placeholder={t('lists.sections.addPlaceholder')}
+                                    className="flex-1 p-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                                />
+                                <button
+                                    type="submit"
+                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                                >
+                                    {t('lists.sections.add')}
+                                </button>
+                            </form>
+
+                            {/* Sections List */}
+                            <div className="space-y-2">
+                                {list?.sections && list.sections.length > 0 ? (
+                                    list.sections.map((section) => (
+                                        <div
+                                            key={section.id}
+                                            className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 dark:bg-gray-700/50"
+                                        >
+                                            {editingSectionId === section.id ? (
+                                                <>
+                                                    <input
+                                                        type="text"
+                                                        value={editedSectionName}
+                                                        onChange={(e) => setEditedSectionName(e.target.value)}
+                                                        className="flex-1 p-1 rounded border border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                                                        autoFocus
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === 'Enter') handleUpdateSection(section.id);
+                                                            if (e.key === 'Escape') {
+                                                                setEditingSectionId(null);
+                                                                setEditedSectionName('');
+                                                            }
+                                                        }}
+                                                    />
+                                                    <button
+                                                        onClick={() => handleUpdateSection(section.id)}
+                                                        className="p-1 text-green-600 hover:text-green-700"
+                                                        title="Save"
+                                                    >
+                                                        ✓
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            setEditingSectionId(null);
+                                                            setEditedSectionName('');
+                                                        }}
+                                                        className="p-1 text-gray-600 hover:text-gray-700"
+                                                        title="Cancel"
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <span className="flex-1 text-sm text-gray-900 dark:text-gray-100">
+                                                        {section.name}
+                                                    </span>
+                                                    <button
+                                                        onClick={() => {
+                                                            setEditingSectionId(section.id);
+                                                            setEditedSectionName(section.name);
+                                                        }}
+                                                        className="p-1 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                                                        title="Edit"
+                                                    >
+                                                        <Edit2 size={14} />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setDeleteSectionId(section.id)}
+                                                        className="p-1 text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+                                                        title="Delete"
+                                                    >
+                                                        <Trash2 size={14} />
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+                                        {t('lists.sections.empty')}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Archive Toggle */}
                     <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
@@ -639,6 +916,14 @@ export const ListDetail: React.FC = React.memo(() => {
                     </div>
                 </div>
             </Modal>
+            <Modal
+                isOpen={deletingSectionId !== null}
+                onClose={() => setDeleteSectionId(null)}
+                onConfirm={() => deletingSectionId && handleDeleteSection(deletingSectionId)}
+                title={t('lists.sections.deleteTitle')}
+                message={t('lists.sections.deleteMessage')}
+                confirmText={t('lists.sections.deleteConfirm')}
+            />
         </div >
     );
 });

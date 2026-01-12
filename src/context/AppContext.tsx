@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import SunCalc from 'suncalc';
-import { Category, List, Item, Todo, ExecutionSession, ListCombination, ListSettings } from '../types';
+import { Category, List, Item, Todo, ExecutionSession, ListCombination, ListSettings, Section } from '../types';
 
 type Priority = 'low' | 'medium' | 'high';
 import { useToast } from './ToastContext';
@@ -47,6 +47,9 @@ interface AppContextType {
     deleteCombination: (id: string) => Promise<void>;
     updateListAccess: (id: string) => Promise<void>;
     archiveList: (id: string, archived: boolean) => Promise<void>;
+    addSection: (listId: string, name: string) => Promise<void>;
+    updateSection: (listId: string, sectionId: string, name: string) => Promise<void>;
+    deleteSection: (listId: string, sectionId: string) => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -391,6 +394,47 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         await sessionsSync.deleteItem(id);
     };
 
+    const addSection = async (listId: string, name: string) => {
+        const list = listsSync.data.find((l: List) => l.id === listId);
+        if (list) {
+            const sections = list.sections || [];
+            const newSection: Section = {
+                id: uuidv4(),
+                name,
+                order: sections.length
+            };
+            await listsSync.updateItem(listId, { sections: [...sections, newSection] });
+        }
+    };
+
+    const updateSection = async (listId: string, sectionId: string, name: string) => {
+        const list = listsSync.data.find((l: List) => l.id === listId);
+        if (list && list.sections) {
+            const updatedSections = list.sections.map(section =>
+                section.id === sectionId ? { ...section, name } : section
+            );
+            await listsSync.updateItem(listId, { sections: updatedSections });
+        }
+    };
+
+    const deleteSection = async (listId: string, sectionId: string) => {
+        const list = listsSync.data.find((l: List) => l.id === listId);
+        if (list) {
+            // Remove section from sections array
+            const updatedSections = (list.sections || []).filter(s => s.id !== sectionId);
+
+            // Remove sectionId from all items in this section
+            const updatedItems = list.items.map(item =>
+                item.sectionId === sectionId ? { ...item, sectionId: undefined } : item
+            );
+
+            await listsSync.updateItem(listId, {
+                sections: updatedSections,
+                items: updatedItems
+            });
+        }
+    };
+
     return (
         <AppContext.Provider
             value={{
@@ -429,6 +473,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
                 deleteCombination,
                 updateListAccess,
                 archiveList,
+                addSection,
+                updateSection,
+                deleteSection,
             }}
         >
             <ErrorBoundary>

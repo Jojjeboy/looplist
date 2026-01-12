@@ -35,3 +35,25 @@ vi.mock('firebase/firestore', () => ({
     getDocs: vi.fn(),
 }));
 
+
+const localStorageMock = (function () {
+    let store: Record<string, string> = {};
+    return {
+        getItem: vi.fn(function (key: string) {
+            return store[key] ?? null;
+        }),
+        setItem: vi.fn(function (key: string, value: string) {
+            store[key] = value.toString();
+        }),
+        clear: vi.fn(function () {
+            store = {};
+        }),
+        removeItem: vi.fn(function (key: string) {
+            delete store[key];
+        })
+    };
+})();
+
+Object.defineProperty(window, 'localStorage', {
+    value: localStorageMock
+});

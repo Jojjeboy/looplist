@@ -1,5 +1,10 @@
 [
   {
+    "hash": "bf08f02f3898617397f373ef61baa7044914f7e6",
+    "date": "2026-01-12 13:02:30 +0100",
+    "message": "1. Settings Modal Layout Fix The settings modal previously opened inside the sidebar because of the sidebar's CSS context."
+  },
+  {
     "hash": "3d1e71afd63e67497870df5441e94a82ac9f1055",
     "date": "2026-01-12 09:35:04 +0100",
     "message": "Statistics"
@@ -93,10 +98,5 @@
     "hash": "5401582ea652a27c37219f296ffd7e166aca987f",
     "date": "2026-01-09 08:40:39 +0100",
     "message": "Optimize performance: Add React.memo to CategoryView and ListDetail components"
-  },
-  {
-    "hash": "87085f0f5c1c1d5ac2c42526e8dcdfc38b99c74c",
-    "date": "2026-01-08 11:37:37 +0100",
-    "message": "feat: reorder settings modal sections, bump version to 7.6.0"
   }
 ]

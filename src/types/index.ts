@@ -3,6 +3,13 @@ export interface Item {
   text: string;
   completed: boolean;
   state?: "unresolved" | "ongoing" | "completed";
+  sectionId?: string;
+}
+
+export interface Section {
+  id: string;
+  name: string;
+  order: number;
 }
 
 export interface Todo {
@@ -25,6 +32,7 @@ export interface List {
   id: string;
   name: string;
   items: Item[];
+  sections?: Section[];
   categoryId: string;
   order?: number;
   settings?: ListSettings;

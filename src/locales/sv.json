@@ -91,6 +91,16 @@
             "unresolved": "Olöst",
             "ongoing": "Pågående",
             "completed": "Avklarad"
+        },
+        "sections": {
+            "title": "Sektioner",
+            "add": "Lägg till sektion",
+            "addPlaceholder": "Ny sektion...",
+            "empty": "Inga sektioner än",
+            "unsectioned": "Utan sektion",
+            "deleteTitle": "Ta bort sektion",
+            "deleteMessage": "Är du säker? Objekt i denna sektion kommer att flyttas till 'Utan sektion'.",
+            "deleteConfirm": "Ta bort"
         }
     },
     "todos": {
