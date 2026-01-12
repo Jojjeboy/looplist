@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import type { Item, ListSettings, List } from '../types';
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent, useDroppable } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from './SortableItem';
 import { Plus, ChevronLeft, Settings, RotateCcw, ChevronDown, Trash2, Edit2 } from 'lucide-react';
@@ -16,6 +16,11 @@ import { useTranslation } from 'react-i18next';
  * Supports adding items, toggling states (normal/three-stage), 
  * sorting, and reordering items via drag and drop.
  */
+const DroppableSection = ({ sectionId, children }: { sectionId: string, children: React.ReactNode }) => {
+    const { setNodeRef } = useDroppable({ id: sectionId });
+    return <div ref={setNodeRef}>{children}</div>;
+};
+
 export const ListDetail: React.FC = React.memo(() => {
     const { t } = useTranslation();
     const { listId } = useParams<{ listId: string }>();
@@ -179,22 +184,39 @@ export const ListDetail: React.FC = React.memo(() => {
         const { active, over } = event;
         if (!over || active.id === over.id) return;
 
-        const activeItem = list.items.find((item) => item.id === active.id);
-        const overItem = list.items.find((item) => item.id === over.id);
+        // Check if dropped ON a section container directly (empty section or section header)
+        const overSectionId = list.sections?.find(s => s.id === over.id)?.id;
 
+        const activeItem = list.items.find((item) => item.id === active.id);
         if (!activeItem) return;
 
-        // Check if we're moving to a different section
-        const activeSectionId = activeItem.sectionId;
-        const overSectionId = overItem?.sectionId;
+        // If dropped on a section directly
+        if (overSectionId) {
+            const currentSectionId = activeItem.sectionId;
+            if (currentSectionId !== overSectionId) {
+                // Move to new section (append to end)
+                const updatedItems = list.items.map(item =>
+                    item.id === active.id ? { ...item, sectionId: overSectionId } : item
+                );
+                await updateListItems(list.id, updatedItems);
+            }
+            return;
+        }
 
-        // If moving between sections, update the sectionId
-        if (activeSectionId !== overSectionId) {
+        // Dropped on another item
+        const overItem = list.items.find((item) => item.id === over.id);
+
+        // Check if we're moving to a different section via item drop
+        const activeItemSectionId = activeItem.sectionId;
+        const overItemSectionId = overItem?.sectionId;
+
+        // If moving between sections (dropped on item in different section)
+        if (overItemSectionId !== undefined && activeItemSectionId !== overItemSectionId) {
             const updatedItems = list.items.map(item =>
-                item.id === active.id ? { ...item, sectionId: overSectionId } : item
+                item.id === active.id ? { ...item, sectionId: overItemSectionId } : item
             );
             await updateListItems(list.id, updatedItems);
-        } else {
+        } else if (overItem) {
             // Reordering within the same section
             const oldIndex = list.items.findIndex((item) => item.id === active.id);
             const newIndex = list.items.findIndex((item) => item.id === over.id);
@@ -534,7 +556,7 @@ export const ListDetail: React.FC = React.memo(() => {
                                             {sections.map((section) => {
                                                 const sectionItems = groupedItems.get(section.id) || [];
                                                 return (
-                                                    <div key={section.id}>
+                                                    <DroppableSection sectionId={section.id} key={section.id}>
                                                         <div className="flex items-center gap-2 mb-2">
                                                             <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
                                                             <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 px-2">
@@ -542,7 +564,7 @@ export const ListDetail: React.FC = React.memo(() => {
                                                             </h3>
                                                             <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
                                                         </div>
-                                                        <div className="space-y-2">
+                                                        <div className="space-y-2 min-h-[2rem]"> {/* Add min-height for empty target */}
                                                             {sectionItems.map((item) => (
                                                                 <SortableItem
                                                                     key={item.id}
@@ -559,7 +581,7 @@ export const ListDetail: React.FC = React.memo(() => {
                                                                 </p>
                                                             )}
                                                         </div>
-                                                    </div>
+                                                    </DroppableSection>
                                                 );
                                             })}
 
