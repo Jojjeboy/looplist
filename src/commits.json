@@ -1,5 +1,25 @@
 [
   {
+    "hash": "531cce9158d8919a4abdc6c4d4c261cc5401422f",
+    "date": "2026-01-12 19:18:58 +0100",
+    "message": "Fix modal scrolling and bump version to 8.0.1"
+  },
+  {
+    "hash": "56d3115f512b83011c601756b9e0fd46f2c5be2d",
+    "date": "2026-01-12 19:11:18 +0100",
+    "message": "Bugfix section"
+  },
+  {
+    "hash": "10a1c37c7bd73be56776bd861335b8674b06e328",
+    "date": "2026-01-12 19:00:56 +0100",
+    "message": "Fixed tests and stuff"
+  },
+  {
+    "hash": "255796b093c0d5e26966b9599c76440c4c1c6f21",
+    "date": "2026-01-12 18:43:14 +0100",
+    "message": "Sections"
+  },
+  {
     "hash": "bf08f02f3898617397f373ef61baa7044914f7e6",
     "date": "2026-01-12 13:02:30 +0100",
     "message": "1. Settings Modal Layout Fix The settings modal previously opened inside the sidebar because of the sidebar's CSS context."
@@ -78,25 +98,5 @@
     "hash": "1d065c29515f37ac5758f8fbafa20d641d79c30d",
     "date": "2026-01-09 09:02:54 +0100",
     "message": "Fix build errors: Add missing state variables in CategorySection and type annotations in AppContext"
-  },
-  {
-    "hash": "c2b56d12ec33d1873bacc2c3b36217292c015bd4",
-    "date": "2026-01-09 08:48:52 +0100",
-    "message": "Expand testing coverage: Add integration tests for useFirestoreSync hook using Vitest"
-  },
-  {
-    "hash": "01164eee663fe9fd9d60890a04d64fb5866befba",
-    "date": "2026-01-09 08:48:30 +0100",
-    "message": "Improve error handling: Add ErrorBoundary components in App.tsx and AppContext.tsx"
-  },
-  {
-    "hash": "e2c50a65cd02e9fcdb54fcf6245c3945e79b3960",
-    "date": "2026-01-09 08:44:22 +0100",
-    "message": "Add bulk edit feature: Multi-select lists for delete and move operations in CategorySection"
-  },
-  {
-    "hash": "5401582ea652a27c37219f296ffd7e166aca987f",
-    "date": "2026-01-09 08:40:39 +0100",
-    "message": "Optimize performance: Add React.memo to CategoryView and ListDetail components"
   }
 ]

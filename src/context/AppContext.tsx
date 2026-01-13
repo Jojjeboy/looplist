@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import SunCalc from 'suncalc';
+
 import { Category, List, Item, Todo, ExecutionSession, ListCombination, ListSettings, Section } from '../types';
 
 type Priority = 'low' | 'medium' | 'high';
@@ -89,22 +89,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         }
 
         const manualTheme = localStorage.getItem('manual_theme');
-        if (!manualTheme && navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    const now = new Date();
-                    const times = SunCalc.getTimes(now, latitude, longitude);
+        if (!manualTheme) {
+            try {
+                // Use Europe/Stockholm time
+                const formatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'Europe/Stockholm',
+                    hour: 'numeric',
+                    hour12: false
+                });
 
-                    // Check if it's daytime (between sunrise and sunset)
-                    const isDay = now > times.sunrise && now < times.sunset;
+                const hour = parseInt(formatter.format(new Date()), 10);
 
-                    setTheme(isDay ? 'light' : 'dark');
-                },
-                (error) => {
-                    console.error("Error getting location for auto-theme:", error);
-                }
-            );
+                // Light mode between 08:00 and 18:00
+                const isDay = hour >= 8 && hour < 18;
+                setTheme(isDay ? 'light' : 'dark');
+            } catch (error) {
+                console.error("Error setting time-based theme:", error);
+                // Fallback to local time if timezone fails
+                const hour = new Date().getHours();
+                const isDay = hour >= 8 && hour < 18;
+                setTheme(isDay ? 'light' : 'dark');
+            }
         }
     }, []);
 

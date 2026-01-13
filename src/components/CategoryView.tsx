@@ -210,12 +210,13 @@ export const CategoryView: React.FC = React.memo(() => {
                     <div className="animate-in slide-in-from-left-2 fade-in duration-300">
                         {recentLists.length > 0 ? (
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                {recentLists.map(list => {
-                                    const activeCount = list.items.filter(i => !i.completed).length;
-                                    const truncatedName = list.name.length > 30 ? list.name.substring(0, 30) + '...' : list.name;
+                                {recentLists.map((list, index) => {
+                                    const activeCount = (list.items || []).filter(i => !i.completed).length;
+                                    const listName = list.name || '';
+                                    const truncatedName = listName.length > 30 ? listName.substring(0, 30) + '...' : listName;
                                     return (
                                         <button
-                                            key={list.id}
+                                            key={`${list.id}-${index}`}
                                             onClick={() => navigate(`/list/${list.id}`)}
                                             className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all cursor-pointer group w-full min-w-0 overflow-hidden text-left block"
                                         >
@@ -304,7 +305,8 @@ export const CategoryView: React.FC = React.memo(() => {
                         {archivedLists.length > 0 ? (
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 {archivedLists.map(list => {
-                                    const truncatedName = list.name.length > 30 ? list.name.substring(0, 30) + '...' : list.name;
+                                    const listName = list.name || '';
+                                    const truncatedName = listName.length > 30 ? listName.substring(0, 30) + '...' : listName;
                                     return (
                                         <button
                                             key={list.id}
@@ -318,7 +320,7 @@ export const CategoryView: React.FC = React.memo(() => {
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-2 text-xs text-gray-500">
-                                                {list.items.length} {t('lists.itemsCount')}
+                                                {list.items?.length || 0} {t('lists.itemsCount')}
                                             </div>
                                         </button>
                                     );
