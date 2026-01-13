@@ -1,5 +1,10 @@
 [
   {
+    "hash": "32ce581fd01666eb8a8f18eb4cdb3304c2ba3a65",
+    "date": "2026-01-13 21:02:34 +0100",
+    "message": "Sortable fix"
+  },
+  {
     "hash": "0bae7f3ac1b365b0ae45a24c65a713854b1ad6e8",
     "date": "2026-01-13 09:38:05 +0100",
     "message": "Bugfix"
@@ -93,10 +98,5 @@
     "hash": "b9f5a4658d6ef746f9b6b45880862ea71dd03972",
     "date": "2026-01-09 09:28:25 +0100",
     "message": "MC"
-  },
-  {
-    "hash": "14a9b0e9d605ed0156cfe3d77ce65b252f2cc25a",
-    "date": "2026-01-09 09:14:43 +0100",
-    "message": "Fix build errors: Add missing state variables for bulk edit feature in CategorySection"
   }
 ]

@@ -68,7 +68,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
     );
 
     const isReadOnly = !onToggle && !onEdit;
-    const isInteractionDisabled = isDragging || isReadOnly;
+    const isInteractionDisabled = isReadOnly;
 
     return (
         <div
@@ -86,7 +86,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                                 e.stopPropagation();
                                 if (onToggle) onToggle(item.id);
                             }}
-                            className={`flex-shrink-0 transition-colors ${isInteractionDisabled ? 'pointer-events-none' : ''}`}
+                            className={`flex-shrink-0 transition-colors ${isInteractionDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                             aria-label={item.completed ? "Mark as incomplete" : "Mark as complete"}
                             onMouseDown={(e) => e.stopPropagation()}
                             onTouchStart={(e) => e.stopPropagation()}
@@ -121,13 +121,13 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                             onChange={(e) => setLocalText(e.target.value)}
                             onBlur={handleBlur}
                             onKeyDown={handleKeyDown}
-                            disabled={disabled}
+                            disabled={isReadOnly}
                             aria-label="Edit item text"
                             className={`flex-1 min-w-0 bg-transparent outline-none p-1 ${(() => {
                                 if (item.completed) return 'line-through text-gray-400';
                                 if (threeStageMode && item.state === 'ongoing') return 'text-gray-800 dark:text-gray-100';
                                 return 'text-gray-700 dark:text-gray-200';
-                            })()} ${isInteractionDisabled ? 'pointer-events-none' : ''}`}
+                            })()} ${isReadOnly ? 'cursor-not-allowed' : ''}`}
                             // Stop propagation to prevent swipe start when interacting with input
                             onMouseDown={(e) => e.stopPropagation()}
                             onTouchStart={(e) => e.stopPropagation()}
