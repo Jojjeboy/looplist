@@ -67,7 +67,8 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
         </TrailingActions>
     );
 
-    const isInteractionDisabled = disabled || isDragging;
+    const isReadOnly = !onToggle && !onEdit;
+    const isInteractionDisabled = isDragging || isReadOnly;
 
     return (
         <div
@@ -138,9 +139,9 @@ export const SortableItem: React.FC<SortableItemProps> = ({ item, onToggle, onDe
                             </div>
                         )}
 
-                        {!disabled && (
+                        {onDelete && (
                             <button
-                                onClick={() => onDelete && onDelete(item.id)}
+                                onClick={() => onDelete(item.id)}
                                 className="p-2 text-gray-400 hover:text-red-500 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100"
                                 aria-label="Delete item"
                                 // Stop propagation to prevent swipe start when clicking button

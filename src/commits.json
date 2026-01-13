@@ -1,5 +1,10 @@
 [
   {
+    "hash": "0bae7f3ac1b365b0ae45a24c65a713854b1ad6e8",
+    "date": "2026-01-13 09:38:05 +0100",
+    "message": "Bugfix"
+  },
+  {
     "hash": "531cce9158d8919a4abdc6c4d4c261cc5401422f",
     "date": "2026-01-12 19:18:58 +0100",
     "message": "Fix modal scrolling and bump version to 8.0.1"
@@ -93,10 +98,5 @@
     "hash": "14a9b0e9d605ed0156cfe3d77ce65b252f2cc25a",
     "date": "2026-01-09 09:14:43 +0100",
     "message": "Fix build errors: Add missing state variables for bulk edit feature in CategorySection"
-  },
-  {
-    "hash": "1d065c29515f37ac5758f8fbafa20d641d79c30d",
-    "date": "2026-01-09 09:02:54 +0100",
-    "message": "Fix build errors: Add missing state variables in CategorySection and type annotations in AppContext"
   }
 ]
