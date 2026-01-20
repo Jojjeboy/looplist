@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Link, NavLink } from 'react-router-dom';
-import { Moon, Sun, Search, Settings, LayoutGrid, SquareCheck, Maximize, Minimize } from 'lucide-react';
+import { Moon, Sun, Search, Settings, LayoutGrid, SquareCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SearchResults } from './SearchResults';
 import { SettingsModal } from './SettingsModal';
@@ -12,19 +12,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     const { t } = useTranslation();
     const { theme, toggleTheme, searchQuery, setSearchQuery } = useApp();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const [isFullscreen, setIsFullscreen] = useState(!!document.fullscreenElement);
 
-    const toggleFullscreen = () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-            setIsFullscreen(true);
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-                setIsFullscreen(false);
-            }
-        }
-    };
 
     return (
         <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 overflow-x-hidden">
@@ -48,22 +36,13 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                                 </h1>
                             </Link>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <button
-                                onClick={toggleTheme}
-                                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
-                                aria-label={t('app.toggleTheme')}
-                            >
-                                {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-                            </button>
-                            <button
-                                onClick={toggleFullscreen}
-                                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
-                                aria-label={isFullscreen ? t('app.exitFullscreen', 'Lämna helskärm') : t('app.enterFullscreen', 'Helskärm')}
-                            >
-                                {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
-                            </button>
-                        </div>
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300"
+                            aria-label={t('app.toggleTheme')}
+                        >
+                            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+                        </button>
                     </div>
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />

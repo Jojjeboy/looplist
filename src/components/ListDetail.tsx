@@ -281,7 +281,7 @@ export const ListDetail: React.FC = React.memo(() => {
     };
 
     const confirmUncheckAll = async () => {
-        const newItems = list.items.map(item => ({ ...item, completed: false }));
+        const newItems = list.items.map(item => ({ ...item, completed: false, state: 'unresolved' as const }));
         await updateListItems(list.id, newItems);
         setUncheckModalOpen(false);
     };

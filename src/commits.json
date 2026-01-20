@@ -1,5 +1,20 @@
 [
   {
+    "hash": "0e99495e9874701bd6c9b780f0d186e106247cda",
+    "date": "2026-01-13 21:46:37 +0100",
+    "message": "Documentation"
+  },
+  {
+    "hash": "9e1c86217c1b8ac174ce6aff520c3bfaf175490e",
+    "date": "2026-01-13 21:29:02 +0100",
+    "message": "packa.json bump"
+  },
+  {
+    "hash": "c8123501b65d65293ea36cb5c700d5ebf258b8c5",
+    "date": "2026-01-13 21:25:01 +0100",
+    "message": "Fix again"
+  },
+  {
     "hash": "32ce581fd01666eb8a8f18eb4cdb3304c2ba3a65",
     "date": "2026-01-13 21:02:34 +0100",
     "message": "Sortable fix"
@@ -83,20 +98,5 @@
     "hash": "7050d5ff2f455dc0eb1142aa36dcb263b5d097a7",
     "date": "2026-01-09 09:51:22 +0100",
     "message": "Lint fixes"
-  },
-  {
-    "hash": "9547950a98b29b25a8365a366af0028b2e4dee12",
-    "date": "2026-01-09 09:36:19 +0100",
-    "message": "Fix PWA build error: Change registerType from 'prompt' to 'autoUpdate' to avoid workbox-window import issue"
-  },
-  {
-    "hash": "67c0c4bc746d7cb613c9cbcca2b3a55b58e62fdd",
-    "date": "2026-01-09 09:32:44 +0100",
-    "message": "Fix vulnabirities"
-  },
-  {
-    "hash": "b9f5a4658d6ef746f9b6b45880862ea71dd03972",
-    "date": "2026-01-09 09:28:25 +0100",
-    "message": "MC"
   }
 ]

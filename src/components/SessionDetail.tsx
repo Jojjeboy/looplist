@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { ChevronLeft, Check } from 'lucide-react';
+import { ChevronLeft, Check, Circle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from './Modal';
 
@@ -39,9 +39,37 @@ export const SessionDetail: React.FC = () => {
     const handleToggleItem = async (listId: string, itemId: string) => {
         const list = lists.find((l) => l.id === listId);
         if (list) {
-            const newItems = list.items.map((item) =>
-                item.id === itemId ? { ...item, completed: !item.completed } : item
-            );
+            const threeStageMode = list.settings?.threeStageMode ?? false;
+            const newItems = list.items.map((item) => {
+                if (item.id !== itemId) return item;
+
+                // Logic for state cycling
+                let newState: 'unresolved' | 'ongoing' | 'completed';
+                let newCompleted: boolean;
+
+                if (threeStageMode) {
+                    // Cycle: unresolved -> ongoing -> completed -> unresolved
+                    if (item.completed) {
+                        // Was completed, go to unresolved
+                        newState = 'unresolved';
+                        newCompleted = false;
+                    } else if (item.state === 'ongoing') {
+                        // Was ongoing, go to completed
+                        newState = 'completed';
+                        newCompleted = true;
+                    } else {
+                        // Was unresolved, go to ongoing
+                        newState = 'ongoing';
+                        newCompleted = false;
+                    }
+                } else {
+                    // Normal toggle
+                    newCompleted = !item.completed;
+                    newState = newCompleted ? 'completed' : 'unresolved';
+                }
+
+                return { ...item, completed: newCompleted, state: newState };
+            });
             await updateListItems(listId, newItems);
         }
     };
@@ -141,10 +169,13 @@ export const SessionDetail: React.FC = () => {
                                             className={`flex-shrink-0 w-5 h-5 rounded border-2 transition-all flex items-center justify-center ${
                                                 item.completed
                                                     ? 'bg-blue-600 border-blue-600'
+                                                    : item.state === 'ongoing'
+                                                    ? 'bg-orange-400 border-orange-400'
                                                     : 'border-gray-300 dark:border-gray-600 hover:border-blue-500'
                                             }`}
                                         >
                                             {item.completed && <Check size={14} className="text-white" />}
+                                            {!item.completed && item.state === 'ongoing' && <Circle size={10} className="text-white fill-white" />}
                                         </button>
                                         <span
                                             className={`flex-1 transition-all ${
