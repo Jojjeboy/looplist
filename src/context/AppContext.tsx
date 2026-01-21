@@ -139,6 +139,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     const updateListSettings = async (id: string, settings: ListSettings) => {
+        // If this list is being pinned, unpin all other lists first
+        if (settings.pinned) {
+            const pinnedLists = listsSync.data.filter((l: List) => l.id !== id && l.settings?.pinned);
+
+            if (pinnedLists.length > 0) {
+                const unpinPromises = pinnedLists.map((l: List) => {
+                    const newSettings = { ...l.settings, pinned: false } as ListSettings;
+                    return listsSync.updateItem(l.id, { settings: newSettings });
+                });
+                await Promise.all(unpinPromises);
+            }
+        }
         await listsSync.updateItem(id, { settings });
     };
 

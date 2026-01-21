@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useBlocker, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import type { Item, ListSettings, List } from '../types';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent, useDroppable } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from './SortableItem';
-import { Plus, ChevronLeft, Settings, RotateCcw, ChevronDown, Trash2, Edit2 } from 'lucide-react';
+import { Plus, ChevronLeft, Settings, RotateCcw, ChevronDown, Trash2, Edit2, Pin } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import { Modal } from './Modal';
 
@@ -36,8 +36,24 @@ export const ListDetail: React.FC = React.memo(() => {
     const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
     const [editedSectionName, setEditedSectionName] = useState('');
     const [deletingSectionId, setDeleteSectionId] = useState<string | null>(null);
+    const [unpinConfirmOpen, setUnpinConfirmOpen] = useState(false);
+    const navigate = useNavigate();
 
     const list: List | undefined = lists.find((l) => l.id === listId);
+
+    // Block navigation if the list is pinned
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) =>
+            !!list?.settings?.pinned &&
+            currentLocation.pathname !== nextLocation.pathname
+    );
+
+    useEffect(() => {
+        if (blocker.state === 'blocked') {
+            setUnpinConfirmOpen(true);
+        }
+    }, [blocker.state]);
+
 
     React.useEffect(() => {
         if (list) {
@@ -425,9 +441,20 @@ export const ListDetail: React.FC = React.memo(() => {
             {/* ... (header code) ... */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <Link to="/" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors flex-shrink-0" title={t('common.back', 'Back')}>
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            if (list?.settings?.pinned) {
+                                setUnpinConfirmOpen(true);
+                            } else {
+                                navigate('/');
+                            }
+                        }}
+                        className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors flex-shrink-0"
+                        title={t('common.back', 'Back')}
+                    >
                         <ChevronLeft />
-                    </Link>
+                    </button>
                     {isEditingTitle ? (
                         <div className="flex items-center gap-2 flex-1 mr-4 min-w-0">
                             <input
@@ -702,6 +729,23 @@ export const ListDetail: React.FC = React.memo(() => {
                         </button>
                     </div>
 
+                    {/* Pinned List Toggle */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
+                        <div className="flex flex-col">
+                            <div className="flex items-center gap-2">
+                                <Pin size={16} className={list?.settings?.pinned ? "text-blue-500" : "text-gray-400"} />
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{t('lists.settings.pinned.title', 'Fäst lista')}</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{t('lists.settings.pinned.description', 'Öppna denna lista automatiskt när appen startar')}</span>
+                        </div>
+                        <button
+                            onClick={() => updateSettings({ pinned: !list?.settings?.pinned })}
+                            className={`w-12 h-6 rounded-full transition-colors relative ${list?.settings?.pinned ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'}`}
+                        >
+                            <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${list?.settings?.pinned ? 'translate-x-6' : ''}`} />
+                        </button>
+                    </div>
+
                     {/* Sorting Options */}
                     <div className="space-y-2">
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -946,6 +990,35 @@ export const ListDetail: React.FC = React.memo(() => {
                 message={t('lists.sections.deleteMessage')}
                 confirmText={t('lists.sections.deleteConfirm')}
             />
+            <Modal
+                isOpen={unpinConfirmOpen}
+                onClose={() => setUnpinConfirmOpen(false)}
+                title={t('lists.unpinConfirm.title', 'Lämna fäst lista?')}
+                message={t('lists.unpinConfirm.message', 'Denna lista är fäst och öppnas automatiskt när appen startar. Vill du sluta fästa den nu?')}
+                confirmText={t('lists.unpinConfirm.unpinAndLeave', 'Sluta fäst och lämna')}
+                cancelText={t('common.cancel', 'Avbryt')}
+                onConfirm={async () => {
+                    if (list) {
+                        await updateSettings({ pinned: false });
+                        navigate('/');
+                    }
+                }}
+            >
+                <div className="pt-2 border-t border-gray-100 dark:border-gray-700 mt-2">
+                    <button
+                        onClick={() => {
+                            setUnpinConfirmOpen(false);
+                            navigate('/');
+                        }}
+                        className="w-full p-3 text-center text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors font-medium border border-gray-200 dark:border-gray-600"
+                    >
+                        {t('lists.unpinConfirm.keepPinned', 'Behåll fäst och lämna')}
+                    </button>
+                    <p className="text-center text-xs text-gray-500 mt-2">
+                        {t('lists.unpinConfirm.explanation', 'Du kan alltid ändra detta i listinställningarna senare.')}
+                    </p>
+                </div>
+            </Modal>
         </div >
     );
 });

@@ -26,6 +26,7 @@ export interface ListSettings {
   defaultSort: "manual" | "alphabetical" | "completed";
   calendarStartTime?: string;
   calendarEndTime?: string;
+  pinned?: boolean;
 }
 
 export interface List {

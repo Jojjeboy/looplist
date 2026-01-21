@@ -1,5 +1,10 @@
 [
   {
+    "hash": "d14f8e3b4baf3e74577d150a1712d39ce7aaa4d0",
+    "date": "2026-01-20 10:19:40 +0100",
+    "message": "feat: add 3-stage mode to sessions, fix list clear, and restore theme toggle (v9.1.0)"
+  },
+  {
     "hash": "0e99495e9874701bd6c9b780f0d186e106247cda",
     "date": "2026-01-13 21:46:37 +0100",
     "message": "Documentation"
@@ -93,10 +98,5 @@
     "hash": "66e96e923fff31433bea1028fed9523ae078119a",
     "date": "2026-01-09 09:55:13 +0100",
     "message": "Fix test failures: Update mock setup and correct test expectations for useFirestoreSync"
-  },
-  {
-    "hash": "7050d5ff2f455dc0eb1142aa36dcb263b5d097a7",
-    "date": "2026-01-09 09:51:22 +0100",
-    "message": "Lint fixes"
   }
 ]

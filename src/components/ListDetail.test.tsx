@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ListDetail } from './ListDetail';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import * as AppContext from '../context/AppContext';
 
 // Mock i18next
@@ -43,7 +43,8 @@ vi.mock('lucide-react', () => ({
     ChevronLeft: () => <div />,
     RotateCcw: () => <div />,
     Settings: () => <div data-testid="settings-icon" />,
-    ChevronDown: () => <div />
+    ChevronDown: () => <div />,
+    Pin: () => <div />
 }));
 
 const mockUpdateListItems = vi.fn();
@@ -91,13 +92,19 @@ describe('ListDetail', () => {
     });
 
     const renderComponent = () => {
-        render(
-            <MemoryRouter initialEntries={['/list/list1']}>
-                <Routes>
-                    <Route path="/list/:listId" element={<ListDetail />} />
-                </Routes>
-            </MemoryRouter>
+        const router = createMemoryRouter(
+            [
+                {
+                    path: '/list/:listId',
+                    element: <ListDetail />,
+                },
+            ],
+            {
+                initialEntries: ['/list/list1'],
+            }
         );
+
+        render(<RouterProvider router={router} />);
     };
 
     it('renders list items', () => {
