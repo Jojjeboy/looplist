@@ -1,5 +1,10 @@
 [
   {
+    "hash": "30bad0f920ca31284aee49ae30acc1e68aaefeff",
+    "date": "2026-01-21 15:08:51 +0100",
+    "message": "feat: implement pinned list navigation blocking and refactor to Data Router (v10.0.0)"
+  },
+  {
     "hash": "d14f8e3b4baf3e74577d150a1712d39ce7aaa4d0",
     "date": "2026-01-20 10:19:40 +0100",
     "message": "feat: add 3-stage mode to sessions, fix list clear, and restore theme toggle (v9.1.0)"
@@ -93,10 +98,5 @@
     "hash": "1db02a05776f1330b062d79fce10a05e945a144a",
     "date": "2026-01-09 10:08:29 +0100",
     "message": "Fix SonarQube CI/CD issue by using JUNIT XML format"
-  },
-  {
-    "hash": "66e96e923fff31433bea1028fed9523ae078119a",
-    "date": "2026-01-09 09:55:13 +0100",
-    "message": "Fix test failures: Update mock setup and correct test expectations for useFirestoreSync"
   }
 ]
