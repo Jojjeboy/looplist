@@ -1,10 +1,10 @@
-# Anti List - PWA
+# LoopList
 
 A mobile-first Progressive Web App for managing reusable lists, built with React, TypeScript, Tailwind CSS, and Vite.
 
 ## 🚀 Features
 
-- **Advanced List Management**: 
+- **Advanced List Management**:
   - **Sections**: Organize items into collapsible sections.
   - **Smart Sorting**: Manual (drag & drop), Alphabetical, or by Completed status.
   - **Three-Stage Mode**: Workflow support for Unresolved -> Prepared -> Completed.

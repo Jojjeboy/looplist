@@ -23,7 +23,7 @@ export const UpdatePrompt: React.FC = () => {
     useEffect(() => {
         if (needRefresh) {
             // Fetch the latest commits from the server (bypassing cache if possible)
-            fetch(`/anti/commits.json?t=${Date.now()}`)
+            fetch(`/looplist/commits.json?t=${Date.now()}`)
                 .then(res => res.json())
                 .then((data: Commit[]) => {
                     if (data && data.length > 0) {

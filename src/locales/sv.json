@@ -5,7 +5,7 @@
         "settings": "Inställningar"
     },
     "app": {
-        "title": "Anti",
+        "title": "LoopList",
         "searchPlaceholder": "Sök listor, objekt, kategorier...",
         "settings": "Inställningar",
         "toggleTheme": "Växla tema",
@@ -253,7 +253,7 @@
         "justNow": "Just nu"
     },
     "landing": {
-        "welcome": "Välkommen till Anti",
+        "welcome": "Välkommen till LoopList",
         "subtitle": "App för återanvändbara listor",
         "signIn": "Logga in med Google"
     },

@@ -5,7 +5,7 @@
         "settings": "Settings"
     },
     "app": {
-        "title": "Anti",
+        "title": "LoopList",
         "searchPlaceholder": "Search lists, items, categories...",
         "settings": "Settings",
         "toggleTheme": "Toggle theme",
@@ -254,7 +254,7 @@
         "justNow": "Just now"
     },
     "landing": {
-        "welcome": "Welcome to Anti",
+        "welcome": "Welcome to LoopList",
         "subtitle": "Reusable lists app",
         "signIn": "Sign in with Google"
     },
