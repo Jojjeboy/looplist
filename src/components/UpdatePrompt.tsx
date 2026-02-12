@@ -76,7 +76,7 @@ export const UpdatePrompt: React.FC = () => {
                                     </span>
                                 </div>
                                 <a
-                                    href="https://github.com/jojjeboy/anti/commits/master"
+                                    href="https://github.com/jojjeboy/looplist/commits/master"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"

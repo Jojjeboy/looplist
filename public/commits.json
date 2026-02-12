@@ -1,5 +1,20 @@
 [
   {
+    "hash": "9777afe625b48a1f5728cba67c102840fc448728",
+    "date": "2026-02-11 16:22:54 +0100",
+    "message": "Merge branch 'master' of https://github.com/Jojjeboy/looplist"
+  },
+  {
+    "hash": "3ba59d124729d7bfb25b6f7d7221e849e9c30f75",
+    "date": "2026-02-11 16:17:19 +0100",
+    "message": "audit fix"
+  },
+  {
+    "hash": "92a6dda8a4696c2a3d6ae272ce1e22807aa4ca0b",
+    "date": "2026-02-11 16:17:19 +0100",
+    "message": "Rename to Looplist"
+  },
+  {
     "hash": "30bad0f920ca31284aee49ae30acc1e68aaefeff",
     "date": "2026-01-21 15:08:51 +0100",
     "message": "feat: implement pinned list navigation blocking and refactor to Data Router (v10.0.0)"
@@ -83,20 +98,5 @@
     "hash": "d14b07b25fea190a800ef7e61138f710c26f1517",
     "date": "2026-01-09 11:20:07 +0100",
     "message": "chore: remove activity log pagination and category bulk edit feature"
-  },
-  {
-    "hash": "61b09de729130218bd2fe0f76d58b39d0a719ada",
-    "date": "2026-01-09 11:07:02 +0100",
-    "message": "fix: revert sonar-scan-action to v6 and disable incompatible test report path"
-  },
-  {
-    "hash": "550454fbc5120595ef7cca17781456750123b192",
-    "date": "2026-01-09 10:53:33 +0100",
-    "message": "fix: resolve SonarQube build issues and enhance UpdatePrompt with multi-commit history and GitHub link"
-  },
-  {
-    "hash": "1db02a05776f1330b062d79fce10a05e945a144a",
-    "date": "2026-01-09 10:08:29 +0100",
-    "message": "Fix SonarQube CI/CD issue by using JUNIT XML format"
   }
 ]
