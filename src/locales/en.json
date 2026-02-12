@@ -71,6 +71,10 @@
                 "title": "Three-stage items",
                 "description": "Unresolved → Ongoing → Done"
             },
+            "resettable": {
+                "title": "Reset Suggestion",
+                "description": "Ask to reset when all items are done"
+            },
             "sort": "Sort Order",
             "calendar": {
                 "title": "Add to Calendar",

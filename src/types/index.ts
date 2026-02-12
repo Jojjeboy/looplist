@@ -27,6 +27,7 @@ export interface ListSettings {
   calendarStartTime?: string;
   calendarEndTime?: string;
   pinned?: boolean;
+  isResettable?: boolean;
 }
 
 export interface List {

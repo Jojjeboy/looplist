@@ -280,7 +280,8 @@ export const ListDetail: React.FC = React.memo(() => {
 
         // Check if all items are now completed
         const allCompleted = newItems.every(item => item.completed);
-        if (allCompleted && newItems.length > 0) {
+        const isResettable = list.settings?.isResettable ?? true;
+        if (allCompleted && newItems.length > 0 && isResettable) {
             setUncheckModalOpen(true);
         }
     };
@@ -726,6 +727,23 @@ export const ListDetail: React.FC = React.memo(() => {
                             className={`w-12 h-6 rounded-full transition-colors relative ${threeStageMode ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'}`}
                         >
                             <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${threeStageMode ? 'translate-x-6' : ''}`} />
+                        </button>
+                    </div>
+
+                    {/* Resettable List Toggle */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
+                        <div className="flex flex-col">
+                            <div className="flex items-center gap-2">
+                                <RotateCcw size={16} className={(list?.settings?.isResettable ?? true) ? "text-blue-500" : "text-gray-400"} />
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{t('lists.settings.resettable.title', 'Reset Suggestion')}</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{t('lists.settings.resettable.description', 'Ask to reset when all items are done')}</span>
+                        </div>
+                        <button
+                            onClick={() => updateSettings({ isResettable: !(list?.settings?.isResettable ?? true) })}
+                            className={`w-12 h-6 rounded-full transition-colors relative ${(list?.settings?.isResettable ?? true) ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'}`}
+                        >
+                            <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${(list?.settings?.isResettable ?? true) ? 'translate-x-6' : ''}`} />
                         </button>
                     </div>
 

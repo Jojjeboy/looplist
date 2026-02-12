@@ -70,6 +70,10 @@
                 "title": "Trestegsobjekt",
                 "description": "Olöst → Pågående → Klar"
             },
+            "resettable": {
+                "title": "Förslag om återställning",
+                "description": "Fråga om att återställa när alla punkter är klara"
+            },
             "sort": "Sortering",
             "calendar": {
                 "title": "Lägg till i kalender",
